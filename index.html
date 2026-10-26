@@ -1,1 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mountain Movers Youth | Official Portal</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- High Fashion Typography Suite -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+  <style>
+    :root {
+      --bg-primary: #09080E;
+      --bg-surface: rgba(22, 19, 32, 0.75);
+      --bg-surface-elevated: rgba(30, 26, 44, 0.88);
+      --border-color: rgba(245, 158, 11, 0.22);
+      --accent: #F59E0B;
+      --accent-secondary: #FB7185;
+      --accent-glow: rgba(245, 158, 11, 0.4);
+      --text-main: #FFFFFF;
+      --card-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(251, 113, 133, 0.03));
+      --brand-gradient: linear-gradient(135deg, #FDE68A 0%, #F59E0B 40%, #FB7185 80%, #C084FC 100%);
+    }
+
+    body.theme-monochrome {
+      --bg-primary: #000000;
+      --bg-surface: rgba(16, 16, 16, 0.85);
+      --bg-surface-elevated: rgba(26, 26, 26, 0.95);
+      --border-color: rgba(255, 255, 255, 0.2);
+      --accent: #FFFFFF;
+      --accent-secondary: #A3A3A3;
+      --accent-glow: rgba(255, 255, 255, 0.25);
+      --text-main: #FFFFFF;
+      --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+      --brand-gradient: linear-gradient(135deg, #FFFFFF 0%, #E5E5E5 35%, #737373 100%);
+    }
+
+    body.theme-sunset {
+      --bg-primary: #0C0A10;
+      --bg-surface: rgba(25, 21, 35, 0.75);
+      --bg-surface-elevated: rgba(35, 30, 50, 0.9);
+      --border-color: rgba(245, 158, 11, 0.25);
+      --accent: #F59E0B;
+      --accent-secondary: #F43F5E;
+      --accent-glow: rgba(245, 158, 11, 0.4);
+      --text-main: #FFFBEB;
+      --card-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(244, 63, 94, 0.04));
+      --brand-gradient: linear-gradient(135deg, #FDE68A 0%, #F59E0B 45%, #F43F5E 80%, #D946EF 100%);
+    }
+
+    body.theme-alpine {
+      --bg-primary: #041210;
+      --bg-surface: rgba(9, 32, 28, 0.78);
+      --bg-surface-elevated: rgba(13, 44, 39, 0.92);
+      --border-color: rgba(16, 185, 129, 0.28);
+      --accent: #10B981;
+      --accent-secondary: #34D399;
+      --accent-glow: rgba(16, 185, 129, 0.4);
+      --text-main: #ECFDF5;
+      --card-gradient: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 78, 59, 0.05));
+      --brand-gradient: linear-gradient(135deg, #A7F3D0 0%, #34D399 45%, #10B981 80%, #F59E0B 100%);
+    }
+
+    body.theme-midnight {
+      --bg-primary: #070914;
+      --bg-surface: rgba(15, 21, 42, 0.8);
+      --bg-surface-elevated: rgba(23, 31, 62, 0.92);
+      --border-color: rgba(99, 102, 241, 0.28);
+      --accent: #6366F1;
+      --accent-secondary: #FBBF24;
+      --accent-glow: rgba(99, 102, 241, 0.4);
+      --text-main: #EEF2FF;
+      --card-gradient: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(251, 191, 36, 0.04));
+      --brand-gradient: linear-gradient(135deg, #C7D2FE 0%, #818CF8 45%, #C084FC 80%, #FBBF24 100%);
+    }
+
+    body.theme-hearth {
+      --bg-primary: #171311;
+      --bg-surface: rgba(38, 30, 26, 0.82);
+      --bg-surface-elevated: rgba(54, 42, 36, 0.92);
+      --border-color: rgba(249, 115, 22, 0.26);
+      --accent: #F97316;
+      --accent-secondary: #FBBF24;
+      --accent-glow: rgba(249, 115, 22, 0.4);
+      --text-main: #FFF7ED;
+      --card-gradient: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(251, 191, 36, 0.04));
+      --brand-gradient: linear-gradient(135deg, #FED7AA 0%, #F97316 45%, #FBBF24 80%, #F43F5E 100%);
+    }
+
+    body { font-family: 'Outfit', sans-serif; }
+    .font-brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.22em; }
+    .font-display { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.08em; }
+
+    .brand-title-gradient {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 14px var(--accent-glow));
+    }
+
+    .theme-card {
+      background-color: var(--bg-surface) !important;
+      border-color: var(--border-color) !important;
+      background-image: var(--card-gradient) !important;
+    }
+    .theme-card-elevated {
+      background-color: var(--bg-surface-elevated) !important;
+      border-color: var(--border-color) !important;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body class="theme-sunset min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black" id="app-body" style="background-color: var(--bg-primary); color: var(--text-main);">
+
+  <!-- Ambient Cinematic Lighting -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div id="ambientGlow1" class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[150px] opacity-35 transition-all duration-700" style="background-color: var(--accent);"></div>
+    <div id="ambientGlow2" class="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full blur-[170px] opacity-25 transition-all duration-700" style="background-color: var(--accent-secondary);"></div>
+  </div>
+
+  <!-- HEADER & LOGO -->
+  <header class="sticky top-0 z-40 backdrop-blur-2xl border-b px-4 lg:px-8 py-3.5 transition-all" style="background-color: rgba(0,0,0,0.55); border-color: var(--border-color);">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-14 h-14 rounded-full bg-white p-1 shadow-2xl flex items-center justify-center shrink-0 border border-stone-200">
+          <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="98" fill="#FFFFFF"/>
+            <path d="M 24 108 C 24 55 58 26 100 26 C 142 26 176 55 176 108 Z" fill="#1C1917"/>
+            <polygon points="100,40 122,82 113,87 138,108 62,108 85,76 96,88" fill="#FFFFFF"/>
+            <polygon points="40,108 68,69 86,92 59,108" fill="#FFFFFF"/>
+            <polygon points="123,90 144,66 164,108 138,108" fill="#FFFFFF"/>
+            <rect x="22" y="110" width="156" height="3" fill="#1C1917"/>
+            <text x="100" y="125" font-family="'Space Grotesk', sans-serif" font-size="8.8" font-weight="700" fill="#1C1917" text-anchor="middle" letter-spacing="2">MOUNTAIN MOVERS YOUTH</text>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-black font-brand tracking-[0.24em] brand-title-gradient">MOUNTAIN MOVERS YOUTH</h1>
+          <p class="text-[11px] font-medium tracking-widest uppercase opacity-75 font-brand">"Faith that shifts mountains" &bull; Matt 17:20</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-3">
+        <div class="relative">
+          <label class="text-[10px] uppercase tracking-widest block mb-0.5 font-bold font-brand opacity-60">Color Atmosphere</label>
+          <select id="themeSelector" onchange="applyTheme(this.value)" class="text-xs bg-stone-900 border text-white rounded-xl px-3 py-2 cursor-pointer font-brand transition shadow-lg" style="border-color: var(--border-color);">
+            <option value="theme-monochrome">🖤 Monochrome Noir (Black & White)</option>
+            <option value="theme-sunset" selected>🔥 Cozy Sunset Ember</option>
+            <option value="theme-alpine">🌲 Alpine Emerald</option>
+            <option value="theme-midnight">🌌 Midnight Indigo</option>
+            <option value="theme-hearth">☕ Warm Hearth</option>
+          </select>
+        </div>
+
+        <div class="pt-3">
+          <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1" style="border-color: var(--border-color);">
+            <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
+              <i class="ph-bold ph-student"></i> Youth Mode
+            </button>
+            <button id="adminRoleBtn" onclick="promptAdminLogin()" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
+              <i class="ph-bold ph-lock-key"></i> Pastor/Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
+    <div class="flex border-b overflow-x-auto space-x-2 pb-1 scrollbar-none" style="border-color: var(--border-color);">
+      <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn active px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 border-b-2 bg-white/5 transition font-brand" style="border-color: var(--accent); color: var(--accent);">
+        <i class="ph-bold ph-presentation"></i> Sermon Slides
+      </button>
+      <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
+        <i class="ph-bold ph-shield-star"></i> Team Leaderboard
+      </button>
+      <button onclick="switchTab('tab-attendance')" id="nav-attendance" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
+        <i class="ph-bold ph-calendar-check"></i> Youth Attendance
+      </button>
+      <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
+        <i class="ph-bold ph-hands-praying"></i> Prayer & Answer Wall
+      </button>
+      <button onclick="switchTab('tab-pastor')" id="nav-pastor" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
+        <i class="ph-bold ph-chat-circle-dots"></i> Ask the Pastor
+        <span id="pastorUnreadDot" class="hidden w-2 h-2 rounded-full" style="background-color: var(--accent-secondary);"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD BODY -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+    <div id="adminNoticeBanner" class="hidden mb-6 p-4 rounded-2xl border backdrop-blur-md flex items-center justify-between theme-card-elevated">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-black" style="background-color: var(--accent);">
+          <i class="ph-fill ph-shield-check text-xl"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-black uppercase font-brand tracking-widest" style="color: var(--accent);">Pastor & Admin Mode Active</h4>
+          <p class="text-xs opacity-80">Full edit permissions enabled: update scores, edit attendance, add slides, and read confidential inquiries.</p>
+        </div>
+      </div>
+      <button onclick="logoutAdmin()" class="px-3 py-1.5 bg-black/60 hover:bg-black text-white rounded-lg text-xs font-bold border transition font-brand" style="border-color: var(--border-color);">
+        Exit Admin
+      </button>
+    </div>
+
+    <!-- TAB 1: SERMON SLIDES -->
+    <section id="tab-sermon" class="tab-content block space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Weekly Word</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sermon Slides & Scriptures</h2>
+        </div>
+        <div class="admin-only hidden">
+          <button onclick="openSlideModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center gap-2 shadow-lg" style="background-color: var(--accent);">
+            <i class="ph-bold ph-plus-circle text-base"></i> Add New Slide
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 rounded-3xl border theme-card backdrop-blur-xl p-6 md:p-8 shadow-2xl relative flex flex-col justify-between min-h-[420px]">
+          <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+            <span id="currentSlideNumber" class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white font-brand">Slide 1 of 3</span>
+            <div class="flex gap-2">
+              <button onclick="prevSlide()" class="w-8 h-8 rounded-lg bg-stone-900 hover:bg-stone-800 flex items-center justify-center text-white border" style="border-color: var(--border-color);"><i class="ph-bold ph-caret-left"></i></button>
+              <button onclick="nextSlide()" class="w-8 h-8 rounded-lg bg-stone-900 hover:bg-stone-800 flex items-center justify-center text-white border" style="border-color: var(--border-color);"><i class="ph-bold ph-caret-right"></i></button>
+            </div>
+          </div>
+          <div id="slideDisplay" class="my-auto text-center px-4 py-8"></div>
+          <div class="flex items-center justify-between text-xs opacity-75 pt-3 border-t font-brand" style="border-color: var(--border-color);">
+            <span id="slideSeriesTitle" class="italic">Series: The Mountain Mover</span>
+            <span>Mountain Movers Youth</span>
+          </div>
+        </div>
+        <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-2xl flex flex-col">
+          <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 font-brand" style="color: var(--accent);">
+            <i class="ph-bold ph-stack"></i> Slide Deck Index
+          </h3>
+          <div id="slidesList" class="space-y-2 overflow-y-auto max-h-[340px] pr-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: TEAMS & SCORES -->
+    <section id="tab-teams" class="tab-content hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Championship</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Team Leaderboard</h2>
+          <p class="text-xs opacity-75 font-brand">Points earned from attendance, memory verses, challenges, & team spirit!</p>
+        </div>
+        <div class="admin-only hidden">
+          <button onclick="resetAllScoresConfirm()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition font-brand">
+            Reset Scores Season
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="teamsGrid"></div>
+    </section>
+
+    <!-- TAB 3: ATTENDANCE -->
+    <section id="tab-attendance" class="tab-content hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Consistency Hub</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Youth Attendance Tracker</h2>
+          <p class="text-xs opacity-75 font-brand">Total Gatherings Tracked: <span id="totalSessionsCount" class="font-bold" style="color: var(--accent);">10</span> sessions</p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="relative">
+            <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search youth name..." class="w-48 md:w-64 bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+            <i class="ph-bold ph-magnifying-glass absolute left-2.5 top-2.5 opacity-60 text-xs"></i>
+          </div>
+          <div class="admin-only hidden">
+            <button onclick="openAddMemberModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-stone-950 flex items-center gap-1.5 shadow-lg font-brand" style="background-color: var(--accent);">
+              <i class="ph-bold ph-user-plus text-sm"></i> Add Youth
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-4 rounded-2xl border theme-card">
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Total Registered</p>
+          <h4 id="statTotalYouth" class="text-2xl font-black mt-1 font-brand">0</h4>
+        </div>
+        <div class="p-4 rounded-2xl border theme-card">
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Avg Attendance</p>
+          <h4 id="statAvgAttendance" class="text-2xl font-black mt-1 font-brand" style="color: var(--accent);">0%</h4>
+        </div>
+        <div class="p-4 rounded-2xl border theme-card">
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Honor Roll (90%+)</p>
+          <h4 id="statHonorRoll" class="text-2xl font-black mt-1 font-brand">0</h4>
+        </div>
+        <div class="p-4 rounded-2xl border theme-card">
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Leading Team</p>
+          <h4 id="statLeadingTeam" class="text-base font-black mt-1 truncate font-brand" style="color: var(--accent-secondary);">-</h4>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border theme-card overflow-hidden shadow-card">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b bg-white/5 text-[10px] uppercase tracking-wider font-bold font-brand" style="border-color: var(--border-color);">
+                <th class="py-3.5 px-4">Youth Member</th>
+                <th class="py-3.5 px-4">Assigned Team</th>
+                <th class="py-3.5 px-4 text-center">Attended</th>
+                <th class="py-3.5 px-4">Attendance %</th>
+                <th class="py-3.5 px-4">Status</th>
+                <th class="py-3.5 px-4 text-right admin-only hidden">Admin Action</th>
+              </tr>
+            </thead>
+            <tbody id="memberTableBody" class="divide-y text-xs" style="border-color: var(--border-color);"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: PRAYER WALL -->
+    <section id="tab-prayers" class="tab-content hidden space-y-8">
+      <div>
+        <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Community of Faith</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold font-display">Prayer & Answer Wall</h2>
+        <p class="text-xs opacity-75 font-brand">Post your burdens or declare what mountains God has moved in your life!</p>
+      </div>
+
+      <div class="rounded-3xl border theme-card p-6 shadow-card">
+        <h3 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2 font-brand" style="color: var(--accent);">
+          <i class="ph-bold ph-pen-nib"></i> Post a Prayer Request or Praise
+        </h3>
+        <form id="prayerForm" onsubmit="handlePrayerSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Your Name (Optional)</label>
+              <input type="text" id="prayerAuthor" placeholder="Leave blank for Anonymous" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Category</label>
+              <select id="prayerType" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+                <option value="request">🙏 Prayer Request</option>
+                <option value="answered">🎉 Answered Prayer (Praise Report!)</option>
+              </select>
+            </div>
+            <div class="flex items-center pt-5">
+              <label class="flex items-center gap-2 text-xs cursor-pointer select-none font-brand">
+                <input type="checkbox" id="prayerAnonToggle" class="w-4 h-4 rounded bg-stone-900 border">
+                <span class="opacity-80">Submit 100% Anonymously</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <textarea id="prayerContent" rows="3" required placeholder="What mountain are we praying for?" class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white" style="border-color: var(--border-color);"></textarea>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand shadow-lg" style="background-color: var(--accent);">
+              <i class="ph-bold ph-paper-plane-tilt"></i> Post to Wall
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand" style="color: var(--accent);">
+              <i class="ph-bold ph-hands-praying"></i> Active Prayer Requests
+            </h4>
+            <span id="prayerReqCount" class="text-xs px-2.5 py-0.5 rounded-full border bg-white/5 font-bold font-brand" style="border-color: var(--border-color);">0</span>
+          </div>
+          <div id="prayerRequestsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand text-emerald-400">
+              <i class="ph-bold ph-confetti"></i> Answered Prayers Wall
+            </h4>
+            <span id="answeredReqCount" class="text-xs px-2.5 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 font-bold font-brand">0</span>
+          </div>
+          <div id="answeredPrayersList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: ASK THE PASTOR -->
+    <section id="tab-pastor" class="tab-content hidden space-y-6">
+      <div>
+        <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Pastoral Guidance</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold font-display">Ask Your Question to the Pastor</h2>
+        <p class="text-xs opacity-75 font-brand">Got a personal question, doubt, or struggle? Only the Pastor with the password can read these.</p>
+      </div>
+
+      <div class="rounded-3xl border theme-card p-6 shadow-card">
+        <form id="pastorQueryForm" onsubmit="handlePastorQuerySubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Your Name / Contact (Optional)</label>
+              <input type="text" id="queryAuthor" placeholder="Leave empty for complete anonymity" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Topic Category</label>
+              <select id="queryTopic" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+                <option value="Spiritual / Bible">📖 Spiritual / Bible Questions</option>
+                <option value="Personal Guidance">🕊️ Personal Guidance / Life Advice</option>
+                <option value="Doubt & Faith">⚡ Doubt, Temptations & Struggles</option>
+                <option value="Youth Group Idea">💡 Youth Group Feedback / Idea</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <textarea id="queryContent" rows="4" required placeholder="Type whatever is on your heart. Zero judgment, total grace..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white" style="border-color: var(--border-color);"></textarea>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] opacity-75 flex items-center gap-1 font-brand">
+              <i class="ph-bold ph-lock-key" style="color: var(--accent);"></i> Locked to youth view.
+            </span>
+            <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand shadow-lg" style="background-color: var(--accent);">
+              <i class="ph-bold ph-paper-plane-right"></i> Send Privately
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="pastorInboxWrapper" class="mt-8">
+        <div id="pastorInboxLocked" class="p-8 rounded-3xl border border-dashed text-center theme-card">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style="background-color: rgba(255,255,255,0.06); color: var(--accent);">
+            <i class="ph-bold ph-lock-key text-2xl"></i>
+          </div>
+          <h3 class="text-sm font-bold uppercase tracking-wider font-brand">Pastor Inbox Protected</h3>
+          <p class="text-xs opacity-70 max-w-md mx-auto mt-1 mb-4 font-brand">Questions are confidential. Youths cannot view submitted inquiries. Pastor must enter password.</p>
+          <button onclick="promptAdminLogin()" class="px-4 py-2 bg-stone-900 font-bold rounded-xl text-xs border font-brand" style="border-color: var(--border-color); color: var(--accent);">
+            Unlock Pastor Inbox
+          </button>
+        </div>
+
+        <div id="pastorInboxUnlocked" class="hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand" style="color: var(--accent);">
+              <i class="ph-bold ph-envelope-simple-open"></i> Confidential Pastor Inbox
+            </h3>
+            <span id="pastorInboxCount" class="text-xs px-2.5 py-1 rounded-full border font-bold font-brand" style="border-color: var(--border-color);">0 Queries</span>
+          </div>
+          <div id="pastorMessagesList" class="space-y-3"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div id="loginModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-2xl text-stone-950 flex items-center justify-center mx-auto mb-2 text-xl font-black" style="background-color: var(--accent);">
+          <i class="ph-bold ph-key"></i>
+        </div>
+        <h3 class="text-base font-bold font-brand tracking-widest uppercase">Pastor Access</h3>
+        <p class="text-xs opacity-75 mt-1 font-brand">Enter your secret password to unlock full administrative access.</p>
+        <span class="text-[10px] px-2 py-0.5 rounded-full mt-2 inline-block bg-white/10 opacity-80 font-mono">Password: <strong>pastor123</strong></span>
+      </div>
+      <div>
+        <input type="password" id="adminPasswordInput" placeholder="Enter password..." class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-sm text-white font-brand" style="border-color: var(--border-color);">
+        <p id="loginErrorMsg" class="text-xs text-rose-400 mt-1.5 hidden text-center font-brand">Incorrect password.</p>
+      </div>
+      <div class="flex gap-2 font-brand">
+        <button onclick="closeLoginModal()" class="flex-1 py-2 text-xs font-semibold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+        <button onclick="verifyAdminPassword()" class="flex-1 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD YOUTH MODAL -->
+  <div id="addMemberModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Youth Member</h3>
+        <button onclick="closeAddMemberModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="newMemberForm" onsubmit="handleSaveMember(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Full Name</label>
+          <input type="text" id="newMemberName" required placeholder="e.g. Samuel Adebayo" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Assign to Team</label>
+          <select id="newMemberTeam" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Sessions Attended (Out of 10)</label>
+          <input type="number" id="newMemberAttended" min="0" max="10" value="8" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        </div>
+        <div class="flex justify-end gap-2 pt-2 font-brand">
+          <button type="button" onclick="closeAddMemberModal()" class="px-3 py-2 text-xs font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+          <button type="submit" class="px-4 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Save Member</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD SLIDE MODAL -->
+  <div id="addSlideModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Sermon Slide</h3>
+        <button onclick="closeSlideModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form onsubmit="handleSaveSlide(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Slide Title</label>
+          <input type="text" id="newSlideTitle" required placeholder="e.g. Mountain-Moving Faith" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Scripture Reference</label>
+          <input type="text" id="newSlideScripture" required placeholder="e.g. Mark 11:22-24" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Slide Key Notes</label>
+          <textarea id="newSlideBody" rows="3" required placeholder="Key points from the sermon..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white font-brand" style="border-color: var(--border-color);"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2 font-brand">
+          <button type="button" onclick="closeSlideModal()" class="px-3 py-2 text-xs font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+          <button type="submit" class="px-4 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Add Slide</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL_SESSIONS = 10;
+    const ADMIN_PASS = "pastor123";
+
+    let state = {
+      theme: 'theme-sunset',
+      role: 'youth',
+      currentSlideIdx: 0,
+      teams: [
+        { id: 1, name: "Zion Lions", points: 840, icon: "ph-crown", bgImage: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" },
+        { id: 2, name: "Summit Strikers", points: 790, icon: "ph-fire", bgImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" },
+        { id: 3, name: "Sinai Thunder", points: 760, icon: "ph-lightning", bgImage: "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=800&q=80" },
+        { id: 4, name: "Grace Titans", points: 710, icon: "ph-shield", bgImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" },
+        { id: 5, name: "Eden Eagles", points: 680, icon: "ph-bird", bgImage: "https://images.unsplash.com/photo-1611689342806-0863700ce1e4?auto=format&fit=crop&w=800&q=80" },
+        { id: 6, name: "Judah Warriors", points: 630, icon: "ph-sword", bgImage: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" }
+      ],
+      members: [
+        { id: 1, name: "Caleb Vance", teamId: 1, attended: 10 },
+        { id: 2, name: "Hannah Kim", teamId: 2, attended: 9 },
+        { id: 3, name: "Elijah Morales", teamId: 3, attended: 8 },
+        { id: 4, name: "Chloe Bennett", teamId: 1, attended: 7 },
+        { id: 5, name: "Micah Johnson", teamId: 4, attended: 10 },
+        { id: 6, name: "Sarah Jenkins", teamId: 5, attended: 9 },
+        { id: 7, name: "David Sterling", teamId: 6, attended: 6 },
+        { id: 8, name: "Esther Okonjo", teamId: 2, attended: 10 },
+        { id: 9, name: "Zion Campbell", teamId: 3, attended: 8 },
+        { id: 10, name: "Noami Foster", teamId: 4, attended: 7 },
+        { id: 11, name: "Lucas Wright", teamId: 5, attended: 5 },
+        { id: 12, name: "Grace Ndlovu", teamId: 6, attended: 9 }
+      ],
+      slides: [
+        { id: 1, series: "Series: The Mountain Mover", title: "Faith Can Relocate Your Giants", scripture: "Matthew 17:20", body: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move. Nothing will be impossible for you." },
+        { id: 2, series: "Series: The Mountain Mover", title: "Stand In Holy Fellowship", scripture: "Ecclesiastes 4:12", body: "Though one may be overpowered, two can defend themselves. A cord of three strands is not quickly broken. Our youth teams stand united in prayer." },
+        { id: 3, series: "Series: The Mountain Mover", title: "Ascend With Clean Hands", scripture: "Psalm 24:3-4", body: "Who may ascend the mountain of the Lord? Who may stand in his holy place? The one who has clean hands and a pure heart." }
+      ],
+      prayers: [
+        { id: 1, type: "answered", author: "Esther O.", text: "Praise God! I passed my college entrance exams after our youth group stood in prayer together!", date: "Yesterday" },
+        { id: 2, type: "request", author: "Anonymous", text: "Please pray for peace in my household and clarity about my future path.", date: "2 days ago" },
+        { id: 3, type: "answered", author: "Caleb V.", text: "My grandmother made a full recovery after severe illness. All glory to Jesus!", date: "3 days ago" }
+      ],
+      pastorQueries: [
+        { id: 1, topic: "Spiritual / Bible", author: "Anonymous", text: "Pastor, how do I build a solid habit of daily scripture reading when school becomes stressful?", date: "This week", status: "pending" }
+      ]
+    };
+
+    function loadStorage() {
+      try {
+        const saved = localStorage.getItem('mm_youth_instant_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.theme) state.theme = parsed.theme;
+          if (parsed.teams) state.teams = parsed.teams;
+          if (parsed.members) state.members = parsed.members;
+          if (parsed.slides) state.slides = parsed.slides;
+          if (parsed.prayers) state.prayers = parsed.prayers;
+          if (parsed.pastorQueries) state.pastorQueries = parsed.pastorQueries;
+        }
+      } catch (err) {
+        console.warn("Storage restricted:", err);
+      }
+    }
+
+    function saveStorage() {
+      try {
+        localStorage.setItem('mm_youth_instant_state', JSON.stringify({
+          theme: state.theme,
+          teams: state.teams,
+          members: state.members,
+          slides: state.slides,
+          prayers: state.prayers,
+          pastorQueries: state.pastorQueries
+        }));
+      } catch (err) {
+        console.warn("Save failed:", err);
+      }
+    }
+
+    function applyTheme(themeClass) {
+      state.theme = themeClass;
+      const body = document.getElementById('app-body');
+      body.className = `${themeClass} min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black`;
+      
+      const themeSelect = document.getElementById('themeSelector');
+      if (themeSelect) themeSelect.value = themeClass;
+
+      const glow1 = document.getElementById('ambientGlow1');
+      const glow2 = document.getElementById('ambientGlow2');
+      if (glow1 && glow2) {
+        glow1.style.backgroundColor = 'var(--accent)';
+        glow2.style.backgroundColor = 'var(--accent-secondary)';
+      }
+      saveStorage();
+      renderAll();
+    }
+
+    function setRole(newRole) {
+      state.role = newRole;
+      const youthBtn = document.getElementById('youthRoleBtn');
+      const adminBtn = document.getElementById('adminRoleBtn');
+      const noticeBanner = document.getElementById('adminNoticeBanner');
+      const adminElements = document.querySelectorAll('.admin-only');
+      const pastorLocked = document.getElementById('pastorInboxLocked');
+      const pastorUnlocked = document.getElementById('pastorInboxUnlocked');
+
+      if (newRole === 'admin') {
+        youthBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+        adminBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
+        adminBtn.style.backgroundColor = "var(--accent)";
+        noticeBanner.classList.remove('hidden');
+        adminElements.forEach(el => el.classList.remove('hidden'));
+        pastorLocked.classList.add('hidden');
+        pastorUnlocked.classList.remove('hidden');
+      } else {
+        youthBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand";
+        adminBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+        adminBtn.style.backgroundColor = "transparent";
+        noticeBanner.classList.add('hidden');
+        adminElements.forEach(el => el.classList.add('hidden'));
+        pastorLocked.classList.remove('hidden');
+        pastorUnlocked.classList.add('hidden');
+      }
+      renderAll();
+    }
+
+    function promptAdminLogin() {
+      if (state.role === 'admin') return;
+      document.getElementById('loginModal').classList.remove('hidden');
+      document.getElementById('adminPasswordInput').value = '';
+      document.getElementById('loginErrorMsg').classList.add('hidden');
+      document.getElementById('adminPasswordInput').focus();
+    }
+
+    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+
+    function verifyAdminPassword() {
+      const pass = document.getElementById('adminPasswordInput').value;
+      if (pass === ADMIN_PASS) {
+        closeLoginModal();
+        setRole('admin');
+      } else {
+        document.getElementById('loginErrorMsg').classList.remove('hidden');
+      }
+    }
+
+    function logoutAdmin() { setRole('youth'); }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.style.borderColor = 'transparent';
+        btn.style.color = '#A8A29E';
+        btn.classList.remove('bg-white/5');
+      });
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.remove('hidden');
+
+      const activeNav = document.getElementById(tabId.replace('tab-', 'nav-'));
+      if (activeNav) {
+        activeNav.style.borderColor = 'var(--accent)';
+        activeNav.style.color = 'var(--accent)';
+        activeNav.classList.add('bg-white/5');
+      }
+    }
+
+    // SLIDES
+    function renderSlide() {
+      if (!state.slides || state.slides.length === 0) return;
+      const slide = state.slides[state.currentSlideIdx];
+      document.getElementById('currentSlideNumber').innerText = `Slide ${state.currentSlideIdx + 1} of ${state.slides.length}`;
+      document.getElementById('slideSeriesTitle').innerText = slide.series;
+
+      document.getElementById('slideDisplay').innerHTML = `
+        <span class="text-xs uppercase tracking-widest font-extrabold px-3.5 py-1 rounded-full border font-brand" style="border-color: var(--border-color); color: var(--accent); background-color: rgba(255,255,255,0.05);">${slide.scripture}</span>
+        <h2 class="text-2xl md:text-5xl font-black mt-5 mb-4 font-display text-white tracking-tight leading-snug">${slide.title}</h2>
+        <p class="text-sm md:text-lg max-w-2xl mx-auto italic leading-relaxed font-light opacity-80">"${slide.body}"</p>
+      `;
+
+      const listEl = document.getElementById('slidesList');
+      listEl.innerHTML = state.slides.map((s, idx) => `
+        <div onclick="goToSlide(${idx})" class="p-3 rounded-2xl cursor-pointer border transition flex items-center justify-between" style="border-color: ${idx === state.currentSlideIdx ? 'var(--accent)' : 'var(--border-color)'}; background-color: ${idx === state.currentSlideIdx ? 'rgba(255,255,255,0.08)' : 'transparent'};">
+          <div class="truncate pr-2">
+            <p class="text-xs font-bold text-white truncate font-brand">${idx + 1}. ${s.title}</p>
+            <p class="text-[11px] font-brand tracking-wider" style="color: var(--accent);">${s.scripture}</p>
+          </div>
+          ${state.role === 'admin' && state.slides.length > 1 ? `
+            <button onclick="event.stopPropagation(); deleteSlide(${s.id})" class="opacity-60 hover:opacity-100 hover:text-rose-400 p-1">
+              <i class="ph-bold ph-trash"></i>
+            </button>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function prevSlide() { if (state.currentSlideIdx > 0) { state.currentSlideIdx--; renderSlide(); } }
+    function nextSlide() { if (state.currentSlideIdx < state.slides.length - 1) { state.currentSlideIdx++; renderSlide(); } }
+    function goToSlide(idx) { state.currentSlideIdx = idx; renderSlide(); }
+
+    function openSlideModal() { document.getElementById('addSlideModal').classList.remove('hidden'); }
+    function closeSlideModal() { document.getElementById('addSlideModal').classList.add('hidden'); }
+
+    function handleSaveSlide(e) {
+      e.preventDefault();
+      const newSlide = {
+        id: Date.now(),
+        series: "Series: The Mountain Mover",
+        title: document.getElementById('newSlideTitle').value,
+        scripture: document.getElementById('newSlideScripture').value,
+        body: document.getElementById('newSlideBody').value
+      };
+      state.slides.push(newSlide);
+      state.currentSlideIdx = state.slides.length - 1;
+      saveStorage();
+      closeSlideModal();
+      renderSlide();
+    }
+
+    function deleteSlide(id) {
+      if (!confirm("Remove this slide?")) return;
+      state.slides = state.slides.filter(s => s.id !== id);
+      if (state.currentSlideIdx >= state.slides.length) state.currentSlideIdx = 0;
+      saveStorage();
+      renderSlide();
+    }
+
+    // TEAMS
+    function renderTeams() {
+      const grid = document.getElementById('teamsGrid');
+      const sortedTeams = [...state.teams].sort((a,b) => b.points - a.points);
+
+      grid.innerHTML = sortedTeams.map((team, rank) => {
+        const teamMemberCount = state.members.filter(m => m.teamId === team.id).length;
+        return `
+          <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[220px]">
+            <div class="absolute inset-0 z-0">
+              <img src="${team.bgImage}" alt="${team.name}" class="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+            </div>
+            <div class="relative z-10">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-black px-2.5 py-1 rounded-full bg-black/80 border text-stone-200 font-brand" style="border-color: var(--border-color);">#${rank + 1} PLACE</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
+              </div>
+              <div class="flex items-center gap-3.5 my-3">
+                <div class="w-12 h-12 rounded-2xl p-0.5 flex items-center justify-center text-stone-950 shadow-lg" style="background-color: var(--accent);">
+                  <div class="w-full h-full bg-black/90 rounded-[14px] flex items-center justify-center text-white">
+                    <i class="ph-bold ${team.icon} text-2xl" style="color: var(--accent);"></i>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-white tracking-wide font-brand">${team.name}</h3>
+                  <p class="text-xs font-bold font-mono tracking-widest mt-0.5" style="color: var(--accent);">${team.points.toLocaleString()} PTS</p>
+                </div>
+              </div>
+            </div>
+            <div class="relative z-10">
+              ${state.role === 'admin' ? `
+                <div class="mt-4 pt-3 border-t flex items-center justify-between" style="border-color: var(--border-color);">
+                  <span class="text-[11px] font-semibold opacity-80 font-brand">Points:</span>
+                  <div class="flex items-center gap-1 font-brand">
+                    <button onclick="adjustTeamScore(${team.id}, -20)" class="w-7 h-7 rounded-lg bg-stone-900 text-stone-300 text-xs font-bold border" style="border-color: var(--border-color);">-20</button>
+                    <button onclick="adjustTeamScore(${team.id}, 20)" class="w-7 h-7 rounded-lg bg-stone-900 text-xs font-bold border" style="border-color: var(--border-color); color: var(--accent);">+20</button>
+                    <button onclick="adjustTeamScore(${team.id}, 50)" class="px-2 h-7 rounded-lg text-stone-950 text-xs font-bold shadow" style="background-color: var(--accent);">+50</button>
+                  </div>
+                </div>
+              ` : `
+                <div class="mt-3 pt-2 text-[11px] opacity-75 italic font-brand">Live team score standing.</div>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (sortedTeams.length > 0) {
+        document.getElementById('statLeadingTeam').innerText = sortedTeams[0].name;
+      }
+    }
+
+    function adjustTeamScore(teamId, delta) {
+      const team = state.teams.find(t => t.id === teamId);
+      if (team) {
+        team.points = Math.max(0, team.points + delta);
+        saveStorage();
+        renderTeams();
+      }
+    }
+
+    function resetAllScoresConfirm() {
+      if (confirm("Reset scores for all teams to zero? This starts a brand new season.")) {
+        state.teams.forEach(t => t.points = 0);
+        saveStorage();
+        renderTeams();
+      }
+    }
+
+    // ATTENDANCE
+    function renderAttendance() {
+      const tableBody = document.getElementById('memberTableBody');
+      const searchVal = (document.getElementById('memberSearchInput')?.value || '').toLowerCase();
+      const filtered = state.members.filter(m => m.name.toLowerCase().includes(searchVal));
+
+      tableBody.innerHTML = filtered.map(member => {
+        const team = state.teams.find(t => t.id === member.teamId) || { name: 'Unassigned' };
+        const percent = Math.round((member.attended / TOTAL_SESSIONS) * 100);
+        
+        let statusBadge = '';
+        if (percent >= 90) {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[10px] font-brand">🔥 Honor Roll (90%+)</span>';
+        } else if (percent >= 70) {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full border font-semibold text-[10px] font-brand" style="border-color: var(--border-color); color: var(--accent);">Consistent</span>';
+        } else {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold text-[10px] font-brand">Encouragement</span>';
+        }
+
+        return `
+          <tr class="hover:bg-white/5 transition">
+            <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full text-[11px] text-stone-950 font-black flex items-center justify-center font-brand" style="background-color: var(--accent);">
+                ${member.name.charAt(0)}
+              </div>
+              <span class="font-brand">${member.name}</span>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded-lg border font-medium text-[11px] font-brand" style="border-color: var(--border-color); background-color: rgba(0,0,0,0.5);">${team.name}</span>
+            </td>
+            <td class="py-3 px-4 text-center font-mono font-bold">${member.attended} / ${TOTAL_SESSIONS}</td>
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-20 bg-stone-950 rounded-full h-2 overflow-hidden border" style="border-color: var(--border-color);">
+                  <div class="h-full rounded-full" style="width: ${percent}%; background-color: var(--accent);"></div>
+                </div>
+                <span class="font-mono font-bold" style="color: var(--accent);">${percent}%</span>
+              </div>
+            </td>
+            <td class="py-3 px-4">${statusBadge}</td>
+            <td class="py-3 px-4 text-right admin-only ${state.role === 'admin' ? '' : 'hidden'}">
+              <div class="flex items-center justify-end gap-1 font-brand">
+                <button onclick="stepAttendance(${member.id}, -1)" class="w-6 h-6 rounded bg-stone-900 text-stone-300 font-bold border" style="border-color: var(--border-color);">-</button>
+                <button onclick="stepAttendance(${member.id}, 1)" class="w-6 h-6 rounded text-stone-950 font-bold" style="background-color: var(--accent);">+</button>
+                <button onclick="removeMember(${member.id})" class="w-6 h-6 rounded bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 ml-1"><i class="ph-bold ph-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      const totalYouth = state.members.length;
+      document.getElementById('statTotalYouth').innerText = totalYouth;
+
+      const totalAttended = state.members.reduce((acc, m) => acc + m.attended, 0);
+      const overallAvg = totalYouth > 0 ? Math.round((totalAttended / (totalYouth * TOTAL_SESSIONS)) * 100) : 0;
+      document.getElementById('statAvgAttendance').innerText = `${overallAvg}%`;
+
+      const honorRoll = state.members.filter(m => (m.attended / TOTAL_SESSIONS) >= 0.9).length;
+      document.getElementById('statHonorRoll').innerText = honorRoll;
+    }
+
+    function filterMembers() { renderAttendance(); }
+
+    function stepAttendance(memberId, delta) {
+      const member = state.members.find(m => m.id === memberId);
+      if (member) {
+        member.attended = Math.min(TOTAL_SESSIONS, Math.max(0, member.attended + delta));
+        saveStorage();
+        renderAttendance();
+      }
+    }
+
+    function removeMember(memberId) {
+      if (!confirm("Remove this youth member?")) return;
+      state.members = state.members.filter(m => m.id !== memberId);
+      saveStorage();
+      renderAttendance();
+      renderTeams();
+    }
+
+    function openAddMemberModal() {
+      const teamSelect = document.getElementById('newMemberTeam');
+      teamSelect.innerHTML = state.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+      document.getElementById('addMemberModal').classList.remove('hidden');
+    }
+
+    function closeAddMemberModal() { document.getElementById('addMemberModal').classList.add('hidden'); }
+
+    function handleSaveMember(e) {
+      e.preventDefault();
+      const name = document.getElementById('newMemberName').value.trim();
+      const teamId = parseInt(document.getElementById('newMemberTeam').value);
+      const attended = parseInt(document.getElementById('newMemberAttended').value);
+
+      if (!name) return;
+
+      const newMember = {
+        id: Date.now(),
+        name,
+        teamId,
+        attended: Math.min(TOTAL_SESSIONS, Math.max(0, attended))
+      };
+
+      state.members.push(newMember);
+      saveStorage();
+      closeAddMemberModal();
+      document.getElementById('newMemberForm').reset();
+      renderAttendance();
+      renderTeams();
+    }
+
+    // PRAYERS & TESTIMONIES
+    function renderPrayers() {
+      const reqList = document.getElementById('prayerRequestsList');
+      const ansList = document.getElementById('answeredPrayersList');
+      const requests = state.prayers.filter(p => p.type === 'request');
+      const answered = state.prayers.filter(p => p.type === 'answered');
+
+      document.getElementById('prayerReqCount').innerText = `${requests.length} Requests`;
+      document.getElementById('answeredReqCount').innerText = `${answered.length} Praises`;
+
+      reqList.innerHTML = requests.map(p => `
+        <div class="p-4 rounded-2xl border theme-card backdrop-blur-md relative">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold flex items-center gap-1.5 font-brand" style="color: var(--accent);">
+              <i class="ph-bold ph-hands-praying"></i> ${p.author}
+            </span>
+            <span class="text-[10px] opacity-60 font-brand">${p.date}</span>
+          </div>
+          <p class="text-xs opacity-90 leading-relaxed">${p.text}</p>
+          ${state.role === 'admin' ? `
+            <div class="flex justify-end gap-2 mt-2 pt-2 border-t font-brand" style="border-color: var(--border-color);">
+              <button onclick="markPrayerAnswered(${p.id})" class="text-[10px] text-emerald-400 hover:underline font-bold">Mark as Answered 🎉</button>
+              <button onclick="deletePrayer(${p.id})" class="text-[10px] text-rose-400 hover:underline">Remove</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+
+      ansList.innerHTML = answered.map(p => `
+        <div class="p-4 rounded-2xl border bg-emerald-950/20 border-emerald-500/25 backdrop-blur-md relative">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-brand">
+              <i class="ph-bold ph-confetti"></i> ${p.author}
+            </span>
+            <span class="text-[10px] opacity-60 font-brand">${p.date}</span>
+          </div>
+          <p class="text-xs opacity-90 leading-relaxed">${p.text}</p>
+          ${state.role === 'admin' ? `
+            <div class="flex justify-end mt-2 pt-2 border-t border-emerald-500/20 font-brand">
+              <button onclick="deletePrayer(${p.id})" class="text-[10px] text-rose-400 hover:underline">Remove</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function handlePrayerSubmit(e) {
+      e.preventDefault();
+      const isAnon = document.getElementById('prayerAnonToggle').checked;
+      const authorInput = document.getElementById('prayerAuthor').value.trim();
+      const author = isAnon || !authorInput ? 'Anonymous Youth' : authorInput;
+      const type = document.getElementById('prayerType').value;
+      const text = document.getElementById('prayerContent').value.trim();
+
+      if (!text) return;
+
+      const newEntry = { id: Date.now(), type, author, text, date: "Just now" };
+      state.prayers.unshift(newEntry);
+      saveStorage();
+      renderPrayers();
+      document.getElementById('prayerForm').reset();
+      alert("Posted to the prayer wall!");
+    }
+
+    function markPrayerAnswered(prayerId) {
+      const p = state.prayers.find(item => item.id === prayerId);
+      if (p) {
+        p.type = 'answered';
+        p.date = 'Answered today!';
+        saveStorage();
+        renderPrayers();
+      }
+    }
+
+    function deletePrayer(id) {
+      if (!confirm("Delete this prayer?")) return;
+      state.prayers = state.prayers.filter(p => p.id !== id);
+      saveStorage();
+      renderPrayers();
+    }
+
+    // PASTOR INBOX
+    function renderPastorInbox() {
+      const list = document.getElementById('pastorMessagesList');
+      const countBadge = document.getElementById('pastorInboxCount');
+      const unreadDot = document.getElementById('pastorUnreadDot');
+
+      countBadge.innerText = `${state.pastorQueries.length} Inquiries`;
+
+      if (state.pastorQueries.some(q => q.status === 'pending')) {
+        unreadDot.classList.remove('hidden');
+      } else {
+        unreadDot.classList.add('hidden');
+      }
+
+      if (state.pastorQueries.length === 0) {
+        list.innerHTML = `<div class="p-6 text-center opacity-60 text-xs italic font-brand">Pastor's inbox is clear.</div>`;
+        return;
+      }
+
+      list.innerHTML = state.pastorQueries.map(q => `
+        <div class="p-4 rounded-2xl border backdrop-blur-md theme-card" style="border-color: ${q.status === 'pending' ? 'var(--accent)' : 'var(--border-color)'};">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold font-brand" style="color: var(--accent);">${q.author}</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border opacity-80 font-brand" style="border-color: var(--border-color);">${q.topic}</span>
+              ${q.status === 'pending' ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 uppercase font-black font-brand">Pending</span>' : ''}
+            </div>
+            <span class="text-[10px] opacity-60 font-brand">${q.date}</span>
+          </div>
+          <p class="text-xs mt-2 leading-relaxed bg-black/60 p-3 rounded-xl border font-mono" style="border-color: var(--border-color);">${q.text}</p>
+          <div class="flex items-center justify-end gap-3 mt-3 font-brand">
+            <button onclick="toggleQueryStatus(${q.id})" class="text-xs hover:underline font-semibold" style="color: var(--accent);">
+              ${q.status === 'pending' ? 'Mark as Addressed' : 'Mark as Pending'}
+            </button>
+            <button onclick="deletePastorQuery(${q.id})" class="text-xs text-rose-400 hover:underline">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handlePastorQuerySubmit(e) {
+      e.preventDefault();
+      const authorVal = document.getElementById('queryAuthor').value.trim();
+      const author = authorVal ? authorVal : "Anonymous Youth";
+      const topic = document.getElementById('queryTopic').value;
+      const text = document.getElementById('queryContent').value.trim();
+
+      if (!text) return;
+
+      const newQuery = { id: Date.now(), topic, author, text, date: "Today", status: "pending" };
+      state.pastorQueries.unshift(newQuery);
+      saveStorage();
+      renderPastorInbox();
+      document.getElementById('pastorQueryForm').reset();
+      alert("Sent directly & privately to Pastor!");
+    }
+
+    function toggleQueryStatus(queryId) {
+      const q = state.pastorQueries.find(item => item.id === queryId);
+      if (q) {
+        q.status = q.status === 'pending' ? 'reviewed' : 'pending';
+        saveStorage();
+        renderPastorInbox();
+      }
+    }
+
+    function deletePastorQuery(queryId) {
+      if (!confirm("Delete query?")) return;
+      state.pastorQueries = state.pastorQueries.filter(q => q.id !== queryId);
+      saveStorage();
+      renderPastorInbox();
+    }
+
+    // MASTER RENDER (Runs immediately)
+    function renderAll() {
+      renderSlide();
+      renderTeams();
+      renderAttendance();
+      renderPrayers();
+      renderPastorInbox();
+    }
+
+    // RUNS INSTANTLY AS SOON AS PAGE OPENS
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStorage();
+      applyTheme(state.theme || 'theme-sunset');
+      renderAll();
+    });
+  </script>
+</body>
+</html>
