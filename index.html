@@ -8,6 +8,9 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- Supabase Official JS SDK CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- High Fashion Typography Suite -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -147,29 +150,39 @@
         </div>
         <div>
           <h1 class="text-xl md:text-2xl font-black font-brand tracking-[0.24em] brand-title-gradient">MOUNTAIN MOVERS YOUTH</h1>
-          <p class="text-[11px] font-medium tracking-widest uppercase opacity-75 font-brand">"Faith that shifts mountains" &bull; Matt 17:20</p>
+          <div class="flex items-center gap-2">
+            <p class="text-[11px] font-medium tracking-widest uppercase opacity-75 font-brand">"Faith that shifts mountains"</p>
+            <span id="cloudStatusBadge" class="text-[9px] px-2 py-0.5 rounded-full border flex items-center gap-1 font-mono bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Supabase Connected
+            </span>
+          </div>
         </div>
       </div>
 
       <div class="flex items-center flex-wrap gap-3">
+        <!-- Theme Selector -->
         <div class="relative">
-          <label class="text-[10px] uppercase tracking-widest block mb-0.5 font-bold font-brand opacity-60">Color Atmosphere</label>
+          <label class="text-[10px] uppercase tracking-widest block mb-0.5 font-bold font-brand opacity-60">Atmosphere</label>
           <select id="themeSelector" onchange="applyTheme(this.value)" class="text-xs bg-stone-900 border text-white rounded-xl px-3 py-2 cursor-pointer font-brand transition shadow-lg" style="border-color: var(--border-color);">
-            <option value="theme-monochrome">🖤 Monochrome Noir (Black & White)</option>
             <option value="theme-sunset" selected>🔥 Cozy Sunset Ember</option>
+            <option value="theme-monochrome">🖤 Monochrome Noir (Black & White)</option>
             <option value="theme-alpine">🌲 Alpine Emerald</option>
             <option value="theme-midnight">🌌 Midnight Indigo</option>
             <option value="theme-hearth">☕ Warm Hearth</option>
           </select>
         </div>
 
+        <!-- Role Badges & Dual Login -->
         <div class="pt-3">
-          <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1" style="border-color: var(--border-color);">
-            <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
-              <i class="ph-bold ph-student"></i> Youth Mode
+          <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1 gap-1" style="border-color: var(--border-color);">
+            <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
+              <i class="ph-bold ph-student"></i> Youth
             </button>
-            <button id="adminRoleBtn" onclick="promptAdminLogin()" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
-              <i class="ph-bold ph-lock-key"></i> Pastor/Admin
+            <button id="adminRoleBtn" onclick="openLoginModal('admin')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
+              <i class="ph-bold ph-shield-check"></i> Admin
+            </button>
+            <button id="pastorRoleBtn" onclick="openLoginModal('pastor')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
+              <i class="ph-bold ph-cross"></i> Pastor
             </button>
           </div>
         </div>
@@ -181,7 +194,7 @@
   <div class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
     <div class="flex border-b overflow-x-auto space-x-2 pb-1 scrollbar-none" style="border-color: var(--border-color);">
       <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn active px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 border-b-2 bg-white/5 transition font-brand" style="border-color: var(--accent); color: var(--accent);">
-        <i class="ph-bold ph-presentation"></i> Sermon Slides
+        <i class="ph-bold ph-presentation"></i> Sermon Slides & PPT
       </button>
       <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
         <i class="ph-bold ph-shield-star"></i> Team Leaderboard
@@ -199,39 +212,80 @@
     </div>
   </div>
 
-  <!-- MAIN DASHBOARD BODY -->
+  <!-- MAIN BODY -->
   <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
-    <div id="adminNoticeBanner" class="hidden mb-6 p-4 rounded-2xl border backdrop-blur-md flex items-center justify-between theme-card-elevated">
+    
+    <!-- ADMIN / PASTOR NOTICE BANNER -->
+    <div id="elevatedBanner" class="hidden mb-6 p-4 rounded-2xl border backdrop-blur-md flex items-center justify-between theme-card-elevated">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-black" style="background-color: var(--accent);">
+        <div id="bannerIcon" class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-black" style="background-color: var(--accent);">
           <i class="ph-fill ph-shield-check text-xl"></i>
         </div>
         <div>
-          <h4 class="text-xs font-black uppercase font-brand tracking-widest" style="color: var(--accent);">Pastor & Admin Mode Active</h4>
-          <p class="text-xs opacity-80">Full edit permissions enabled: update scores, edit attendance, add slides, and read confidential inquiries.</p>
+          <h4 id="bannerTitle" class="text-xs font-black uppercase font-brand tracking-widest" style="color: var(--accent);">Elevated Privileges Active</h4>
+          <p id="bannerDesc" class="text-xs opacity-80">Connected directly to Supabase cloud database.</p>
         </div>
       </div>
-      <button onclick="logoutAdmin()" class="px-3 py-1.5 bg-black/60 hover:bg-black text-white rounded-lg text-xs font-bold border transition font-brand" style="border-color: var(--border-color);">
-        Exit Admin
-      </button>
+      <div class="flex items-center gap-2">
+        <button id="manageKeysBtn" onclick="openKeyManagerModal()" class="hidden px-3 py-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 rounded-lg text-xs font-bold border border-amber-400/40 transition font-brand flex items-center gap-1">
+          <i class="ph-bold ph-key"></i> Passwords
+        </button>
+        <button onclick="logoutRole()" class="px-3 py-1.5 bg-black/60 hover:bg-black text-white rounded-lg text-xs font-bold border transition font-brand" style="border-color: var(--border-color);">
+          Logout
+        </button>
+      </div>
     </div>
 
-    <!-- TAB 1: SERMON SLIDES -->
+    <!-- TAB 1: SERMON SLIDES & PPT HUB -->
     <section id="tab-sermon" class="tab-content block space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Weekly Word</span>
-          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sermon Slides & Scriptures</h2>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Weekly Word Hub</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sermon Slides & Presentation</h2>
         </div>
-        <div class="admin-only hidden">
-          <button onclick="openSlideModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center gap-2 shadow-lg" style="background-color: var(--accent);">
-            <i class="ph-bold ph-plus-circle text-base"></i> Add New Slide
+        <div class="staff-only hidden flex items-center gap-2">
+          <button onclick="openPptUploadModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center gap-2 shadow-lg" style="background-color: var(--accent);">
+            <i class="ph-bold ph-file-arrow-up text-base"></i> Upload PPT / Link Slides
+          </button>
+          <button onclick="openSlideModal()" class="px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 text-white hover:bg-white/20 border transition font-brand" style="border-color: var(--border-color);">
+            + Quick Slide Note
           </button>
         </div>
       </div>
 
+      <!-- PPT PRESENTATION CARD -->
+      <div id="pptHeroContainer" class="rounded-3xl border theme-card backdrop-blur-xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black text-stone-950 shadow-glow" style="background-color: var(--accent);">
+              <i class="ph-bold ph-presentation"></i>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-white/10 text-white font-brand">Sunday Presentation Deck</span>
+              <h3 id="pptTitleDisplay" class="text-xl md:text-2xl font-black text-white font-brand mt-1">Faith That Shifts Mountains</h3>
+              <p id="pptSubtitleDisplay" class="text-xs opacity-75 font-brand">Pastor & Speaker Notes &bull; Complete Youth Deck</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <a id="pptDownloadBtn" href="#" download="Mountain_Movers_Sermon.pptx" class="px-5 py-3 rounded-xl font-brand font-bold text-xs text-stone-950 shadow-lg flex items-center gap-2 transition hover:brightness-110" style="background-color: var(--accent);">
+              <i class="ph-bold ph-download-simple text-base"></i> Download Presentation (.PPT)
+            </a>
+            <button id="pptViewOnlineBtn" onclick="toggleOnlineSlideViewer()" class="px-4 py-3 rounded-xl font-brand font-semibold text-xs bg-white/10 text-white hover:bg-white/15 border transition" style="border-color: var(--border-color);">
+              <i class="ph-bold ph-eye text-base"></i> View Slides Online
+            </button>
+          </div>
+        </div>
+
+        <div id="onlineSlideViewer" class="mt-6 pt-6 border-t hidden" style="border-color: var(--border-color);">
+          <div class="aspect-video w-full rounded-2xl overflow-hidden border bg-black/60" style="border-color: var(--border-color);">
+            <iframe id="slideIframe" src="" class="w-full h-full" allowfullscreen="true"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK SLIDE DECK -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 rounded-3xl border theme-card backdrop-blur-xl p-6 md:p-8 shadow-2xl relative flex flex-col justify-between min-h-[420px]">
+        <div class="lg:col-span-2 rounded-3xl border theme-card backdrop-blur-xl p-6 md:p-8 shadow-2xl relative flex flex-col justify-between min-h-[380px]">
           <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
             <span id="currentSlideNumber" class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white font-brand">Slide 1 of 3</span>
             <div class="flex gap-2">
@@ -241,7 +295,7 @@
           </div>
           <div id="slideDisplay" class="my-auto text-center px-4 py-8"></div>
           <div class="flex items-center justify-between text-xs opacity-75 pt-3 border-t font-brand" style="border-color: var(--border-color);">
-            <span id="slideSeriesTitle" class="italic">Series: The Mountain Mover</span>
+            <span id="slideSeriesTitle" class="italic">The Mountain Mover</span>
             <span>Mountain Movers Youth</span>
           </div>
         </div>
@@ -249,20 +303,20 @@
           <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 font-brand" style="color: var(--accent);">
             <i class="ph-bold ph-stack"></i> Slide Deck Index
           </h3>
-          <div id="slidesList" class="space-y-2 overflow-y-auto max-h-[340px] pr-1"></div>
+          <div id="slidesList" class="space-y-2 overflow-y-auto max-h-[300px] pr-1"></div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: TEAMS & SCORES -->
+    <!-- TAB 2: TEAMS (EDITABLE) -->
     <section id="tab-teams" class="tab-content hidden space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Championship</span>
           <h2 class="text-3xl md:text-4xl font-extrabold font-display">Team Leaderboard</h2>
-          <p class="text-xs opacity-75 font-brand">Points earned from attendance, memory verses, challenges, & team spirit!</p>
+          <p class="text-xs opacity-75 font-brand">Admins & Pastor can edit team names, logos, & scores.</p>
         </div>
-        <div class="admin-only hidden">
+        <div class="staff-only hidden">
           <button onclick="resetAllScoresConfirm()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition font-brand">
             Reset Scores Season
           </button>
@@ -284,7 +338,7 @@
             <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search youth name..." class="w-48 md:w-64 bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
             <i class="ph-bold ph-magnifying-glass absolute left-2.5 top-2.5 opacity-60 text-xs"></i>
           </div>
-          <div class="admin-only hidden">
+          <div class="staff-only hidden">
             <button onclick="openAddMemberModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-stone-950 flex items-center gap-1.5 shadow-lg font-brand" style="background-color: var(--accent);">
               <i class="ph-bold ph-user-plus text-sm"></i> Add Youth
             </button>
@@ -321,7 +375,7 @@
                 <th class="py-3.5 px-4 text-center">Attended</th>
                 <th class="py-3.5 px-4">Attendance %</th>
                 <th class="py-3.5 px-4">Status</th>
-                <th class="py-3.5 px-4 text-right admin-only hidden">Admin Action</th>
+                <th class="py-3.5 px-4 text-right staff-only hidden">Staff Action</th>
               </tr>
             </thead>
             <tbody id="memberTableBody" class="divide-y text-xs" style="border-color: var(--border-color);"></tbody>
@@ -335,7 +389,6 @@
       <div>
         <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Community of Faith</span>
         <h2 class="text-3xl md:text-4xl font-extrabold font-display">Prayer & Answer Wall</h2>
-        <p class="text-xs opacity-75 font-brand">Post your burdens or declare what mountains God has moved in your life!</p>
       </div>
 
       <div class="rounded-3xl border theme-card p-6 shadow-card">
@@ -401,7 +454,7 @@
       <div>
         <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Pastoral Guidance</span>
         <h2 class="text-3xl md:text-4xl font-extrabold font-display">Ask Your Question to the Pastor</h2>
-        <p class="text-xs opacity-75 font-brand">Got a personal question, doubt, or struggle? Only the Pastor with the password can read these.</p>
+        <p class="text-xs opacity-75 font-brand">Strictly confidential line directly to the Pastor.</p>
       </div>
 
       <div class="rounded-3xl border theme-card p-6 shadow-card">
@@ -409,7 +462,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Your Name / Contact (Optional)</label>
-              <input type="text" id="queryAuthor" placeholder="Leave empty for complete anonymity" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+              <input type="text" id="queryAuthor" placeholder="Leave blank for anonymity" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
             </div>
             <div>
               <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Topic Category</label>
@@ -422,11 +475,11 @@
             </div>
           </div>
           <div>
-            <textarea id="queryContent" rows="4" required placeholder="Type whatever is on your heart. Zero judgment, total grace..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white" style="border-color: var(--border-color);"></textarea>
+            <textarea id="queryContent" rows="4" required placeholder="Type whatever is on your heart. Read exclusively by the Pastor..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white" style="border-color: var(--border-color);"></textarea>
           </div>
           <div class="flex items-center justify-between">
             <span class="text-[11px] opacity-75 flex items-center gap-1 font-brand">
-              <i class="ph-bold ph-lock-key" style="color: var(--accent);"></i> Locked to youth view.
+              <i class="ph-bold ph-lock-key" style="color: var(--accent);"></i> Encrypted: Leaders & Youths cannot open.
             </span>
             <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand shadow-lg" style="background-color: var(--accent);">
               <i class="ph-bold ph-paper-plane-right"></i> Send Privately
@@ -441,9 +494,11 @@
             <i class="ph-bold ph-lock-key text-2xl"></i>
           </div>
           <h3 class="text-sm font-bold uppercase tracking-wider font-brand">Pastor Inbox Protected</h3>
-          <p class="text-xs opacity-70 max-w-md mx-auto mt-1 mb-4 font-brand">Questions are confidential. Youths cannot view submitted inquiries. Pastor must enter password.</p>
-          <button onclick="promptAdminLogin()" class="px-4 py-2 bg-stone-900 font-bold rounded-xl text-xs border font-brand" style="border-color: var(--border-color); color: var(--accent);">
-            Unlock Pastor Inbox
+          <p id="inboxLockNotice" class="text-xs opacity-70 max-w-md mx-auto mt-1 mb-4 font-brand">
+            Questions submitted here are strictly confidential for the Pastor.
+          </p>
+          <button onclick="openLoginModal('pastor')" class="px-4 py-2 bg-stone-900 font-bold rounded-xl text-xs border font-brand" style="border-color: var(--border-color); color: var(--accent);">
+            Pastor Unlock
           </button>
         </div>
 
@@ -460,29 +515,109 @@
     </section>
   </main>
 
-  <!-- ADMIN LOGIN MODAL -->
+  <!-- MODALS -->
+  <div id="editTeamModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Edit Team Identity</h3>
+        <button onclick="closeEditTeamModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="editTeamForm" onsubmit="handleSaveTeam(event)" class="space-y-3 font-brand text-xs">
+        <input type="hidden" id="editTeamId">
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Team Name</label>
+          <input type="text" id="editTeamName" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Team Icon (ph-crown, ph-fire, ph-shield, ph-lightning)</label>
+          <input type="text" id="editTeamIcon" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Team Background Image URL</label>
+          <input type="url" id="editTeamBg" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEditTeamModal()" class="px-3 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+          <button type="submit" class="px-4 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Save Team</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="pptUploadModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Upload Sunday PPT & Slides</h3>
+        <button onclick="closePptUploadModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="pptUploadForm" onsubmit="handleSavePpt(event)" class="space-y-4 font-brand text-xs">
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Sermon Title</label>
+          <input type="text" id="uploadPptTitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Speaker / Subtitle</label>
+          <input type="text" id="uploadPptSubtitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Upload File (.PPTX / .PPT / .PDF)</label>
+          <input type="file" id="uploadPptFile" accept=".pptx,.ppt,.pdf" class="w-full bg-stone-900 border rounded-xl p-2 text-stone-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-white/10 file:text-white" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Or Embed Link (Google Slides / Canva)</label>
+          <input type="url" id="uploadPptLink" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closePptUploadModal()" class="px-3 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Publish Slides</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="loginModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="text-center">
-        <div class="w-12 h-12 rounded-2xl text-stone-950 flex items-center justify-center mx-auto mb-2 text-xl font-black" style="background-color: var(--accent);">
+        <div id="loginModalIcon" class="w-12 h-12 rounded-2xl text-stone-950 flex items-center justify-center mx-auto mb-2 text-xl font-black" style="background-color: var(--accent);">
           <i class="ph-bold ph-key"></i>
         </div>
-        <h3 class="text-base font-bold font-brand tracking-widest uppercase">Pastor Access</h3>
-        <p class="text-xs opacity-75 mt-1 font-brand">Enter your secret password to unlock full administrative access.</p>
-        <span class="text-[10px] px-2 py-0.5 rounded-full mt-2 inline-block bg-white/10 opacity-80 font-mono">Password: <strong>pastor123</strong></span>
+        <h3 id="loginModalTitle" class="text-base font-bold font-brand tracking-widest uppercase">Restricted Access</h3>
+        <p id="loginModalSub" class="text-xs opacity-75 mt-1 font-brand">Enter your passcode to unlock.</p>
       </div>
       <div>
-        <input type="password" id="adminPasswordInput" placeholder="Enter password..." class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-sm text-white font-brand" style="border-color: var(--border-color);">
-        <p id="loginErrorMsg" class="text-xs text-rose-400 mt-1.5 hidden text-center font-brand">Incorrect password.</p>
+        <input type="password" id="targetPasswordInput" placeholder="Enter password..." class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-sm text-white font-brand focus:outline-none" style="border-color: var(--border-color);">
+        <p id="loginErrorMsg" class="text-xs text-rose-400 mt-1.5 hidden text-center font-brand">Access Denied: Incorrect password.</p>
       </div>
       <div class="flex gap-2 font-brand">
         <button onclick="closeLoginModal()" class="flex-1 py-2 text-xs font-semibold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
-        <button onclick="verifyAdminPassword()" class="flex-1 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Unlock</button>
+        <button onclick="submitTargetLogin()" class="flex-1 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Enter</button>
       </div>
     </div>
   </div>
 
-  <!-- ADD YOUTH MODAL -->
+  <div id="keyManagerModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Manage System Passwords</h3>
+        <button onclick="closeKeyManagerModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <div class="space-y-4 font-brand text-xs">
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Pastor Password (Master Key)</label>
+          <input type="text" id="changePastorPass" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white font-mono" style="border-color: var(--border-color);">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Admin / Leader Password</label>
+          <input type="text" id="changeAdminPass" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white font-mono" style="border-color: var(--border-color);">
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2 font-brand">
+        <button type="button" onclick="closeKeyManagerModal()" class="px-3 py-2 text-xs font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+        <button type="button" onclick="saveNewKeys()" class="px-4 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Save Passwords</button>
+      </div>
+    </div>
+  </div>
+
   <div id="addMemberModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -510,42 +645,66 @@
     </div>
   </div>
 
-  <!-- ADD SLIDE MODAL -->
   <div id="addSlideModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
-        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Sermon Slide</h3>
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Slide Note</h3>
         <button onclick="closeSlideModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
-      <form onsubmit="handleSaveSlide(event)" class="space-y-3">
+      <form onsubmit="handleSaveSlide(event)" class="space-y-3 font-brand text-xs">
         <div>
-          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Slide Title</label>
-          <input type="text" id="newSlideTitle" required placeholder="e.g. Mountain-Moving Faith" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+          <label class="block font-semibold mb-1 opacity-80">Slide Title</label>
+          <input type="text" id="newSlideTitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Scripture Reference</label>
-          <input type="text" id="newSlideScripture" required placeholder="e.g. Mark 11:22-24" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+          <label class="block font-semibold mb-1 opacity-80">Scripture Reference</label>
+          <input type="text" id="newSlideScripture" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Slide Key Notes</label>
-          <textarea id="newSlideBody" rows="3" required placeholder="Key points from the sermon..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white font-brand" style="border-color: var(--border-color);"></textarea>
+          <label class="block font-semibold mb-1 opacity-80">Slide Key Notes</label>
+          <textarea id="newSlideBody" rows="3" required class="w-full bg-stone-900 border rounded-xl p-3 text-white" style="border-color: var(--border-color);"></textarea>
         </div>
-        <div class="flex justify-end gap-2 pt-2 font-brand">
-          <button type="button" onclick="closeSlideModal()" class="px-3 py-2 text-xs font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
-          <button type="submit" class="px-4 py-2 text-xs font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Add Slide</button>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeSlideModal()" class="px-3 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
+          <button type="submit" class="px-4 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Add Slide</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
+    // ========================================================
+    // SUPABASE REALTIME CLOUD CONFIGURATION
+    // PASTE YOUR KEYS HERE (From Supabase -> Settings -> API)
+    // ========================================================
+    const SUPABASE_URL = "https://pidgteyfhxxmgkmpkzjw.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_7TUOVAquMi1Z_SuLvNuUFw_BndnvACS";
+
+    let supabaseClient = null;
+    if (SUPABASE_URL !== "https://your-project-id.supabase.co") {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+
     const TOTAL_SESSIONS = 10;
-    const ADMIN_PASS = "pastor123";
+
+    let authConfig = {
+      pastorKey: "pastor777",
+      adminKey: "admin777"
+    };
+
+    let loginTarget = null;
 
     let state = {
       theme: 'theme-sunset',
       role: 'youth',
       currentSlideIdx: 0,
+      pptData: {
+        title: "Faith That Shifts Mountains",
+        subtitle: "Pastor & Speaker Notes • Sunday Service Deck",
+        downloadUrl: "#",
+        embedUrl: "https://docs.google.com/presentation/d/e/2PACX-1vR6fMvY6vL6K_7e-Xo9Vw/embed?start=false&loop=false&delayms=3000"
+      },
       teams: [
         { id: 1, name: "Zion Lions", points: 840, icon: "ph-crown", bgImage: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" },
         { id: 2, name: "Summit Strikers", points: 790, icon: "ph-fire", bgImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" },
@@ -569,50 +728,102 @@
         { id: 12, name: "Grace Ndlovu", teamId: 6, attended: 9 }
       ],
       slides: [
-        { id: 1, series: "Series: The Mountain Mover", title: "Faith Can Relocate Your Giants", scripture: "Matthew 17:20", body: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move. Nothing will be impossible for you." },
-        { id: 2, series: "Series: The Mountain Mover", title: "Stand In Holy Fellowship", scripture: "Ecclesiastes 4:12", body: "Though one may be overpowered, two can defend themselves. A cord of three strands is not quickly broken. Our youth teams stand united in prayer." },
+        { id: 1, series: "Series: The Mountain Mover", title: "Faith Can Relocate Your Giants", scripture: "Matthew 17:20", body: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move." },
+        { id: 2, series: "Series: The Mountain Mover", title: "Stand In Holy Fellowship", scripture: "Ecclesiastes 4:12", body: "Though one may be overpowered, two can defend themselves. A cord of three strands is not quickly broken." },
         { id: 3, series: "Series: The Mountain Mover", title: "Ascend With Clean Hands", scripture: "Psalm 24:3-4", body: "Who may ascend the mountain of the Lord? Who may stand in his holy place? The one who has clean hands and a pure heart." }
       ],
       prayers: [
         { id: 1, type: "answered", author: "Esther O.", text: "Praise God! I passed my college entrance exams after our youth group stood in prayer together!", date: "Yesterday" },
-        { id: 2, type: "request", author: "Anonymous", text: "Please pray for peace in my household and clarity about my future path.", date: "2 days ago" },
-        { id: 3, type: "answered", author: "Caleb V.", text: "My grandmother made a full recovery after severe illness. All glory to Jesus!", date: "3 days ago" }
+        { id: 2, type: "request", author: "Anonymous", text: "Please pray for peace in my household and clarity about my future path.", date: "2 days ago" }
       ],
       pastorQueries: [
-        { id: 1, topic: "Spiritual / Bible", author: "Anonymous", text: "Pastor, how do I build a solid habit of daily scripture reading when school becomes stressful?", date: "This week", status: "pending" }
+        { id: 1, topic: "Spiritual / Bible", author: "Anonymous", text: "Pastor, how do I build a solid habit of daily scripture reading?", date: "This week", status: "pending" }
       ]
     };
 
-    function loadStorage() {
+    // ==========================================
+    // SUPABASE REALTIME CLOUD SYNC
+    // ==========================================
+    async function syncFromCloud() {
+      if (!supabaseClient) {
+        document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Offline Mode`;
+        return;
+      }
+
       try {
-        const saved = localStorage.getItem('mm_youth_instant_state');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (parsed.theme) state.theme = parsed.theme;
-          if (parsed.teams) state.teams = parsed.teams;
-          if (parsed.members) state.members = parsed.members;
-          if (parsed.slides) state.slides = parsed.slides;
-          if (parsed.prayers) state.prayers = parsed.prayers;
-          if (parsed.pastorQueries) state.pastorQueries = parsed.pastorQueries;
+        const { data, error } = await supabaseClient
+          .from('mountain_movers')
+          .select('data')
+          .eq('id', 'master_state')
+          .single();
+
+        if (data && data.data) {
+          state = { ...data.data, role: state.role };
+          document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Supabase Connected`;
+          renderAll();
+        } else {
+          // Initialize in Supabase on first run
+          await pushToCloud();
         }
       } catch (err) {
-        console.warn("Storage restricted:", err);
+        console.warn("Supabase load failed, using local copy", err);
       }
+    }
+
+    async function pushToCloud() {
+      saveStorage(); // Always save instant local copy
+
+      if (!supabaseClient) return;
+
+      try {
+        await supabaseClient
+          .from('mountain_movers')
+          .upsert({ id: 'master_state', data: state, updated_at: new Date() });
+      } catch (err) {
+        console.warn("Could not push to Supabase", err);
+      }
+    }
+
+    // Subscribe to live instant changes (Realtime WebSocket!)
+    function subscribeToRealtime() {
+      if (!supabaseClient) return;
+
+      supabaseClient
+        .channel('public:mountain_movers')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'mountain_movers' }, payload => {
+          if (payload.new && payload.new.data) {
+            state = { ...payload.new.data, role: state.role };
+            renderAll();
+          }
+        })
+        .subscribe();
+    }
+
+    function loadStorage() {
+      try {
+        const savedKeys = localStorage.getItem('mm_youth_keys');
+        if (savedKeys) authConfig = { ...authConfig, ...JSON.parse(savedKeys) };
+
+        const saved = localStorage.getItem('mm_youth_supabase_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed, role: state.role };
+        }
+      } catch (e) {}
     }
 
     function saveStorage() {
       try {
-        localStorage.setItem('mm_youth_instant_state', JSON.stringify({
+        localStorage.setItem('mm_youth_supabase_state', JSON.stringify({
           theme: state.theme,
           teams: state.teams,
           members: state.members,
           slides: state.slides,
           prayers: state.prayers,
-          pastorQueries: state.pastorQueries
+          pastorQueries: state.pastorQueries,
+          pptData: state.pptData
         }));
-      } catch (err) {
-        console.warn("Save failed:", err);
-      }
+      } catch (e) {}
     }
 
     function applyTheme(themeClass) {
@@ -635,54 +846,143 @@
 
     function setRole(newRole) {
       state.role = newRole;
+
       const youthBtn = document.getElementById('youthRoleBtn');
       const adminBtn = document.getElementById('adminRoleBtn');
-      const noticeBanner = document.getElementById('adminNoticeBanner');
-      const adminElements = document.querySelectorAll('.admin-only');
+      const pastorBtn = document.getElementById('pastorRoleBtn');
+
+      const elevatedBanner = document.getElementById('elevatedBanner');
+      const bannerTitle = document.getElementById('bannerTitle');
+      const bannerDesc = document.getElementById('bannerDesc');
+      const manageKeysBtn = document.getElementById('manageKeysBtn');
+
+      const staffElements = document.querySelectorAll('.staff-only');
       const pastorLocked = document.getElementById('pastorInboxLocked');
       const pastorUnlocked = document.getElementById('pastorInboxUnlocked');
+      const inboxLockNotice = document.getElementById('inboxLockNotice');
 
-      if (newRole === 'admin') {
-        youthBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
-        adminBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
-        adminBtn.style.backgroundColor = "var(--accent)";
-        noticeBanner.classList.remove('hidden');
-        adminElements.forEach(el => el.classList.remove('hidden'));
-        pastorLocked.classList.add('hidden');
-        pastorUnlocked.classList.remove('hidden');
-      } else {
-        youthBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand";
-        adminBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
-        adminBtn.style.backgroundColor = "transparent";
-        noticeBanner.classList.add('hidden');
-        adminElements.forEach(el => el.classList.add('hidden'));
+      youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+      adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+      pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+      adminBtn.style.backgroundColor = "transparent";
+      pastorBtn.style.backgroundColor = "transparent";
+
+      if (newRole === 'youth') {
+        youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand";
+        elevatedBanner.classList.add('hidden');
+        staffElements.forEach(el => el.classList.add('hidden'));
         pastorLocked.classList.remove('hidden');
         pastorUnlocked.classList.add('hidden');
+        inboxLockNotice.innerText = "Questions submitted here are strictly confidential for the Pastor.";
       }
+      else if (newRole === 'admin') {
+        adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
+        adminBtn.style.backgroundColor = "var(--accent)";
+        elevatedBanner.classList.remove('hidden');
+        bannerTitle.innerText = "Admin & Leader Mode Active";
+        bannerDesc.innerText = "You can record attendance, manage team points, edit teams, and upload PPTs.";
+        manageKeysBtn.classList.add('hidden');
+        staffElements.forEach(el => el.classList.remove('hidden'));
+
+        pastorLocked.classList.remove('hidden');
+        pastorUnlocked.classList.add('hidden');
+        inboxLockNotice.innerText = "Protected: Pastor inbox is strictly restricted to Pastor role.";
+      }
+      else if (newRole === 'pastor') {
+        pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
+        pastorBtn.style.backgroundColor = "var(--accent)";
+        elevatedBanner.classList.remove('hidden');
+        bannerTitle.innerText = "Pastor Sanctuary Active";
+        bannerDesc.innerText = "Master access unlocked: Confidential queries open, team identity editor, PPT hub, and key vault.";
+        manageKeysBtn.classList.remove('hidden');
+        staffElements.forEach(el => el.classList.remove('hidden'));
+
+        pastorLocked.classList.add('hidden');
+        pastorUnlocked.classList.remove('hidden');
+      }
+
       renderAll();
     }
 
-    function promptAdminLogin() {
-      if (state.role === 'admin') return;
+    function openLoginModal(target) {
+      if (state.role === target) return;
+      loginTarget = target;
       document.getElementById('loginModal').classList.remove('hidden');
-      document.getElementById('adminPasswordInput').value = '';
+      document.getElementById('targetPasswordInput').value = '';
       document.getElementById('loginErrorMsg').classList.add('hidden');
-      document.getElementById('adminPasswordInput').focus();
+
+      const modalTitle = document.getElementById('loginModalTitle');
+      const modalSub = document.getElementById('loginModalSub');
+
+      if (target === 'pastor') {
+        modalTitle.innerText = "Pastor Access";
+        modalSub.innerText = "Enter Pastor's master password to view queries & manage keys.";
+      } else {
+        modalTitle.innerText = "Admin Access";
+        modalSub.innerText = "Enter Admin password to edit scores, teams & attendance.";
+      }
+
+      document.getElementById('targetPasswordInput').focus();
     }
 
-    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+      loginTarget = null;
+    }
 
-    function verifyAdminPassword() {
-      const pass = document.getElementById('adminPasswordInput').value;
-      if (pass === ADMIN_PASS) {
-        closeLoginModal();
-        setRole('admin');
-      } else {
-        document.getElementById('loginErrorMsg').classList.remove('hidden');
+    function submitTargetLogin() {
+      const entered = document.getElementById('targetPasswordInput').value;
+
+      if (loginTarget === 'pastor') {
+        if (entered === authConfig.pastorKey) {
+          closeLoginModal();
+          setRole('pastor');
+        } else {
+          document.getElementById('loginErrorMsg').classList.remove('hidden');
+        }
+      } 
+      else if (loginTarget === 'admin') {
+        if (entered === authConfig.adminKey || entered === authConfig.pastorKey) {
+          closeLoginModal();
+          setRole('admin');
+        } else {
+          document.getElementById('loginErrorMsg').classList.remove('hidden');
+        }
       }
     }
 
-    function logoutAdmin() { setRole('youth'); }
+    function logoutRole() { setRole('youth'); }
+
+    function openKeyManagerModal() {
+      if (state.role !== 'pastor') return;
+      document.getElementById('changePastorPass').value = authConfig.pastorKey;
+      document.getElementById('changeAdminPass').value = authConfig.adminKey;
+      document.getElementById('keyManagerModal').classList.remove('hidden');
+    }
+
+    function closeKeyManagerModal() {
+      document.getElementById('keyManagerModal').classList.add('hidden');
+    }
+
+    async function saveNewKeys() {
+      const newP = document.getElementById('changePastorPass').value.trim();
+      const newA = document.getElementById('changeAdminPass').value.trim();
+
+      if (!newP || !newA) {
+        alert("Passwords cannot be blank!");
+        return;
+      }
+
+      authConfig.pastorKey = newP;
+      authConfig.adminKey = newA;
+
+      try {
+        localStorage.setItem('mm_youth_keys', JSON.stringify(authConfig));
+      } catch (e) {}
+
+      closeKeyManagerModal();
+      alert("New passwords saved securely!");
+    }
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -703,7 +1003,74 @@
       }
     }
 
-    // SLIDES
+    function renderPptCard() {
+      if (!state.pptData) return;
+      document.getElementById('pptTitleDisplay').innerText = state.pptData.title || "Sunday Sermon Presentation";
+      document.getElementById('pptSubtitleDisplay').innerText = state.pptData.subtitle || "Speaker Notes";
+      
+      const downloadBtn = document.getElementById('pptDownloadBtn');
+      if (state.pptData.downloadUrl && state.pptData.downloadUrl !== '#') {
+        downloadBtn.href = state.pptData.downloadUrl;
+        downloadBtn.classList.remove('opacity-50', 'pointer-events-none');
+      } else {
+        downloadBtn.href = "#";
+        downloadBtn.onclick = () => alert("Pastor has not uploaded a downloadable PPT file yet.");
+      }
+
+      if (state.pptData.embedUrl) {
+        document.getElementById('slideIframe').src = state.pptData.embedUrl;
+      }
+    }
+
+    function toggleOnlineSlideViewer() {
+      const viewer = document.getElementById('onlineSlideViewer');
+      viewer.classList.toggle('hidden');
+    }
+
+    function openPptUploadModal() {
+      if (state.pptData) {
+        document.getElementById('uploadPptTitle').value = state.pptData.title || '';
+        document.getElementById('uploadPptSubtitle').value = state.pptData.subtitle || '';
+        document.getElementById('uploadPptLink').value = state.pptData.embedUrl || '';
+      }
+      document.getElementById('pptUploadModal').classList.remove('hidden');
+    }
+
+    function closePptUploadModal() {
+      document.getElementById('pptUploadModal').classList.add('hidden');
+    }
+
+    async function handleSavePpt(e) {
+      e.preventDefault();
+      const title = document.getElementById('uploadPptTitle').value.trim();
+      const subtitle = document.getElementById('uploadPptSubtitle').value.trim();
+      const link = document.getElementById('uploadPptLink').value.trim();
+      const fileInput = document.getElementById('uploadPptFile');
+
+      state.pptData = state.pptData || {};
+      state.pptData.title = title;
+      state.pptData.subtitle = subtitle;
+      if (link) state.pptData.embedUrl = link;
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          state.pptData.downloadUrl = evt.target.result;
+          closePptUploadModal();
+          renderPptCard();
+          await pushToCloud();
+          alert("PPT presentation uploaded & ready for students to download!");
+        };
+        reader.readAsDataURL(file);
+      } else {
+        closePptUploadModal();
+        renderPptCard();
+        await pushToCloud();
+        alert("Presentation details updated successfully!");
+      }
+    }
+
     function renderSlide() {
       if (!state.slides || state.slides.length === 0) return;
       const slide = state.slides[state.currentSlideIdx];
@@ -723,7 +1090,7 @@
             <p class="text-xs font-bold text-white truncate font-brand">${idx + 1}. ${s.title}</p>
             <p class="text-[11px] font-brand tracking-wider" style="color: var(--accent);">${s.scripture}</p>
           </div>
-          ${state.role === 'admin' && state.slides.length > 1 ? `
+          ${(state.role === 'admin' || state.role === 'pastor') && state.slides.length > 1 ? `
             <button onclick="event.stopPropagation(); deleteSlide(${s.id})" class="opacity-60 hover:opacity-100 hover:text-rose-400 p-1">
               <i class="ph-bold ph-trash"></i>
             </button>
@@ -739,7 +1106,7 @@
     function openSlideModal() { document.getElementById('addSlideModal').classList.remove('hidden'); }
     function closeSlideModal() { document.getElementById('addSlideModal').classList.add('hidden'); }
 
-    function handleSaveSlide(e) {
+    async function handleSaveSlide(e) {
       e.preventDefault();
       const newSlide = {
         id: Date.now(),
@@ -750,37 +1117,47 @@
       };
       state.slides.push(newSlide);
       state.currentSlideIdx = state.slides.length - 1;
-      saveStorage();
       closeSlideModal();
       renderSlide();
+      await pushToCloud();
     }
 
-    function deleteSlide(id) {
+    async function deleteSlide(id) {
       if (!confirm("Remove this slide?")) return;
       state.slides = state.slides.filter(s => s.id !== id);
       if (state.currentSlideIdx >= state.slides.length) state.currentSlideIdx = 0;
-      saveStorage();
       renderSlide();
+      await pushToCloud();
     }
 
-    // TEAMS
     function renderTeams() {
       const grid = document.getElementById('teamsGrid');
       const sortedTeams = [...state.teams].sort((a,b) => b.points - a.points);
+      const isStaff = state.role === 'admin' || state.role === 'pastor';
 
       grid.innerHTML = sortedTeams.map((team, rank) => {
         const teamMemberCount = state.members.filter(m => m.teamId === team.id).length;
+
         return `
           <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[220px]">
             <div class="absolute inset-0 z-0">
               <img src="${team.bgImage}" alt="${team.name}" class="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition duration-700">
               <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
             </div>
+            
             <div class="relative z-10">
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black px-2.5 py-1 rounded-full bg-black/80 border text-stone-200 font-brand" style="border-color: var(--border-color);">#${rank + 1} PLACE</span>
-                <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
+                  ${isStaff ? `
+                    <button onclick="openEditTeamModal(${team.id})" title="Edit Team Name & Logo" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
+                      <i class="ph-bold ph-pencil-simple"></i>
+                    </button>
+                  ` : ''}
+                </div>
               </div>
+              
               <div class="flex items-center gap-3.5 my-3">
                 <div class="w-12 h-12 rounded-2xl p-0.5 flex items-center justify-center text-stone-950 shadow-lg" style="background-color: var(--accent);">
                   <div class="w-full h-full bg-black/90 rounded-[14px] flex items-center justify-center text-white">
@@ -793,8 +1170,9 @@
                 </div>
               </div>
             </div>
+
             <div class="relative z-10">
-              ${state.role === 'admin' ? `
+              ${isStaff ? `
                 <div class="mt-4 pt-3 border-t flex items-center justify-between" style="border-color: var(--border-color);">
                   <span class="text-[11px] font-semibold opacity-80 font-brand">Points:</span>
                   <div class="flex items-center gap-1 font-brand">
@@ -816,28 +1194,58 @@
       }
     }
 
-    function adjustTeamScore(teamId, delta) {
+    function openEditTeamModal(teamId) {
+      const team = state.teams.find(t => t.id === teamId);
+      if (!team) return;
+      document.getElementById('editTeamId').value = team.id;
+      document.getElementById('editTeamName').value = team.name;
+      document.getElementById('editTeamIcon').value = team.icon;
+      document.getElementById('editTeamBg').value = team.bgImage;
+      document.getElementById('editTeamModal').classList.remove('hidden');
+    }
+
+    function closeEditTeamModal() {
+      document.getElementById('editTeamModal').classList.add('hidden');
+    }
+
+    async function handleSaveTeam(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('editTeamId').value);
+      const team = state.teams.find(t => t.id === id);
+      if (team) {
+        team.name = document.getElementById('editTeamName').value.trim();
+        team.icon = document.getElementById('editTeamIcon').value.trim();
+        team.bgImage = document.getElementById('editTeamBg').value.trim();
+        closeEditTeamModal();
+        renderTeams();
+        renderAttendance();
+        await pushToCloud();
+        alert("Team updated successfully!");
+      }
+    }
+
+    async function adjustTeamScore(teamId, delta) {
       const team = state.teams.find(t => t.id === teamId);
       if (team) {
         team.points = Math.max(0, team.points + delta);
-        saveStorage();
         renderTeams();
+        await pushToCloud();
       }
     }
 
-    function resetAllScoresConfirm() {
+    async function resetAllScoresConfirm() {
       if (confirm("Reset scores for all teams to zero? This starts a brand new season.")) {
         state.teams.forEach(t => t.points = 0);
-        saveStorage();
         renderTeams();
+        await pushToCloud();
       }
     }
 
-    // ATTENDANCE
     function renderAttendance() {
       const tableBody = document.getElementById('memberTableBody');
       const searchVal = (document.getElementById('memberSearchInput')?.value || '').toLowerCase();
       const filtered = state.members.filter(m => m.name.toLowerCase().includes(searchVal));
+      const isStaff = state.role === 'admin' || state.role === 'pastor';
 
       tableBody.innerHTML = filtered.map(member => {
         const team = state.teams.find(t => t.id === member.teamId) || { name: 'Unassigned' };
@@ -873,10 +1281,10 @@
               </div>
             </td>
             <td class="py-3 px-4">${statusBadge}</td>
-            <td class="py-3 px-4 text-right admin-only ${state.role === 'admin' ? '' : 'hidden'}">
+            <td class="py-3 px-4 text-right staff-only ${isStaff ? '' : 'hidden'}">
               <div class="flex items-center justify-end gap-1 font-brand">
-                <button onclick="stepAttendance(${member.id}, -1)" class="w-6 h-6 rounded bg-stone-900 text-stone-300 font-bold border" style="border-color: var(--border-color);">-</button>
-                <button onclick="stepAttendance(${member.id}, 1)" class="w-6 h-6 rounded text-stone-950 font-bold" style="background-color: var(--accent);">+</button>
+                <button onclick="stepAttendance(${member.id}, -1)" title="Absent / Minus" class="w-6 h-6 rounded bg-stone-900 text-stone-300 font-bold border" style="border-color: var(--border-color);">-</button>
+                <button onclick="stepAttendance(${member.id}, 1)" title="Present / Add" class="w-6 h-6 rounded text-stone-950 font-bold" style="background-color: var(--accent);">+</button>
                 <button onclick="removeMember(${member.id})" class="w-6 h-6 rounded bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 ml-1"><i class="ph-bold ph-trash"></i></button>
               </div>
             </td>
@@ -897,21 +1305,21 @@
 
     function filterMembers() { renderAttendance(); }
 
-    function stepAttendance(memberId, delta) {
+    async function stepAttendance(memberId, delta) {
       const member = state.members.find(m => m.id === memberId);
       if (member) {
         member.attended = Math.min(TOTAL_SESSIONS, Math.max(0, member.attended + delta));
-        saveStorage();
         renderAttendance();
+        await pushToCloud();
       }
     }
 
-    function removeMember(memberId) {
+    async function removeMember(memberId) {
       if (!confirm("Remove this youth member?")) return;
       state.members = state.members.filter(m => m.id !== memberId);
-      saveStorage();
       renderAttendance();
       renderTeams();
+      await pushToCloud();
     }
 
     function openAddMemberModal() {
@@ -922,7 +1330,7 @@
 
     function closeAddMemberModal() { document.getElementById('addMemberModal').classList.add('hidden'); }
 
-    function handleSaveMember(e) {
+    async function handleSaveMember(e) {
       e.preventDefault();
       const name = document.getElementById('newMemberName').value.trim();
       const teamId = parseInt(document.getElementById('newMemberTeam').value);
@@ -938,19 +1346,19 @@
       };
 
       state.members.push(newMember);
-      saveStorage();
       closeAddMemberModal();
       document.getElementById('newMemberForm').reset();
       renderAttendance();
       renderTeams();
+      await pushToCloud();
     }
 
-    // PRAYERS & TESTIMONIES
     function renderPrayers() {
       const reqList = document.getElementById('prayerRequestsList');
       const ansList = document.getElementById('answeredPrayersList');
       const requests = state.prayers.filter(p => p.type === 'request');
       const answered = state.prayers.filter(p => p.type === 'answered');
+      const isStaff = state.role === 'admin' || state.role === 'pastor';
 
       document.getElementById('prayerReqCount').innerText = `${requests.length} Requests`;
       document.getElementById('answeredReqCount').innerText = `${answered.length} Praises`;
@@ -964,7 +1372,7 @@
             <span class="text-[10px] opacity-60 font-brand">${p.date}</span>
           </div>
           <p class="text-xs opacity-90 leading-relaxed">${p.text}</p>
-          ${state.role === 'admin' ? `
+          ${isStaff ? `
             <div class="flex justify-end gap-2 mt-2 pt-2 border-t font-brand" style="border-color: var(--border-color);">
               <button onclick="markPrayerAnswered(${p.id})" class="text-[10px] text-emerald-400 hover:underline font-bold">Mark as Answered 🎉</button>
               <button onclick="deletePrayer(${p.id})" class="text-[10px] text-rose-400 hover:underline">Remove</button>
@@ -982,7 +1390,7 @@
             <span class="text-[10px] opacity-60 font-brand">${p.date}</span>
           </div>
           <p class="text-xs opacity-90 leading-relaxed">${p.text}</p>
-          ${state.role === 'admin' ? `
+          ${isStaff ? `
             <div class="flex justify-end mt-2 pt-2 border-t border-emerald-500/20 font-brand">
               <button onclick="deletePrayer(${p.id})" class="text-[10px] text-rose-400 hover:underline">Remove</button>
             </div>
@@ -991,7 +1399,7 @@
       `).join('');
     }
 
-    function handlePrayerSubmit(e) {
+    async function handlePrayerSubmit(e) {
       e.preventDefault();
       const isAnon = document.getElementById('prayerAnonToggle').checked;
       const authorInput = document.getElementById('prayerAuthor').value.trim();
@@ -1003,30 +1411,29 @@
 
       const newEntry = { id: Date.now(), type, author, text, date: "Just now" };
       state.prayers.unshift(newEntry);
-      saveStorage();
       renderPrayers();
       document.getElementById('prayerForm').reset();
+      await pushToCloud();
       alert("Posted to the prayer wall!");
     }
 
-    function markPrayerAnswered(prayerId) {
+    async function markPrayerAnswered(prayerId) {
       const p = state.prayers.find(item => item.id === prayerId);
       if (p) {
         p.type = 'answered';
         p.date = 'Answered today!';
-        saveStorage();
         renderPrayers();
+        await pushToCloud();
       }
     }
 
-    function deletePrayer(id) {
+    async function deletePrayer(id) {
       if (!confirm("Delete this prayer?")) return;
       state.prayers = state.prayers.filter(p => p.id !== id);
-      saveStorage();
       renderPrayers();
+      await pushToCloud();
     }
 
-    // PASTOR INBOX
     function renderPastorInbox() {
       const list = document.getElementById('pastorMessagesList');
       const countBadge = document.getElementById('pastorInboxCount');
@@ -1066,7 +1473,7 @@
       `).join('');
     }
 
-    function handlePastorQuerySubmit(e) {
+    async function handlePastorQuerySubmit(e) {
       e.preventDefault();
       const authorVal = document.getElementById('queryAuthor').value.trim();
       const author = authorVal ? authorVal : "Anonymous Youth";
@@ -1077,30 +1484,30 @@
 
       const newQuery = { id: Date.now(), topic, author, text, date: "Today", status: "pending" };
       state.pastorQueries.unshift(newQuery);
-      saveStorage();
       renderPastorInbox();
       document.getElementById('pastorQueryForm').reset();
-      alert("Sent directly & privately to Pastor!");
+      await pushToCloud();
+      alert("Delivered directly to Pastor's personal inbox!");
     }
 
-    function toggleQueryStatus(queryId) {
+    async function toggleQueryStatus(queryId) {
       const q = state.pastorQueries.find(item => item.id === queryId);
       if (q) {
         q.status = q.status === 'pending' ? 'reviewed' : 'pending';
-        saveStorage();
         renderPastorInbox();
+        await pushToCloud();
       }
     }
 
-    function deletePastorQuery(queryId) {
+    async function deletePastorQuery(queryId) {
       if (!confirm("Delete query?")) return;
       state.pastorQueries = state.pastorQueries.filter(q => q.id !== queryId);
-      saveStorage();
       renderPastorInbox();
+      await pushToCloud();
     }
 
-    // MASTER RENDER (Runs immediately)
     function renderAll() {
+      renderPptCard();
       renderSlide();
       renderTeams();
       renderAttendance();
@@ -1108,11 +1515,15 @@
       renderPastorInbox();
     }
 
-    // RUNS INSTANTLY AS SOON AS PAGE OPENS
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
       loadStorage();
       applyTheme(state.theme || 'theme-sunset');
+      setRole('youth');
       renderAll();
+
+      // Connect to Supabase Cloud & Start Realtime WebSocket!
+      await syncFromCloud();
+      subscribeToRealtime();
     });
   </script>
 </body>
