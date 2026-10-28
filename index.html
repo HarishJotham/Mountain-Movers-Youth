@@ -11,7 +11,12 @@
   <!-- Supabase Official JS SDK CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- High Fashion Typography Suite -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Noto+Sans+Tamil:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .font-tamil { font-family: 'Noto Sans Tamil', 'Outfit', sans-serif !important; }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -295,6 +300,7 @@
       <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn nav-tab-base nav-tab-sermon active px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold flex items-center gap-2 font-brand">
         <i class="ph-bold ph-presentation text-base text-sky-400"></i> Sermon PPT Deck
       </button>
+      
 
       <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn nav-tab-base nav-tab-teams px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold flex items-center gap-2 font-brand">
         <i class="ph-bold ph-trophy text-base text-amber-400"></i> Teams
@@ -304,6 +310,11 @@
         <i class="ph-bold ph-calendar-check text-emerald-400 text-base"></i>
         <span>Attendance 2026</span>
         <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono">52 Sundays</span>
+      </button>
+      <button onclick="switchTab('tab-bible')" id="nav-bible" class="tab-btn nav-tab-base nav-tab-bible px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-book-open text-base text-amber-400"></i>
+        <span>Bible Reading</span>
+        <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-200 font-tamil font-bold">வேதாகமம்</span>
       </button>
 
       <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn nav-tab-base nav-tab-prayers px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold flex items-center gap-2 font-brand">
@@ -340,6 +351,116 @@
         </button>
       </div>
     </div>
+    <!-- TAB: BIBLE READING & SCRIPTURE HUB (15-MIN TIMER & TAMIL/ENGLISH) -->
+    <section id="tab-bible" class="tab-content hidden space-y-6">
+      <!-- Top Header & Member Info Banner -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur-md flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <i class="ph ph-book-open text-2xl"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span id="bible-title-en">Daily Bible Reading</span>
+              <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-mono">+1 Point/Day</span>
+            </h2>
+            <p class="text-xs text-slate-400">Read God's Word for 15 active minutes to earn daily points for your team</p>
+          </div>
+        </div>
+
+        <!-- Language Switcher: Tamil & English -->
+        <div class="flex items-center bg-slate-950/80 border border-slate-800 p-1 rounded-xl">
+          <button type="button" onclick="setBibleLanguage('ta')" id="btn-lang-ta" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-sm font-tamil">
+            🇮🇳 தமிழ் (Tamil)
+          </button>
+          <button type="button" onclick="setBibleLanguage('en')" id="btn-lang-en" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white">
+            🇬🇧 English
+          </button>
+        </div>
+      </div>
+
+      <!-- 15-Minute Verified Timer Card -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-900/90 to-amber-950/20 border border-amber-500/20 rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-5 w-full md:w-auto">
+            <!-- Circular Progress Indicator -->
+            <div class="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
+              <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="bible-timer-ring" class="text-amber-400 transition-all duration-500" stroke-width="3.5" stroke-dasharray="0, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="bible-timer-display" class="text-sm font-mono font-bold text-white">15:00</span>
+                <span class="text-[9px] text-slate-400 uppercase tracking-wider">Left</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-semibold text-white">Active Reading Tracker</h3>
+                <span id="bible-timer-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300">Ready</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1 max-w-md">
+                Timer automatically pauses if you switch tabs or stay idle. Complete 15 minutes to record your devotion today.
+              </p>
+            </div>
+          </div>
+
+          <!-- Timer Action Buttons -->
+          <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+            <button id="btn-bible-timer" onclick="toggleBibleTimer()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 transition-all cursor-pointer">
+              <i id="icon-bible-timer" class="ph ph-play-fill text-base"></i>
+              <span id="label-bible-timer">Start 15m Session</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book & Chapter Selectors -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3 flex-1 min-w-[240px]">
+          <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Book:</label>
+          <select id="bible-book-select" onchange="onBibleBookChange()" class="bg-slate-950 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 flex-1 focus:outline-none focus:border-amber-500">
+            <!-- Populated dynamically via JS with all 66 books in English / Tamil -->
+          </select>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Chapter:</label>
+          <select id="bible-chapter-select" onchange="onBibleChapterChange()" class="bg-slate-950 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+            <!-- Populated dynamically based on chapter count -->
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="changeFontSize(-1)" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-bold" title="Smaller font">A-</button>
+          <button onclick="changeFontSize(1)" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-bold" title="Larger font">A+</button>
+        </div>
+      </div>
+
+      <!-- Scripture Reader Container -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 min-h-[450px] shadow-2xl relative">
+        <div id="bible-loading" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-3 z-10">
+          <div class="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-xs text-amber-300 font-medium">Loading Scripture text...</p>
+        </div>
+
+        <!-- Chapter Heading -->
+        <div class="border-b border-slate-800 pb-4 mb-6 flex items-baseline justify-between">
+          <h2 id="bible-heading" class="text-2xl font-bold text-white tracking-wide">
+            Matthew 17
+          </h2>
+          <span id="bible-version-tag" class="text-[11px] text-amber-400/90 font-mono bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
+            TBSI (தமிழ்)
+          </span>
+        </div>
+
+        <!-- Verses Text Area -->
+        <div id="bible-verses-container" class="space-y-4 text-slate-200 text-base leading-relaxed selection:bg-amber-500 selection:text-slate-950 font-tamil">
+          <!-- Verses injected here via JavaScript -->
+        </div>
+      </div>
+    </section>
 
     <!-- TAB 1: SERMON SLIDES & PPT HUB -->
     <section id="tab-sermon" class="tab-content block space-y-6">
@@ -2017,6 +2138,297 @@
       await syncFromCloud();
       subscribeToRealtime();
     });
+    /* ==========================================================================
+     BIBLE READING MODULE: 66 BOOKS (TAMIL & ENGLISH) + 15-MIN VERIFIED TIMER
+     ========================================================================== */
+  const BIBLE_66_BOOKS = [
+    { num: 1, id: "GEN", nameEn: "Genesis", nameTa: "ஆதியாகமம்", ch: 50 },
+    { num: 2, id: "EXO", nameEn: "Exodus", nameTa: "யாத்திராகமம்", ch: 40 },
+    { num: 3, id: "LEV", nameEn: "Leviticus", nameTa: "லேவியராகமம்", ch: 27 },
+    { num: 4, id: "NUM", nameEn: "Numbers", nameTa: "எண்ணாகமம்", ch: 36 },
+    { num: 5, id: "DEU", nameEn: "Deuteronomy", nameTa: "உபாகமம்", ch: 34 },
+    { num: 6, id: "JOS", nameEn: "Joshua", nameTa: "யோசுவா", ch: 24 },
+    { num: 7, id: "JDG", nameEn: "Judges", nameTa: "நியாயாதிபதிகள்", ch: 21 },
+    { num: 8, id: "RUT", nameEn: "Ruth", nameTa: "ரூத்", ch: 4 },
+    { num: 9, id: "1SA", nameEn: "1 Samuel", nameTa: "1 சாமுவேல்", ch: 31 },
+    { num: 10, id: "2SA", nameEn: "2 Samuel", nameTa: "2 சாமுவேல்", ch: 24 },
+    { num: 11, id: "1KI", nameEn: "1 Kings", nameTa: "1 இராஜாக்கள்", ch: 22 },
+    { num: 12, id: "2KI", nameEn: "2 Kings", nameTa: "2 இராஜாக்கள்", ch: 25 },
+    { num: 13, id: "1CH", nameEn: "1 Chronicles", nameTa: "1 நாளாகமம்", ch: 29 },
+    { num: 14, id: "2CH", nameEn: "2 Chronicles", nameTa: "2 நாளாகமம்", ch: 36 },
+    { num: 15, id: "EZR", nameEn: "Ezra", nameTa: "எஸ்றா", ch: 10 },
+    { num: 16, id: "NEH", nameEn: "Nehemiah", nameTa: "நெகேமியா", ch: 13 },
+    { num: 17, id: "EST", nameEn: "Esther", nameTa: "எஸ்தர்", ch: 10 },
+    { num: 18, id: "JOB", nameEn: "Job", nameTa: "யோபு", ch: 42 },
+    { num: 19, id: "PSA", nameEn: "Psalms", nameTa: "சங்கீதம்", ch: 150 },
+    { num: 20, id: "PRO", nameEn: "Proverbs", nameTa: "நீதிமொழிகள்", ch: 31 },
+    { num: 21, id: "ECC", nameEn: "Ecclesiastes", nameTa: "பிரசங்கி", ch: 12 },
+    { num: 22, id: "SNG", nameEn: "Song of Solomon", nameTa: "உன்னதப்பாட்டு", ch: 8 },
+    { num: 23, id: "ISA", nameEn: "Isaiah", nameTa: "ஏசாயா", ch: 66 },
+    { num: 24, id: "JER", nameEn: "Jeremiah", nameTa: "எரேமியா", ch: 52 },
+    { num: 25, id: "LAM", nameEn: "Lamentations", nameTa: "புலம்பல்", ch: 5 },
+    { num: 26, id: "EZK", nameEn: "Ezekiel", nameTa: "எசேக்கியேல்", ch: 48 },
+    { num: 27, id: "DAN", nameEn: "Daniel", nameTa: "தானியேல்", ch: 12 },
+    { num: 28, id: "HOS", nameEn: "Hosea", nameTa: "ஓசியா", ch: 14 },
+    { num: 29, id: "JOL", nameEn: "Joel", nameTa: "யோவேல்", ch: 3 },
+    { num: 30, id: "AMO", nameEn: "Amos", nameTa: "ஆமோஸ்", ch: 9 },
+    { num: 31, id: "OBA", nameEn: "Obadiah", nameTa: "ஒபதியா", ch: 1 },
+    { num: 32, id: "JON", nameEn: "Jonah", nameTa: "யோனா", ch: 4 },
+    { num: 33, id: "MIC", nameEn: "Micah", nameTa: "மீகா", ch: 7 },
+    { num: 34, id: "NAM", nameEn: "Nahum", nameTa: "நாகூம்", ch: 3 },
+    { num: 35, id: "HAB", nameEn: "Habakkuk", nameTa: "ஆபகூக்", ch: 3 },
+    { num: 36, id: "ZEP", nameEn: "Zephaniah", nameTa: "செப்பனியா", ch: 3 },
+    { num: 37, id: "HAG", nameEn: "Haggai", nameTa: "ஆகாய்", ch: 2 },
+    { num: 38, id: "ZEC", nameEn: "Zechariah", nameTa: "சகரியா", ch: 14 },
+    { num: 39, id: "MAL", nameEn: "Malachi", nameTa: "மல்கியா", ch: 4 },
+    { num: 40, id: "MAT", nameEn: "Matthew", nameTa: "மத்தேயு", ch: 28 },
+    { num: 41, id: "MRK", nameEn: "Mark", nameTa: "மாற்கு", ch: 16 },
+    { num: 42, id: "LUK", nameEn: "Luke", nameTa: "லூக்கா", ch: 24 },
+    { num: 43, id: "JHN", nameEn: "John", nameTa: "யோவான்", ch: 21 },
+    { num: 44, id: "ACT", nameEn: "Acts", nameTa: "அப்போஸ்தலர் நடபடிகள்", ch: 28 },
+    { num: 45, id: "ROM", nameEn: "Romans", nameTa: "ரோமர்", ch: 16 },
+    { num: 46, id: "1CO", nameEn: "1 Corinthians", nameTa: "1 கொரிந்தியர்", ch: 16 },
+    { num: 47, id: "2CO", nameEn: "2 Corinthians", nameTa: "2 கொரிந்தியர்", ch: 13 },
+    { num: 48, id: "GAL", nameEn: "Galatians", nameTa: "கலாத்தியர்", ch: 6 },
+    { num: 49, id: "EPH", nameEn: "Ephesians", nameTa: "எபேசியர்", ch: 6 },
+    { num: 50, id: "PHP", nameEn: "Philippians", nameTa: "பிலிப்பியர்", ch: 4 },
+    { num: 51, id: "COL", nameEn: "Colossians", nameTa: "கொலோசெயர்", ch: 4 },
+    { num: 52, id: "1TH", nameEn: "1 Thessalonians", nameTa: "1 தெசலோனிக்கேயர்", ch: 5 },
+    { num: 53, id: "2TH", nameEn: "2 Thessalonians", nameTa: "2 தெசலோனிக்கேயர்", ch: 3 },
+    { num: 54, id: "1TI", nameEn: "1 Timothy", nameTa: "1 தீமோத்தேயு", ch: 6 },
+    { num: 55, id: "2TI", nameEn: "2 Timothy", nameTa: "2 தீமோத்தேயு", ch: 4 },
+    { num: 56, id: "TIT", nameEn: "Titus", nameTa: "தீத்து", ch: 3 },
+    { num: 57, id: "PHM", nameEn: "Philemon", nameTa: "பிலேமோன்", ch: 1 },
+    { num: 58, id: "HEB", nameEn: "Hebrews", nameTa: "எபிரெயர்", ch: 13 },
+    { num: 59, id: "JAS", nameEn: "James", nameTa: "யாக்கோபு", ch: 5 },
+    { num: 60, id: "1PE", nameEn: "1 Peter", nameTa: "1 பேதுரு", ch: 5 },
+    { num: 61, id: "2PE", nameEn: "2 Peter", nameTa: "2 பேதுரு", ch: 3 },
+    { num: 62, id: "1JN", nameEn: "1 John", nameTa: "1 யோவான்", ch: 5 },
+    { num: 63, id: "2JN", nameEn: "2 John", nameTa: "2 யோவான்", ch: 1 },
+    { num: 64, id: "3JN", nameEn: "3 John", nameTa: "3 யோவான்", ch: 1 },
+    { num: 65, id: "JUD", nameEn: "Jude", nameTa: "யூதா", ch: 1 },
+    { num: 66, id: "REV", nameEn: "Revelation", nameTa: "வெளிப்படுத்தின விசேஷம்", ch: 22 }
+  ];
+
+  let currentBibleLang = 'ta'; // Default to Tamil
+  let currentBookIndex = 39;   // Matthew by default
+  let currentChapterNum = 17;  // Matthew 17
+  let bibleCurrentFontSize = 16;
+
+  // 15-Minute Timer Variables
+  const BIBLE_TARGET_SECONDS = 900; // 15 mins
+  let bibleSecondsRemaining = 900;
+  let bibleTimerInterval = null;
+  let isBibleTimerRunning = false;
+  let lastUserActivity = Date.now();
+
+  function initBibleModule() {
+    populateBibleBooks();
+    populateBibleChapters();
+    loadBibleScripture();
+
+    // Auto-pause timer when tab is hidden or user is inactive
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isBibleTimerRunning) {
+        pauseBibleTimer("Paused (Tab Inactive)");
+      }
+    });
+
+    ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { lastUserActivity = Date.now(); }, { passive: true });
+    });
+
+    setInterval(() => {
+      if (isBibleTimerRunning && (Date.now() - lastUserActivity > 60000)) {
+        pauseBibleTimer("Paused (Inactive)");
+      }
+    }, 10000);
+  }
+
+  function setBibleLanguage(lang) {
+    currentBibleLang = lang;
+    const btnTa = document.getElementById('btn-lang-ta');
+    const btnEn = document.getElementById('btn-lang-en');
+    const container = document.getElementById('bible-verses-container');
+
+    if (lang === 'ta') {
+      btnTa.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-sm font-tamil";
+      btnEn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white";
+      if (container) container.classList.add('font-tamil');
+      document.getElementById('bible-version-tag').innerText = "TBSI (தமிழ்)";
+    } else {
+      btnEn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-sm";
+      btnTa.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white font-tamil";
+      if (container) container.classList.remove('font-tamil');
+      document.getElementById('bible-version-tag').innerText = "WEB (English)";
+    }
+    populateBibleBooks();
+    loadBibleScripture();
+  }
+
+  function populateBibleBooks() {
+    const select = document.getElementById('bible-book-select');
+    if (!select) return;
+    const prevVal = currentBookIndex;
+    select.innerHTML = BIBLE_66_BOOKS.map((b, idx) => {
+      const name = currentBibleLang === 'ta' ? b.nameTa : b.nameEn;
+      return `<option value="${idx}" ${idx === prevVal ? 'selected' : ''}>${idx + 1}. ${name}</option>`;
+    }).join('');
+  }
+
+  function populateBibleChapters() {
+    const select = document.getElementById('bible-chapter-select');
+    if (!select) return;
+    const book = BIBLE_66_BOOKS[currentBookIndex];
+    let html = '';
+    for (let c = 1; c <= book.ch; c++) {
+      html += `<option value="${c}" ${c === currentChapterNum ? 'selected' : ''}>Chapter ${c}</option>`;
+    }
+    select.innerHTML = html;
+  }
+
+  function onBibleBookChange() {
+    const select = document.getElementById('bible-book-select');
+    currentBookIndex = parseInt(select.value, 10);
+    currentChapterNum = 1;
+    populateBibleChapters();
+    loadBibleScripture();
+  }
+
+  function onBibleChapterChange() {
+    const select = document.getElementById('bible-chapter-select');
+    currentChapterNum = parseInt(select.value, 10);
+    loadBibleScripture();
+  }
+
+  function changeFontSize(delta) {
+    bibleCurrentFontSize = Math.min(26, Math.max(13, bibleCurrentFontSize + (delta * 2)));
+    const container = document.getElementById('bible-verses-container');
+    if (container) container.style.fontSize = bibleCurrentFontSize + 'px';
+  }
+
+  async function loadBibleScripture() {
+    const book = BIBLE_66_BOOKS[currentBookIndex];
+    const heading = document.getElementById('bible-heading');
+    const container = document.getElementById('bible-verses-container');
+    const loader = document.getElementById('bible-loading');
+
+    const bookName = currentBibleLang === 'ta' ? book.nameTa : book.nameEn;
+    if (heading) heading.innerText = `${bookName} - Chapter ${currentChapterNum}`;
+    if (loader) loader.classList.remove('hidden');
+
+    try {
+      let verses = [];
+      if (currentBibleLang === 'ta') {
+        // Fetch TBSI Tamil Chapter via free open gateway
+        const res = await fetch(`https://bolls.life/get-chapter/TBSI/${book.num}/${currentChapterNum}/`);
+        if (res.ok) {
+          const data = await res.json();
+          verses = data.map(item => ({ verse: item.verse, text: item.text.replace(/<[^>]*>/g, '') }));
+        }
+      } else {
+        // Fetch English Chapter via free bible-api
+        const res = await fetch(`https://bible-api.com/${encodeURIComponent(book.nameEn)}+${currentChapterNum}`);
+        if (res.ok) {
+          const data = await res.json();
+          verses = (data.verses || []).map(item => ({ verse: item.verse, text: item.text }));
+        }
+      }
+
+      if (verses && verses.length > 0) {
+        container.innerHTML = verses.map(v => `
+          <div class="flex items-start gap-3 py-1 border-b border-slate-800/40 hover:bg-slate-800/30 px-2 rounded-lg transition-colors">
+            <span class="text-xs font-mono font-bold text-amber-400/80 pt-1 select-none w-7 text-right flex-shrink-0">${v.verse}</span>
+            <p class="text-slate-200 flex-1">${v.text}</p>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = `<p class="text-slate-400 italic">No verses found. Please select another chapter.</p>`;
+      }
+    } catch (e) {
+      container.innerHTML = `<p class="text-rose-400">Unable to load verses at this moment. Please check your internet connection.</p>`;
+    } finally {
+      if (loader) loader.classList.add('hidden');
+    }
+  }
+
+  // Timer controls
+  function toggleBibleTimer() {
+    if (isBibleTimerRunning) {
+      pauseBibleTimer("Paused");
+    } else {
+      startBibleTimer();
+    }
+  }
+
+  function startBibleTimer() {
+    isBibleTimerRunning = true;
+    lastUserActivity = Date.now();
+    updateTimerBadge("Active Reading...", "bg-amber-500/20 text-amber-300 border border-amber-500/30");
+    document.getElementById('label-bible-timer').innerText = "Pause Session";
+    document.getElementById('icon-bible-timer').className = "ph ph-pause-fill text-base";
+
+    bibleTimerInterval = setInterval(() => {
+      if (bibleSecondsRemaining > 0) {
+        bibleSecondsRemaining--;
+        updateTimerDisplay();
+      } else {
+        completeBibleSession();
+      }
+    }, 1000);
+  }
+
+  function pauseBibleTimer(msg) {
+    isBibleTimerRunning = false;
+    clearInterval(bibleTimerInterval);
+    updateTimerBadge(msg, "bg-slate-800 text-slate-300");
+    document.getElementById('label-bible-timer').innerText = "Resume Session";
+    document.getElementById('icon-bible-timer').className = "ph ph-play-fill text-base";
+  }
+
+  function updateTimerDisplay() {
+    const mins = Math.floor(bibleSecondsRemaining / 60);
+    const secs = bibleSecondsRemaining % 60;
+    const disp = document.getElementById('bible-timer-display');
+    if (disp) disp.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    const ring = document.getElementById('bible-timer-ring');
+    if (ring) {
+      const pct = Math.round(((BIBLE_TARGET_SECONDS - bibleSecondsRemaining) / BIBLE_TARGET_SECONDS) * 100);
+      ring.setAttribute('stroke-dasharray', `${pct}, 100`);
+    }
+  }
+
+  function updateTimerBadge(text, cls) {
+    const badge = document.getElementById('bible-timer-status');
+    if (badge) {
+      badge.className = `px-2 py-0.5 rounded text-[10px] font-semibold ${cls}`;
+      badge.innerText = text;
+    }
+  }
+
+  function completeBibleSession() {
+    pauseBibleTimer("Completed!");
+    updateTimerBadge("15m Completed (+1 Pt)", "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30");
+    
+    // Award point to currently active member/team
+    if (typeof state !== 'undefined' && state.activeMemberId) {
+      const member = state.members ? state.members.find(m => m.id === state.activeMemberId) : null;
+      if (member) {
+        member.points = (member.points || 0) + 1;
+        if (typeof updateTeamPoints === 'function') updateTeamPoints();
+        if (typeof syncToSupabase === 'function') syncToSupabase();
+      }
+    }
+    alert("Hallelujah! 15 minutes of Bible reading completed. +1 point awarded to your team!");
+  }
+
+  // Initialize once DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBibleModule);
+  } else {
+    initBibleModule();
+  }
   </script>
 </body>
 </html>
