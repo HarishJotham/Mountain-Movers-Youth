@@ -1,8 +1,12 @@
+The entire file is contained below. Copy everything from the very first line
+(<!DOCTYPE html>) down to the very last line (</html>) and paste it directly
+into your GitHub index.html file:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Mountain Movers Youth | Official Portal</title>
   
   <!-- Tailwind CSS CDN -->
@@ -19,11 +23,22 @@
   <!-- Phosphor Icons CDN -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+  <!-- JSZip (for Client-Side PPTX parsing without paid APIs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <!-- PDF.js (for high-fidelity PDF slides exported from PowerPoint) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+
   <style>
     :root {
       --bg-primary: #09080E;
-      --bg-surface: rgba(22, 19, 32, 0.75);
-      --bg-surface-elevated: rgba(30, 26, 44, 0.88);
+      --bg-surface: rgba(22, 19, 32, 0.78);
+      --bg-surface-elevated: rgba(30, 26, 44, 0.92);
       --border-color: rgba(245, 158, 11, 0.22);
       --accent: #F59E0B;
       --accent-secondary: #FB7185;
@@ -48,8 +63,8 @@
 
     body.theme-sunset {
       --bg-primary: #0C0A10;
-      --bg-surface: rgba(25, 21, 35, 0.75);
-      --bg-surface-elevated: rgba(35, 30, 50, 0.9);
+      --bg-surface: rgba(25, 21, 35, 0.78);
+      --bg-surface-elevated: rgba(35, 30, 50, 0.92);
       --border-color: rgba(245, 158, 11, 0.25);
       --accent: #F59E0B;
       --accent-secondary: #F43F5E;
@@ -61,8 +76,8 @@
 
     body.theme-alpine {
       --bg-primary: #041210;
-      --bg-surface: rgba(9, 32, 28, 0.78);
-      --bg-surface-elevated: rgba(13, 44, 39, 0.92);
+      --bg-surface: rgba(9, 32, 28, 0.82);
+      --bg-surface-elevated: rgba(13, 44, 39, 0.94);
       --border-color: rgba(16, 185, 129, 0.28);
       --accent: #10B981;
       --accent-secondary: #34D399;
@@ -74,8 +89,8 @@
 
     body.theme-midnight {
       --bg-primary: #070914;
-      --bg-surface: rgba(15, 21, 42, 0.8);
-      --bg-surface-elevated: rgba(23, 31, 62, 0.92);
+      --bg-surface: rgba(15, 21, 42, 0.82);
+      --bg-surface-elevated: rgba(23, 31, 62, 0.94);
       --border-color: rgba(99, 102, 241, 0.28);
       --accent: #6366F1;
       --accent-secondary: #FBBF24;
@@ -87,8 +102,8 @@
 
     body.theme-hearth {
       --bg-primary: #171311;
-      --bg-surface: rgba(38, 30, 26, 0.82);
-      --bg-surface-elevated: rgba(54, 42, 36, 0.92);
+      --bg-surface: rgba(38, 30, 26, 0.85);
+      --bg-surface-elevated: rgba(54, 42, 36, 0.95);
       --border-color: rgba(249, 115, 22, 0.26);
       --accent: #F97316;
       --accent-secondary: #FBBF24;
@@ -98,9 +113,12 @@
       --brand-gradient: linear-gradient(135deg, #FED7AA 0%, #F97316 45%, #FBBF24 80%, #F43F5E 100%);
     }
 
-    body { font-family: 'Outfit', sans-serif; }
-    .font-brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.18em; }
-    .font-display { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.08em; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.12em; }
+    .font-display { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.06em; }
 
     .brand-title-gradient {
       background: var(--brand-gradient);
@@ -121,150 +139,201 @@
 
     .nav-tab-base {
       transition: all 0.25s ease;
+      white-space: nowrap;
       border-bottom-width: 3px;
     }
     .nav-tab-sermon { border-color: transparent; color: #cbd5e1; }
-    .nav-tab-sermon.active { border-color: #38bdf8 !important; color: #38bdf8 !important; background: rgba(56, 189, 248, 0.12); }
+    .nav-tab-sermon.active { border-color: #38bdf8 !important; color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15); }
 
     .nav-tab-teams { border-color: transparent; color: #cbd5e1; }
-    .nav-tab-teams.active { border-color: #f59e0b !important; color: #f59e0b !important; background: rgba(245, 158, 11, 0.12); }
+    .nav-tab-teams.active { border-color: #f59e0b !important; color: #f59e0b !important; background: rgba(245, 158, 11, 0.15); }
 
     .nav-tab-attendance {
-      border: 1px solid rgba(16, 185, 129, 0.4);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       background: rgba(16, 185, 129, 0.08);
       color: #6ee7b7;
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
     }
     .nav-tab-attendance.active {
       border-color: #10b981 !important;
       border-bottom-width: 3px !important;
       background: rgba(16, 185, 129, 0.22) !important;
       color: #a7f3d0 !important;
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
     }
 
     .nav-tab-prayers { border-color: transparent; color: #cbd5e1; }
-    .nav-tab-prayers.active { border-color: #ec4899 !important; color: #f472b6 !important; background: rgba(236, 72, 153, 0.12); }
+    .nav-tab-prayers.active { border-color: #ec4899 !important; color: #f472b6 !important; background: rgba(236, 72, 153, 0.15); }
 
     .nav-tab-pastor { border-color: transparent; color: #cbd5e1; }
-    .nav-tab-pastor.active { border-color: #a855f7 !important; color: #c084fc !important; background: rgba(168, 85, 247, 0.12); }
+    .nav-tab-pastor.active { border-color: #a855f7 !important; color: #c084fc !important; background: rgba(168, 85, 247, 0.15); }
 
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 9999px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+    #pptCanvasWrapper:fullscreen {
+      background: #000;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
-<body class="theme-sunset min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black" id="app-body" style="background-color: var(--bg-primary); color: var(--text-main);">
+<body class="theme-sunset min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black pb-12" id="app-body" style="background-color: var(--bg-primary); color: var(--text-main);">
 
   <!-- Ambient Cinematic Lighting -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-    <div id="ambientGlow1" class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[150px] opacity-35 transition-all duration-700" style="background-color: var(--accent);"></div>
-    <div id="ambientGlow2" class="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full blur-[170px] opacity-25 transition-all duration-700" style="background-color: var(--accent-secondary);"></div>
+    <div id="ambientGlow1" class="absolute -top-32 -left-32 w-72 md:w-[500px] h-72 md:h-[500px] rounded-full blur-[100px] md:blur-[150px] opacity-35 transition-all duration-700" style="background-color: var(--accent);"></div>
+    <div id="ambientGlow2" class="absolute top-1/3 -right-32 w-80 md:w-[600px] h-80 md:h-[600px] rounded-full blur-[110px] md:blur-[170px] opacity-25 transition-all duration-700" style="background-color: var(--accent-secondary);"></div>
   </div>
 
-  <!-- HEADER & LOGO -->
-  <header class="sticky top-0 z-40 backdrop-blur-2xl border-b px-4 lg:px-8 py-3.5 transition-all" style="background-color: rgba(0,0,0,0.55); border-color: var(--border-color);">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3.5">
-        <div class="w-14 h-14 rounded-full bg-white p-1 shadow-2xl flex items-center justify-center shrink-0 border border-stone-200">
-          <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="98" fill="#FFFFFF"/>
-            <path d="M 24 108 C 24 55 58 26 100 26 C 142 26 176 55 176 108 Z" fill="#1C1917"/>
-            <polygon points="100,40 122,82 113,87 138,108 62,108 85,76 96,88" fill="#FFFFFF"/>
-            <polygon points="40,108 68,69 86,92 59,108" fill="#FFFFFF"/>
-            <polygon points="123,90 144,66 164,108 138,108" fill="#FFFFFF"/>
-            <rect x="22" y="110" width="156" height="3" fill="#1C1917"/>
-            <text x="100" y="125" font-family="'Space Grotesk', sans-serif" font-size="8.8" font-weight="700" fill="#1C1917" text-anchor="middle" letter-spacing="2">MOUNTAIN MOVERS YOUTH</text>
-          </svg>
-        </div>
-        <div>
-          <h1 class="text-xl md:text-2xl font-black font-brand tracking-[0.24em] brand-title-gradient">MOUNTAIN MOVERS YOUTH</h1>
-          <div class="flex items-center gap-2">
-            <p class="text-[11px] font-medium tracking-widest uppercase opacity-75 font-brand">"Faith that shifts mountains"</p>
-            <span id="cloudStatusBadge" class="text-[9px] px-2 py-0.5 rounded-full border flex items-center gap-1 font-mono bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Supabase Connected
-            </span>
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 backdrop-blur-2xl border-b px-3 sm:px-6 lg:px-8 py-3 transition-all" style="background-color: rgba(0,0,0,0.7); border-color: var(--border-color);">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white p-1 shadow-xl flex items-center justify-center shrink-0 border border-stone-200">
+            <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="98" fill="#FFFFFF"/>
+              <path d="M 24 108 C 24 55 58 26 100 26 C 142 26 176 55 176 108 Z" fill="#1C1917"/>
+              <polygon points="100,40 122,82 113,87 138,108 62,108 85,76 96,88" fill="#FFFFFF"/>
+              <polygon points="40,108 68,69 86,92 59,108" fill="#FFFFFF"/>
+              <polygon points="123,90 144,66 164,108 138,108" fill="#FFFFFF"/>
+              <rect x="22" y="110" width="156" height="3" fill="#1C1917"/>
+              <text x="100" y="125" font-family="'Space Grotesk', sans-serif" font-size="8.8" font-weight="700" fill="#1C1917" text-anchor="middle" letter-spacing="2">MOUNTAIN MOVERS</text>
+            </svg>
           </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-black font-brand tracking-[0.16em] brand-title-gradient">MOUNTAIN MOVERS YOUTH</h1>
+            <div class="flex items-center gap-2">
+              <span id="cloudStatusBadge" class="text-[9px] px-2 py-0.5 rounded-full border flex items-center gap-1 font-mono bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Connected
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Quick Role Buttons -->
+        <div class="flex md:hidden items-center bg-stone-900/90 border rounded-xl p-1 gap-1" style="border-color: var(--border-color);">
+          <button onclick="setRole('youth')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white/20 text-white font-brand">Youth</button>
+          <button onclick="openLoginModal('admin')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold text-stone-400 hover:text-white font-brand">Admin</button>
+          <button onclick="openLoginModal('pastor')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold text-stone-400 hover:text-white font-brand">Pastor</button>
         </div>
       </div>
 
-      <div class="flex items-center flex-wrap gap-3">
-        <!-- Theme Selector -->
-        <div class="relative">
-          <label class="text-[10px] uppercase tracking-widest block mb-0.5 font-bold font-brand opacity-60">Atmosphere</label>
-          <select id="themeSelector" onchange="applyTheme(this.value)" class="text-xs bg-stone-900 border text-white rounded-xl px-3 py-2 cursor-pointer font-brand transition shadow-lg" style="border-color: var(--border-color);">
+      <!-- Controls on Tablet/Desktop -->
+      <div class="hidden md:flex items-center flex-wrap gap-3">
+        <div>
+          <select id="themeSelector" onchange="applyTheme(this.value)" class="text-xs bg-stone-900 border text-white rounded-xl px-3 py-2 cursor-pointer font-brand shadow-lg" style="border-color: var(--border-color);">
             <option value="theme-sunset" selected>🔥 Cozy Sunset Ember</option>
-            <option value="theme-monochrome">🖤 Monochrome Noir (Black & White)</option>
+            <option value="theme-monochrome">🖤 Monochrome Noir</option>
             <option value="theme-alpine">🌲 Alpine Emerald</option>
             <option value="theme-midnight">🌌 Midnight Indigo</option>
             <option value="theme-hearth">☕ Warm Hearth</option>
           </select>
         </div>
 
-        <!-- Role Badges & Login -->
-        <div class="pt-3">
-          <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1 gap-1" style="border-color: var(--border-color);">
-            <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
-              <i class="ph-bold ph-student"></i> Youth
-            </button>
-            <button id="adminRoleBtn" onclick="openLoginModal('admin')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
-              <i class="ph-bold ph-shield-check"></i> Admin
-            </button>
-            <button id="pastorRoleBtn" onclick="openLoginModal('pastor')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
-              <i class="ph-bold ph-cross"></i> Pastor
-            </button>
-          </div>
+        <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1 gap-1" style="border-color: var(--border-color);">
+          <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
+            <i class="ph-bold ph-student"></i> Youth
+          </button>
+          <button id="adminRoleBtn" onclick="openLoginModal('admin')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
+            <i class="ph-bold ph-shield-check"></i> Admin
+          </button>
+          <button id="pastorRoleBtn" onclick="openLoginModal('pastor')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand">
+            <i class="ph-bold ph-cross"></i> Pastor
+          </button>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- HOMEPAGE: DYNAMIC DAILY BIBLE VERSE SECTION -->
+  <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 mt-4">
+    <section class="relative overflow-hidden rounded-2xl md:rounded-3xl border theme-card backdrop-blur-xl p-4 sm:p-6 shadow-xl" aria-label="Verse of the Day">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+        
+        <div class="flex items-start gap-3.5">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 text-2xl font-black text-stone-950 shadow-md" style="background-color: var(--accent);">
+            <i class="ph-fill ph-book-open"></i>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[10px] uppercase font-black tracking-widest font-brand text-amber-300">Verse of the Day</span>
+              <span id="dailyVerseDateLabel" class="text-[9px] uppercase px-2 py-0.5 rounded-full bg-white/10 font-bold font-mono opacity-80"></span>
+              <span id="dailyVerseThemeLabel" class="text-[9px] uppercase px-2.5 py-0.5 rounded-full font-bold font-mono text-black font-brand shadow-sm" style="background-color: var(--accent);">God's Guidance</span>
+            </div>
+            <blockquote id="dailyVerseText" class="text-xs sm:text-base font-medium leading-relaxed opacity-95 italic text-stone-100 max-w-4xl pt-0.5">
+              "Loading today's Scripture..."
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between md:justify-end gap-3 shrink-0 border-t md:border-t-0 pt-2.5 md:pt-0" style="border-color: var(--border-color);">
+          <cite id="dailyVerseRef" class="text-xs sm:text-sm font-bold font-brand not-italic text-amber-300"></cite>
+          <button onclick="changeDailyVerse(true)" title="Cycle Scripture of Encouragement" class="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition text-xs font-brand flex items-center gap-1 border" style="border-color: var(--border-color);">
+            <i class="ph-bold ph-arrows-clockwise text-xs"></i>
+            <span class="hidden sm:inline text-[11px]">Next Verse</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
   <!-- NAVIGATION TABS -->
-  <div class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
-    <div class="flex border-b overflow-x-auto space-x-2 pb-1 scrollbar-none items-center" style="border-color: var(--border-color);">
-      <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn nav-tab-base nav-tab-sermon active px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 font-brand">
-        <i class="ph-bold ph-presentation text-base text-sky-400"></i> Sermon Slides & PPT
+  <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 mt-4">
+    <div class="flex border-b overflow-x-auto space-x-2 pb-1 no-scrollbar items-center" style="border-color: var(--border-color);">
+      <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn nav-tab-base nav-tab-sermon active px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-presentation text-base text-sky-400"></i> Sermon PPT Deck
       </button>
 
-      <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn nav-tab-base nav-tab-teams px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
-        <i class="ph-bold ph-trophy text-base text-amber-400"></i> Team Leaderboard
+      <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn nav-tab-base nav-tab-teams px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-trophy text-base text-amber-400"></i> Teams
       </button>
 
-      <button onclick="switchTab('tab-attendance')" id="nav-attendance" class="tab-btn nav-tab-base nav-tab-attendance px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 font-brand">
-        <i class="ph-bold ph-calendar-check text-emerald-400 text-lg animate-pulse"></i>
-        <span>Sunday Attendance 2026</span>
-        <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono">Live</span>
+      <button onclick="switchTab('tab-attendance')" id="nav-attendance" class="tab-btn nav-tab-base nav-tab-attendance px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-calendar-check text-emerald-400 text-base"></i>
+        <span>Attendance 2026</span>
+        <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono">52 Sundays</span>
       </button>
 
-      <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn nav-tab-base nav-tab-prayers px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
-        <i class="ph-bold ph-hands-praying text-base text-pink-400"></i> Prayer & Praise Wall
+      <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn nav-tab-base nav-tab-prayers px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-hands-praying text-base text-pink-400"></i> Prayers
       </button>
 
-      <button onclick="switchTab('tab-pastor')" id="nav-pastor" class="tab-btn nav-tab-base nav-tab-pastor px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
-        <i class="ph-bold ph-chat-circle-dots text-base text-purple-400"></i> Ask the Pastor
+      <button onclick="switchTab('tab-pastor')" id="nav-pastor" class="tab-btn nav-tab-base nav-tab-pastor px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-chat-circle-dots text-base text-purple-400"></i> Ask Pastor
         <span id="pastorUnreadDot" class="hidden w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
       </button>
     </div>
   </div>
 
   <!-- MAIN BODY -->
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+  <main class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 md:py-8">
     
     <!-- ADMIN / PASTOR NOTICE BANNER -->
-    <div id="elevatedBanner" class="hidden mb-6 p-4 rounded-2xl border backdrop-blur-md flex items-center justify-between theme-card-elevated">
+    <div id="elevatedBanner" class="hidden mb-6 p-4 rounded-2xl border backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 theme-card-elevated">
       <div class="flex items-center gap-3">
-        <div id="bannerIcon" class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-black" style="background-color: var(--accent);">
-          <i class="ph-fill ph-shield-check text-xl"></i>
+        <div id="bannerIcon" class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-black shrink-0" style="background-color: var(--accent);">
+          <i class="ph-fill ph-shield-check text-lg"></i>
         </div>
         <div>
-          <h4 id="bannerTitle" class="text-xs font-black uppercase font-brand tracking-widest" style="color: var(--accent);">Elevated Privileges Active</h4>
-          <p id="bannerDesc" class="text-xs opacity-80">Connected directly to Supabase cloud database.</p>
+          <h4 id="bannerTitle" class="text-xs font-black uppercase font-brand tracking-wider" style="color: var(--accent);">Elevated Privileges Active</h4>
+          <p id="bannerDesc" class="text-xs opacity-80">Full permissions enabled: upload PowerPoint slides, set custom points, and register attendance.</p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
         <button id="manageKeysBtn" onclick="openKeyManagerModal()" class="hidden px-3 py-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 rounded-lg text-xs font-bold border border-amber-400/40 transition font-brand flex items-center gap-1">
-          <i class="ph-bold ph-key"></i> Passwords
+          <i class="ph-bold ph-key"></i> Keys
         </button>
         <button onclick="logoutRole()" class="px-3 py-1.5 bg-black/60 hover:bg-black text-white rounded-lg text-xs font-bold border transition font-brand" style="border-color: var(--border-color);">
           Logout
@@ -274,83 +343,85 @@
 
     <!-- TAB 1: SERMON SLIDES & PPT HUB -->
     <section id="tab-sermon" class="tab-content block space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Weekly Word Hub</span>
-          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sermon Slides & Presentation</h2>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand text-sky-400">Weekly Word Hub</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold font-display">Sunday Sermon Slides</h2>
+          <p class="text-xs opacity-75 font-brand">Upload and view Sunday PowerPoint decks directly inside the website.</p>
         </div>
         <div class="staff-only hidden flex items-center gap-2">
-          <button onclick="openPptUploadModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center gap-2 shadow-lg" style="background-color: var(--accent);">
-            <i class="ph-bold ph-file-arrow-up text-base"></i> Upload PPT / Link Slides
-          </button>
-          <button onclick="openSlideModal()" class="px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 text-white hover:bg-white/20 border transition font-brand" style="border-color: var(--border-color);">
-            + Quick Slide Note
+          <button onclick="openPptUploadModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center justify-center gap-2 shadow-lg" style="background-color: var(--accent);">
+            <i class="ph-bold ph-file-arrow-up text-base"></i> Upload PPT / PPTX Deck
           </button>
         </div>
       </div>
 
-      <!-- PPT PRESENTATION CARD -->
-      <div id="pptHeroContainer" class="rounded-3xl border theme-card backdrop-blur-xl p-6 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <!-- PPT HEADER HERO CARD -->
+      <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 sm:p-7 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
           <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black text-stone-950 shadow-glow" style="background-color: var(--accent);">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-3xl font-black text-stone-950 shrink-0 shadow-lg" style="background-color: var(--accent);">
               <i class="ph-bold ph-presentation"></i>
             </div>
             <div>
               <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-white/10 text-white font-brand">Sunday Presentation Deck</span>
-              <h3 id="pptTitleDisplay" class="text-xl md:text-2xl font-black text-white font-brand mt-1">Faith That Shifts Mountains</h3>
-              <p id="pptSubtitleDisplay" class="text-xs opacity-75 font-brand">Pastor & Speaker Notes &bull; Complete Youth Deck</p>
+              <h3 id="pptTitleDisplay" class="text-lg sm:text-2xl font-black text-white font-brand mt-1 leading-snug">Faith That Shifts Mountains</h3>
+              <p id="pptSubtitleDisplay" class="text-xs opacity-75 font-brand mt-0.5">Pastor & Speaker Deck &bull; Complete Youth Notes</p>
             </div>
           </div>
-          <div class="flex flex-wrap items-center gap-3">
-            <a id="pptDownloadBtn" href="#" download="Mountain_Movers_Sermon.pptx" class="px-5 py-3 rounded-xl font-brand font-bold text-xs text-stone-950 shadow-lg flex items-center gap-2 transition hover:brightness-110" style="background-color: var(--accent);">
-              <i class="ph-bold ph-download-simple text-base"></i> Download Presentation (.PPT)
-            </a>
-            <button id="pptViewOnlineBtn" onclick="toggleOnlineSlideViewer()" class="px-4 py-3 rounded-xl font-brand font-semibold text-xs bg-white/10 text-white hover:bg-white/15 border transition" style="border-color: var(--border-color);">
-              <i class="ph-bold ph-eye text-base"></i> View Slides Online
+          
+          <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+            <button onclick="focusSlideViewer()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl font-brand font-bold text-xs bg-white/15 hover:bg-white/20 text-white border flex items-center justify-center gap-2 transition" style="border-color: var(--border-color);">
+              <i class="ph-bold ph-eye text-base text-sky-400"></i> View Slides Online
             </button>
+            <a id="pptDownloadBtn" href="#" download="Mountain_Movers_Sermon.pptx" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl font-brand font-bold text-xs text-stone-950 shadow-lg flex items-center justify-center gap-2 transition hover:brightness-110" style="background-color: var(--accent);">
+              <i class="ph-bold ph-download-simple text-base"></i> Download (.PPTX)
+            </a>
           </div>
         </div>
 
-        <div id="onlineSlideViewer" class="mt-6 pt-6 border-t hidden" style="border-color: var(--border-color);">
-          <div class="aspect-video w-full rounded-2xl overflow-hidden border bg-black/60" style="border-color: var(--border-color);">
-            <iframe id="slideIframe" src="" class="w-full h-full" allowfullscreen="true"></iframe>
-          </div>
-        </div>
-      </div>
-
-      <!-- QUICK SLIDE DECK -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 rounded-3xl border theme-card backdrop-blur-xl p-6 md:p-8 shadow-2xl relative flex flex-col justify-between min-h-[380px]">
-          <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
-            <span id="currentSlideNumber" class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white font-brand">Slide 1 of 3</span>
-            <div class="flex gap-2">
-              <button onclick="prevSlide()" class="w-8 h-8 rounded-lg bg-stone-900 hover:bg-stone-800 flex items-center justify-center text-white border" style="border-color: var(--border-color);"><i class="ph-bold ph-caret-left"></i></button>
-              <button onclick="nextSlide()" class="w-8 h-8 rounded-lg bg-stone-900 hover:bg-stone-800 flex items-center justify-center text-white border" style="border-color: var(--border-color);"><i class="ph-bold ph-caret-right"></i></button>
+        <!-- THE SINGLE IN-WEBSITE PRESENTATION VIEWER -->
+        <div id="pptCanvasWrapper" class="mt-6 pt-6 border-t space-y-4" style="border-color: var(--border-color);">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span id="deckSlideCounter" class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white font-brand">Slide 1 of 3</span>
+              <span id="deckPresentationFormat" class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">In-Browser Deck</span>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+              <button onclick="toggleFullScreenViewer()" title="Toggle Fullscreen" class="p-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white border text-xs font-brand flex items-center gap-1" style="border-color: var(--border-color);">
+                <i class="ph-bold ph-arrows-out"></i> Fullscreen
+              </button>
+              <div class="flex items-center gap-1.5">
+                <button onclick="navigateDeckSlide(-1)" class="px-3 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white border text-xs font-bold font-brand flex items-center gap-1" style="border-color: var(--border-color);">
+                  <i class="ph-bold ph-caret-left"></i> Prev
+                </button>
+                <button onclick="navigateDeckSlide(1)" class="px-3 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white border text-xs font-bold font-brand flex items-center gap-1" style="border-color: var(--border-color);">
+                  Next <i class="ph-bold ph-caret-right"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <div id="slideDisplay" class="my-auto text-center px-4 py-8"></div>
-          <div class="flex items-center justify-between text-xs opacity-75 pt-3 border-t font-brand" style="border-color: var(--border-color);">
-            <span id="slideSeriesTitle" class="italic">The Mountain Mover</span>
-            <span>Mountain Movers Youth</span>
+
+          <!-- Slide Display Canvas -->
+          <div id="deckCanvas" class="w-full min-h-[300px] sm:min-h-[440px] rounded-2xl p-6 sm:p-12 flex flex-col justify-center items-center text-center border relative overflow-hidden bg-black/70 shadow-inner" style="border-color: var(--border-color);">
+            <canvas id="pdfSlideCanvas" class="max-w-full max-h-[70vh] rounded-lg shadow-2xl hidden"></canvas>
+            <div id="deckSlideBody" class="max-w-3xl mx-auto space-y-4">
+            </div>
           </div>
-        </div>
-        <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-2xl flex flex-col">
-          <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 font-brand" style="color: var(--accent);">
-            <i class="ph-bold ph-stack"></i> Slide Deck Index
-          </h3>
-          <div id="slidesList" class="space-y-2 overflow-y-auto max-h-[300px] pr-1"></div>
+
+          <!-- Slide Thumbnails Strip -->
+          <div id="deckThumbnails" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: TEAMS (EDITABLE + MANUAL POINT EDITING) -->
+    <!-- TAB 2: TEAMS (MANUAL POINT EDITING + ROSTER) -->
     <section id="tab-teams" class="tab-content hidden space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Championship</span>
-          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Team Leaderboard</h2>
-          <p class="text-xs opacity-75 font-brand">Admins & Pastor can edit team identities and assign precise points directly.</p>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand text-amber-400">Championship</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold font-display">Team Leaderboard</h2>
+          <p class="text-xs opacity-75 font-brand">Admin and Pastor can set custom team points directly.</p>
         </div>
         <div class="staff-only hidden">
           <button onclick="resetAllScoresConfirm()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition font-brand">
@@ -358,40 +429,40 @@
           </button>
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="teamsGrid"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="teamsGrid"></div>
     </section>
 
     <!-- TAB 3: 2026 SUNDAY ATTENDANCE -->
     <section id="tab-attendance" class="tab-content hidden space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span class="text-xs font-bold tracking-widest uppercase font-brand text-emerald-400">Year 2026 Registry</span>
-          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sunday Attendance Tracker</h2>
-          <p class="text-xs opacity-80 font-brand">Select any Sunday throughout 2026 to view and mark attendance records.</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold font-display">Sunday Attendance Tracker</h2>
+          <p class="text-xs opacity-80 font-brand">Select any Sunday throughout 2026 to view and mark attendance.</p>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
-          <div class="relative">
-            <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search youth name..." class="w-48 md:w-64 bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+          <div class="relative flex-1 sm:flex-none">
+            <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search youth name..." class="w-full sm:w-60 bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
             <i class="ph-bold ph-magnifying-glass absolute right-3 top-2.5 opacity-60 text-xs"></i>
           </div>
           <div class="staff-only hidden">
-            <button onclick="openAddMemberModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-stone-950 flex items-center gap-1.5 shadow-lg font-brand" style="background-color: var(--accent);">
+            <button onclick="openAddMemberModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-stone-950 flex items-center gap-1.5 shadow-lg font-brand whitespace-nowrap" style="background-color: var(--accent);">
               <i class="ph-bold ph-user-plus text-sm"></i> Add Youth
             </button>
           </div>
         </div>
       </div>
 
-      <!-- 2026 SUNDAY DATE PICKER BAR -->
-      <div class="p-5 rounded-3xl border theme-card backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <!-- 2026 SUNDAY SELECTOR -->
+      <div class="p-4 sm:p-5 rounded-2xl md:rounded-3xl border theme-card backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div class="flex items-center gap-3 w-full md:w-auto">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center justify-center shrink-0 text-2xl">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center justify-center shrink-0 text-xl sm:text-2xl">
             <i class="ph-bold ph-calendar"></i>
           </div>
           <div class="w-full">
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-emerald-300 font-brand">Selected Sunday (2026 Session)</label>
+            <label class="block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-300 font-brand">Sunday Date (2026)</label>
             <div class="flex items-center gap-2 mt-1">
-              <select id="sundaySelector" onchange="handleSundayChange(this.value)" class="bg-stone-950 border border-emerald-500/40 text-emerald-200 text-xs rounded-xl px-3 py-2 font-mono font-bold w-full md:w-72 focus:outline-none focus:ring-1 focus:ring-emerald-400">
+              <select id="sundaySelector" onchange="handleSundayChange(this.value)" class="bg-stone-950 border border-emerald-500/40 text-emerald-200 text-xs rounded-xl px-3 py-2 font-mono font-bold w-full sm:w-72 focus:outline-none">
               </select>
               <button onclick="navigateSunday(-1)" title="Previous Sunday" class="p-2 rounded-xl bg-stone-900 border border-stone-700 text-white hover:bg-stone-800"><i class="ph-bold ph-caret-left"></i></button>
               <button onclick="navigateSunday(1)" title="Next Sunday" class="p-2 rounded-xl bg-stone-900 border border-stone-700 text-white hover:bg-stone-800"><i class="ph-bold ph-caret-right"></i></button>
@@ -399,55 +470,55 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="px-4 py-2 rounded-2xl bg-black/60 border border-stone-700">
-            <span class="text-[10px] uppercase font-bold opacity-70 block font-brand">Active Registry Date</span>
+        <div class="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
+          <div class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-black/60 border border-stone-700">
+            <span class="text-[9px] uppercase font-bold opacity-70 block font-brand">Viewing Sunday</span>
             <span id="activeSundayLabel" class="text-xs font-extrabold text-emerald-300 font-brand">Sunday, 04 Jan 2026</span>
           </div>
 
-          <div class="staff-only hidden flex items-center gap-2">
-            <button onclick="markAllForDate(true)" class="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-brand">
+          <div class="staff-only hidden flex items-center gap-1.5">
+            <button onclick="markAllForDate(true)" class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-brand">
               All Present
             </button>
-            <button onclick="markAllForDate(false)" class="px-3 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold font-brand">
+            <button onclick="markAllForDate(false)" class="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold font-brand">
               All Absent
             </button>
           </div>
         </div>
       </div>
 
-      <!-- STATISTICS FOR SELECTED SUNDAY -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="p-4 rounded-2xl border theme-card">
+      <!-- ATTENDANCE STATS -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="p-3.5 sm:p-4 rounded-2xl border theme-card">
           <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Total Registered</p>
-          <h4 id="statTotalYouth" class="text-2xl font-black mt-1 font-brand">0</h4>
+          <h4 id="statTotalYouth" class="text-xl sm:text-2xl font-black mt-1 font-brand">0</h4>
         </div>
-        <div class="p-4 rounded-2xl border theme-card">
+        <div class="p-3.5 sm:p-4 rounded-2xl border theme-card">
           <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Present on Date</p>
-          <h4 id="statDatePresentCount" class="text-2xl font-black mt-1 font-brand text-emerald-400">0</h4>
+          <h4 id="statDatePresentCount" class="text-xl sm:text-2xl font-black mt-1 font-brand text-emerald-400">0</h4>
         </div>
-        <div class="p-4 rounded-2xl border theme-card">
+        <div class="p-3.5 sm:p-4 rounded-2xl border theme-card">
           <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Sunday Turnout %</p>
-          <h4 id="statDatePercentage" class="text-2xl font-black mt-1 font-brand" style="color: var(--accent);">0%</h4>
+          <h4 id="statDatePercentage" class="text-xl sm:text-2xl font-black mt-1 font-brand" style="color: var(--accent);">0%</h4>
         </div>
-        <div class="p-4 rounded-2xl border theme-card">
-          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">2026 Annual Consistency</p>
-          <h4 id="statAnnualConsistency" class="text-xl font-black mt-1 truncate font-brand text-sky-400">0%</h4>
+        <div class="p-3.5 sm:p-4 rounded-2xl border theme-card">
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">2026 Consistency</p>
+          <h4 id="statAnnualConsistency" class="text-xl sm:text-2xl font-black mt-1 truncate font-brand text-sky-400">0%</h4>
         </div>
       </div>
 
-      <!-- ATTENDANCE ROSTER TABLE -->
-      <div class="rounded-3xl border theme-card overflow-hidden shadow-card">
+      <!-- ATTENDANCE ROSTER -->
+      <div class="rounded-2xl md:rounded-3xl border theme-card overflow-hidden shadow-card">
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b bg-white/5 text-[10px] uppercase tracking-wider font-bold font-brand" style="border-color: var(--border-color);">
-                <th class="py-3.5 px-4">Youth Member</th>
-                <th class="py-3.5 px-4">Assigned Team</th>
-                <th class="py-3.5 px-4 text-center">Status on Selected Sunday</th>
-                <th class="py-3.5 px-4 text-center">2026 Total Attendance</th>
-                <th class="py-3.5 px-4">Year Standing</th>
-                <th class="py-3.5 px-4 text-right staff-only hidden">Staff Controls</th>
+                <th class="py-3 px-3 sm:px-4">Youth Member</th>
+                <th class="py-3 px-3 sm:px-4">Team</th>
+                <th class="py-3 px-3 sm:px-4 text-center">Selected Sunday Status</th>
+                <th class="py-3 px-3 sm:px-4 text-center">2026 Total</th>
+                <th class="py-3 px-3 sm:px-4 hidden sm:table-cell">Standing</th>
+                <th class="py-3 px-3 sm:px-4 text-right staff-only hidden">Actions</th>
               </tr>
             </thead>
             <tbody id="memberTableBody" class="divide-y text-xs" style="border-color: var(--border-color);"></tbody>
@@ -456,34 +527,34 @@
       </div>
     </section>
 
-    <!-- TAB 4: PRAYER WALL -->
-    <section id="tab-prayers" class="tab-content hidden space-y-8">
+    <!-- TAB 4: PRAYER & PRAISE WALL -->
+    <section id="tab-prayers" class="tab-content hidden space-y-6">
       <div>
         <span class="text-xs font-bold tracking-widest uppercase font-brand text-pink-400">Community of Faith</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold font-display">Prayer & Answer Wall</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold font-display">Prayer & Answer Wall</h2>
       </div>
 
-      <div class="rounded-3xl border theme-card p-6 shadow-card">
+      <div class="rounded-2xl md:rounded-3xl border theme-card p-4 sm:p-6 shadow-card">
         <h3 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2 font-brand text-pink-400">
           <i class="ph-bold ph-pen-nib"></i> Post a Prayer Request or Praise
         </h3>
-        <form id="prayerForm" onsubmit="handlePrayerSubmit(event)" class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <form id="prayerForm" onsubmit="handlePrayerSubmit(event)" class="space-y-3 sm:space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div>
               <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Your Name (Optional)</label>
-              <input type="text" id="prayerAuthor" placeholder="Leave blank for Anonymous" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+              <input type="text" id="prayerAuthor" placeholder="Blank for Anonymous" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
             </div>
             <div>
               <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Category</label>
               <select id="prayerType" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
                 <option value="request">🙏 Prayer Request</option>
-                <option value="answered">🎉 Answered Prayer (Praise Report!)</option>
+                <option value="answered">🎉 Answered Prayer (Praise!)</option>
               </select>
             </div>
-            <div class="flex items-center pt-5">
+            <div class="flex items-center pt-2 sm:pt-5">
               <label class="flex items-center gap-2 text-xs cursor-pointer select-none font-brand">
                 <input type="checkbox" id="prayerAnonToggle" class="w-4 h-4 rounded bg-stone-900 border">
-                <span class="opacity-80">Submit 100% Anonymously</span>
+                <span class="opacity-80">Submit Anonymously</span>
               </label>
             </div>
           </div>
@@ -498,10 +569,10 @@
         </form>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <h4 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand" style="color: var(--accent);">
+            <h4 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand text-amber-300">
               <i class="ph-bold ph-hands-praying"></i> Active Prayer Requests
             </h4>
             <span id="prayerReqCount" class="text-xs px-2.5 py-0.5 rounded-full border bg-white/5 font-bold font-brand" style="border-color: var(--border-color);">0</span>
@@ -509,10 +580,10 @@
           <div id="prayerRequestsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-brand text-emerald-400">
-              <i class="ph-bold ph-confetti"></i> Answered Prayers Wall
+              <i class="ph-bold ph-confetti"></i> Answered Praise Wall
             </h4>
             <span id="answeredReqCount" class="text-xs px-2.5 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 font-bold font-brand">0</span>
           </div>
@@ -521,17 +592,17 @@
       </div>
     </section>
 
-    <!-- TAB 5: ASK THE PASTOR -->
+    <!-- TAB 5: ASK THE PASTOR (CONFIDENTIAL) -->
     <section id="tab-pastor" class="tab-content hidden space-y-6">
       <div>
         <span class="text-xs font-bold tracking-widest uppercase font-brand text-purple-400">Pastoral Guidance</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold font-display">Ask Your Question to the Pastor</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold font-display">Ask Your Question to Pastor</h2>
         <p class="text-xs opacity-75 font-brand">Strictly confidential line directly to the Pastor.</p>
       </div>
 
-      <div class="rounded-3xl border theme-card p-6 shadow-card">
-        <form id="pastorQueryForm" onsubmit="handlePastorQuerySubmit(event)" class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="rounded-2xl md:rounded-3xl border theme-card p-4 sm:p-6 shadow-card">
+        <form id="pastorQueryForm" onsubmit="handlePastorQuerySubmit(event)" class="space-y-3 sm:space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
               <label class="block text-[11px] font-semibold mb-1 opacity-80 font-brand">Your Name / Contact (Optional)</label>
               <input type="text" id="queryAuthor" placeholder="Leave blank for anonymity" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
@@ -549,9 +620,9 @@
           <div>
             <textarea id="queryContent" rows="4" required placeholder="Type whatever is on your heart. Read exclusively by the Pastor..." class="w-full bg-stone-900 border rounded-xl p-3 text-xs text-white" style="border-color: var(--border-color);"></textarea>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] opacity-75 flex items-center gap-1 font-brand">
-              <i class="ph-bold ph-lock-key text-purple-400"></i> Encrypted: Leaders & Youths cannot open.
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span class="text-[11px] opacity-75 flex items-center gap-1 font-brand text-purple-300">
+              <i class="ph-bold ph-lock-key"></i> Encrypted: Leaders & Youths cannot open.
             </span>
             <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand shadow-lg" style="background-color: var(--accent);">
               <i class="ph-bold ph-paper-plane-right"></i> Send Privately
@@ -560,10 +631,10 @@
         </form>
       </div>
 
-      <div id="pastorInboxWrapper" class="mt-8">
-        <div id="pastorInboxLocked" class="p-8 rounded-3xl border border-dashed text-center theme-card">
-          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style="background-color: rgba(255,255,255,0.06); color: var(--accent);">
-            <i class="ph-bold ph-lock-key text-2xl"></i>
+      <div id="pastorInboxWrapper" class="mt-6">
+        <div id="pastorInboxLocked" class="p-6 sm:p-8 rounded-2xl md:rounded-3xl border border-dashed text-center theme-card">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style="background-color: rgba(255,255,255,0.06); color: var(--accent);">
+            <i class="ph-bold ph-lock-key text-xl"></i>
           </div>
           <h3 class="text-sm font-bold uppercase tracking-wider font-brand">Pastor Inbox Protected</h3>
           <p id="inboxLockNotice" class="text-xs opacity-70 max-w-md mx-auto mt-1 mb-4 font-brand">
@@ -589,9 +660,9 @@
 
   <!-- MODALS -->
 
-  <!-- MANUAL POINTS EDIT MODAL (ADMIN & PASTOR) -->
+  <!-- MANUAL POINTS EDIT MODAL -->
   <div id="editPointsModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
         <div class="flex items-center gap-2">
           <i class="ph-bold ph-calculator text-lg" style="color: var(--accent);"></i>
@@ -604,7 +675,7 @@
         <input type="hidden" id="editPointsTeamId">
         
         <div>
-          <span class="text-[10px] uppercase font-bold opacity-60">Target Team</span>
+          <span class="text-[10px] uppercase font-bold opacity-60">Team</span>
           <p id="editPointsTeamName" class="text-base font-black text-white mt-0.5 font-brand">Team Name</p>
         </div>
 
@@ -612,11 +683,10 @@
           <label class="block font-semibold mb-1 opacity-80">Enter New Total Score</label>
           <input type="number" id="manualPointsInput" min="0" step="1" required placeholder="e.g. 5, 27, 150, 480" class="w-full bg-stone-900 border rounded-xl px-3 py-2.5 text-base font-mono font-bold text-white focus:outline-none focus:ring-1 focus:ring-amber-400" style="border-color: var(--border-color);">
           <p id="pointsValidationError" class="text-[11px] text-rose-400 mt-1 hidden">Please enter a valid non-negative whole number.</p>
-          <span class="text-[10px] opacity-60 mt-1 block">Enter any custom score directly. Replaces current points.</span>
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeEditPointsModal()" class="px-3.5 py-2 font-bold rounded-xl bg-stone-900 text-stone-300 hover:bg-stone-800">Cancel</button>
+          <button type="button" onclick="closeEditPointsModal()" class="px-3.5 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
           <button type="submit" class="px-5 py-2 font-bold rounded-xl text-stone-950 shadow-lg" style="background-color: var(--accent);">Save Score</button>
         </div>
       </form>
@@ -625,7 +695,7 @@
 
   <!-- EDIT TEAM IDENTITY MODAL -->
   <div id="editTeamModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
         <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Edit Team Identity</h3>
         <button onclick="closeEditTeamModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
@@ -637,7 +707,7 @@
           <input type="text" id="editTeamName" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block font-semibold mb-1 opacity-80">Team Icon (e.g. ph-crown, ph-fire, ph-shield, ph-lightning, ph-trophy)</label>
+          <label class="block font-semibold mb-1 opacity-80">Team Icon (e.g. ph-crown, ph-fire, ph-shield, ph-lightning)</label>
           <input type="text" id="editTeamIcon" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
@@ -652,33 +722,31 @@
     </div>
   </div>
 
-  <!-- PPT UPLOAD MODAL -->
+  <!-- PPT PRESENTATION UPLOAD MODAL -->
   <div id="pptUploadModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-lg shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
-        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Upload Sunday PPT & Slides</h3>
+        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Upload PPT Presentation</h3>
         <button onclick="closePptUploadModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
       <form id="pptUploadForm" onsubmit="handleSavePpt(event)" class="space-y-4 font-brand text-xs">
         <div>
-          <label class="block font-semibold mb-1 opacity-80">Sermon Title</label>
+          <label class="block font-semibold mb-1 opacity-80">Sermon Deck Title</label>
           <input type="text" id="uploadPptTitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block font-semibold mb-1 opacity-80">Speaker / Subtitle</label>
+          <label class="block font-semibold mb-1 opacity-80">Speaker / Notes Subtitle</label>
           <input type="text" id="uploadPptSubtitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block font-semibold mb-1 opacity-80">Upload File (.PPTX / .PPT / .PDF)</label>
-          <input type="file" id="uploadPptFile" accept=".pptx,.ppt,.pdf" class="w-full bg-stone-900 border rounded-xl p-2 text-stone-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-white/10 file:text-white" style="border-color: var(--border-color);">
+          <label class="block font-semibold mb-1 opacity-80">Upload Presentation File (.PPTX / .PDF / .PPT)</label>
+          <input type="file" id="uploadPptFile" accept=".pptx,.pdf,.ppt" class="w-full bg-stone-900 border rounded-xl p-2 text-stone-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-white/10 file:text-white" style="border-color: var(--border-color);">
+          <span class="text-[10px] opacity-60 block mt-1 text-amber-200">Tip: Uploading a .PPTX or exported .PDF file renders slides directly in the browser!</span>
         </div>
-        <div>
-          <label class="block font-semibold mb-1 opacity-80">Or Embed Link (Google Slides / Canva)</label>
-          <input type="url" id="uploadPptLink" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
-        </div>
+        <div id="uploadStatusMsg" class="hidden text-xs text-emerald-400 font-mono"></div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closePptUploadModal()" class="px-3 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
-          <button type="submit" class="px-5 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Publish Slides</button>
+          <button type="submit" id="uploadPptSubmitBtn" class="px-5 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Publish Presentation</button>
         </div>
       </form>
     </div>
@@ -686,16 +754,16 @@
 
   <!-- LOGIN MODAL -->
   <div id="loginModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="text-center">
         <div id="loginModalIcon" class="w-12 h-12 rounded-2xl text-stone-950 flex items-center justify-center mx-auto mb-2 text-xl font-black" style="background-color: var(--accent);">
           <i class="ph-bold ph-key"></i>
         </div>
         <h3 id="loginModalTitle" class="text-base font-bold font-brand tracking-widest uppercase">Restricted Access</h3>
-        <p id="loginModalSub" class="text-xs opacity-75 mt-1 font-brand">Enter your passcode to unlock.</p>
+        <p id="loginModalSub" class="text-xs opacity-75 mt-1 font-brand">Enter password to unlock.</p>
       </div>
       <div>
-        <input type="password" id="targetPasswordInput" placeholder="Enter password..." class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-sm text-white font-brand focus:outline-none" style="border-color: var(--border-color);">
+        <input type="password" id="targetPasswordInput" placeholder="Enter password..." class="w-full bg-stone-900 border rounded-xl px-3 py-2.5 text-sm text-white font-brand focus:outline-none" style="border-color: var(--border-color);">
         <p id="loginErrorMsg" class="text-xs text-rose-400 mt-1.5 hidden text-center font-brand">Access Denied: Incorrect password.</p>
       </div>
       <div class="flex gap-2 font-brand">
@@ -707,7 +775,7 @@
 
   <!-- PASSWORD MANAGER MODAL -->
   <div id="keyManagerModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
         <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Manage System Passwords</h3>
         <button onclick="closeKeyManagerModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
@@ -731,7 +799,7 @@
 
   <!-- ADD YOUTH MEMBER MODAL -->
   <div id="addMemberModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+    <div class="bg-stone-950 border rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
         <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Youth Member</h3>
         <button onclick="closeAddMemberModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
@@ -759,34 +827,6 @@
     </div>
   </div>
 
-  <!-- ADD SLIDE MODAL -->
-  <div id="addSlideModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
-    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
-      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
-        <h3 class="text-sm font-bold font-brand uppercase tracking-wider" style="color: var(--accent);">Add Slide Note</h3>
-        <button onclick="closeSlideModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
-      </div>
-      <form onsubmit="handleSaveSlide(event)" class="space-y-3 font-brand text-xs">
-        <div>
-          <label class="block font-semibold mb-1 opacity-80">Slide Title</label>
-          <input type="text" id="newSlideTitle" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
-        </div>
-        <div>
-          <label class="block font-semibold mb-1 opacity-80">Scripture Reference</label>
-          <input type="text" id="newSlideScripture" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
-        </div>
-        <div>
-          <label class="block font-semibold mb-1 opacity-80">Slide Key Notes</label>
-          <textarea id="newSlideBody" rows="3" required class="w-full bg-stone-900 border rounded-xl p-3 text-white" style="border-color: var(--border-color);"></textarea>
-        </div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeSlideModal()" class="px-3 py-2 font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
-          <button type="submit" class="px-4 py-2 font-bold rounded-xl text-stone-950" style="background-color: var(--accent);">Add Slide</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     const SUPABASE_URL = "https://pidgteyfhxxmgkmpkzjw.supabase.co";
@@ -803,8 +843,76 @@
     };
 
     let loginTarget = null;
+    let pdfDocInstance = null; // For PDF presentation slides
 
-    // Generate all Sundays in the Year 2026 (52 Sundays)
+    // ----------------------------------------------------
+    // CURATED 31-DAY DETERMINISTIC SCRIPTURE LIBRARY
+    // (World English Bible / Public Domain Translations)
+    // ----------------------------------------------------
+    const SCRIPTURE_VAULT = [
+      { text: "Have I not commanded you? Be strong and courageous. Don’t be afraid. Don’t be dismayed, for Yahweh your God is with you wherever you go.", ref: "Joshua 1:9", theme: "Courage & Guidance" },
+      { text: "For I know the thoughts that I think toward you, says Yahweh, thoughts of peace, and not of evil, to give you hope and a future.", ref: "Jeremiah 29:11", theme: "God's Leading" },
+      { text: "Trust in Yahweh with all your heart, and don’t lean on your own understanding. In all your ways acknowledge him, and he will make your paths straight.", ref: "Proverbs 3:5-6", theme: "Faith Over Fear" },
+      { text: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move. Nothing will be impossible for you.", ref: "Matthew 17:20", theme: "Faith Builder" },
+      { text: "Cast all your worries on him, because he cares for you.", ref: "1 Peter 5:7", theme: "Peace & Comfort" },
+      { text: "I can do all things through Christ, who strengthens me.", ref: "Philippians 4:13", theme: "Strength for Today" },
+      { text: "Yahweh is my light and my salvation. Whom shall I fear? Yahweh is the strength of my life. Of whom shall I be afraid?", ref: "Psalm 27:1", theme: "Fear Overcome" },
+      { text: "Don’t you be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you.", ref: "Isaiah 41:10", theme: "Divine Strength" },
+      { text: "Come to me, all you who labor and are heavily burdened, and I will give you rest.", ref: "Matthew 11:28", theme: "Peace & Rest" },
+      { text: "Peace I leave with you. My peace I give to you; not as the world gives, give I to you. Don’t let your heart be troubled, neither let it be fearful.", ref: "John 14:27", theme: "Peace in His Presence" },
+      { text: "Your word is a lamp to my feet, and a light for my path.", ref: "Psalm 119:105", theme: "God's Guidance" },
+      { text: "Let no one despise your youth; but be an example to those who believe, in word, in your way of life, in love, in spirit, in faith, and in purity.", ref: "1 Timothy 4:12", theme: "Youth Calling" },
+      { text: "Those who wait for Yahweh will renew their strength. They will mount up with wings like eagles. They will run, and not be weary. They will walk, and not faint.", ref: "Isaiah 40:31", theme: "Renewed Strength" },
+      { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1", theme: "Comfort & Peace" },
+      { text: "Yahweh’s loving kindnesses indeed never cease, for his compassions never fail. They are new every morning; great is your faithfulness.", ref: "Lamentations 3:22-23", theme: "Faithfulness" },
+      { text: "Don’t be anxious for anything, but in everything by prayer and petition with thanksgiving, let your requests be made known to God.", ref: "Philippians 4:6", theme: "Overcoming Anxiety" },
+      { text: "The name of Yahweh is a strong tower: the righteous runs into it, and is safe.", ref: "Proverbs 18:10", theme: "Divine Protection" },
+      { text: "For God didn’t give us a spirit of fear, but of power, love, and self-control.", ref: "2 Timothy 1:7", theme: "Power & Courage" },
+      { text: "We know that all things work together for good for those who love God, for those who are called according to his purpose.", ref: "Romans 8:28", theme: "God's Leading" },
+      { text: "Yahweh is my shepherd: I shall lack nothing. He makes me lie down in green pastures. He leads me beside still waters.", ref: "Psalm 23:1-2", theme: "Quiet Waters" },
+      { text: "Be still, and know that I am God. I will be exalted among the nations. I will be exalted in the earth.", ref: "Psalm 46:10", theme: "Peace in His Presence" },
+      { text: "Faith is assurance of things hoped for, proof of things not seen.", ref: "Hebrews 11:1", theme: "Faith Builder" },
+      { text: "Taste and see that Yahweh is good. Blessed is the man who takes refuge in him.", ref: "Psalm 34:8", theme: "Grace & Love" },
+      { text: "He heals the broken in heart, and binds up their wounds.", ref: "Psalm 147:3", theme: "Healing & Comfort" },
+      { text: "If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach; and it will be given to him.", ref: "James 1:5", theme: "God's Guidance" },
+      { text: "Every good gift and every perfect gift is from above, coming down from the Father of lights.", ref: "James 1:17", theme: "God's Grace" },
+      { text: "Create in me a clean heart, O God. Renew a right spirit within me.", ref: "Psalm 51:10", theme: "Spiritual Growth" },
+      { text: "I have told you these things, that in me you may have peace. In the world you have trouble; but cheer up! I have overcome the world.", ref: "John 16:33", theme: "Victory in Christ" },
+      { text: "Yahweh bless you, and keep you. Yahweh make his face to shine on you, and be gracious to you.", ref: "Numbers 6:24-25", theme: "Blessing & Hope" },
+      { text: "Love is patient and is kind; love doesn't envy. Love doesn't brag, is not proud... Love never fails.", ref: "1 Corinthians 13:4,8", theme: "God's Love" },
+      { text: "Therefore, if anyone is in Christ, he is a new creation. The old things have passed away. Behold, they have become new.", ref: "2 Corinthians 5:17", theme: "New Life" }
+    ];
+
+    let verseCycleOffset = 0;
+
+    function renderDailyVerse(cycleNext = false) {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+
+      if (cycleNext) {
+        verseCycleOffset = (verseCycleOffset + 1) % SCRIPTURE_VAULT.length;
+      }
+
+      const index = (dayOfYear + verseCycleOffset) % SCRIPTURE_VAULT.length;
+      const scripture = SCRIPTURE_VAULT[index];
+
+      const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('dailyVerseDateLabel').innerText = dateStr;
+      document.getElementById('dailyVerseThemeLabel').innerText = scripture.theme;
+      document.getElementById('dailyVerseText').innerText = `"${scripture.text}"`;
+      document.getElementById('dailyVerseRef').innerText = `— ${scripture.ref}`;
+    }
+
+    function changeDailyVerse() {
+      renderDailyVerse(true);
+    }
+
+    // ----------------------------------------------------
+    // 52 SUNDAYS OF 2026 GENERATOR
+    // ----------------------------------------------------
     const SUNDAYS_2026 = (function generateSundays() {
       const dates = [];
       const d = new Date(2026, 0, 1);
@@ -831,9 +939,28 @@
       sundayAttendance: {},
       pptData: {
         title: "Faith That Shifts Mountains",
-        subtitle: "Pastor & Speaker Notes • Sunday Service Deck",
+        subtitle: "Pastor & Speaker Notes • Complete Youth Presentation",
         downloadUrl: "#",
-        embedUrl: "https://docs.google.com/presentation/d/e/2PACX-1vR6fMvY6vL6K_7e-Xo9Vw/embed?start=false&loop=false&delayms=3000"
+        fileType: "native_slides",
+        pdfDataUrl: null,
+        totalPdfPages: 0,
+        deckSlides: [
+          {
+            title: "Faith Can Relocate Your Giants",
+            scripture: "Matthew 17:20",
+            body: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move. Nothing will be impossible for you."
+          },
+          {
+            title: "Ascend With Clean Hands & A Pure Heart",
+            scripture: "Psalm 24:3-4",
+            body: "Who may ascend the mountain of the Lord? Who may stand in his holy place? The one who has clean hands and a pure heart, who does not trust in an idol or swear falsely."
+          },
+          {
+            title: "Unbroken Fellowship & Strength",
+            scripture: "Ecclesiastes 4:12",
+            body: "Though one may be overpowered, two can defend themselves. A cord of three strands is not quickly broken. Together as Mountain Movers, we stand firm in Christ."
+          }
+        ]
       },
       teams: [
         { id: 1, name: "Zion Lions", points: 840, icon: "ph-crown", bgImage: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" },
@@ -857,11 +984,6 @@
         { id: 11, name: "Lucas Wright", teamId: 5, attended: 5 },
         { id: 12, name: "Grace Ndlovu", teamId: 6, attended: 9 }
       ],
-      slides: [
-        { id: 1, series: "Series: The Mountain Mover", title: "Faith Can Relocate Your Giants", scripture: "Matthew 17:20", body: "Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move." },
-        { id: 2, series: "Series: The Mountain Mover", title: "Stand In Holy Fellowship", scripture: "Ecclesiastes 4:12", body: "Though one may be overpowered, two can defend themselves. A cord of three strands is not quickly broken." },
-        { id: 3, series: "Series: The Mountain Mover", title: "Ascend With Clean Hands", scripture: "Psalm 24:3-4", body: "Who may ascend the mountain of the Lord? Who may stand in his holy place? The one who has clean hands and a pure heart." }
-      ],
       prayers: [
         { id: 1, type: "answered", author: "Esther O.", text: "Praise God! I passed my college entrance exams after our youth group stood in prayer together!", date: "Yesterday" },
         { id: 2, type: "request", author: "Anonymous", text: "Please pray for peace in my household and clarity about my future path.", date: "2 days ago" }
@@ -876,7 +998,7 @@
     // ==========================================
     async function syncFromCloud() {
       if (!supabaseClient) {
-        document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Offline Mode`;
+        document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Mode`;
         return;
       }
 
@@ -890,13 +1012,14 @@
         if (data && data.data) {
           state = { ...data.data, role: state.role };
           if (!state.sundayAttendance) state.sundayAttendance = {};
-          document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Supabase Connected`;
+          if (!state.pptData.deckSlides) state.pptData.deckSlides = [];
+          document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Connected`;
           renderAll();
         } else {
           await pushToCloud();
         }
       } catch (err) {
-        console.warn("Supabase load failed, using local copy", err);
+        console.warn("Supabase fetch failed, operating from local cache", err);
       }
     }
 
@@ -949,7 +1072,6 @@
           theme: state.theme,
           teams: state.teams,
           members: state.members,
-          slides: state.slides,
           prayers: state.prayers,
           pastorQueries: state.pastorQueries,
           pptData: state.pptData,
@@ -961,7 +1083,7 @@
     function applyTheme(themeClass) {
       state.theme = themeClass;
       const body = document.getElementById('app-body');
-      body.className = `${themeClass} min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black`;
+      body.className = `${themeClass} min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-white selection:text-black pb-12`;
       
       const themeSelect = document.getElementById('themeSelector');
       if (themeSelect) themeSelect.value = themeClass;
@@ -991,41 +1113,40 @@
       const staffElements = document.querySelectorAll('.staff-only');
       const pastorLocked = document.getElementById('pastorInboxLocked');
       const pastorUnlocked = document.getElementById('pastorInboxUnlocked');
-      const inboxLockNotice = document.getElementById('inboxLockNotice');
 
-      youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
-      adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
-      pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
-      adminBtn.style.backgroundColor = "transparent";
-      pastorBtn.style.backgroundColor = "transparent";
+      if (youthBtn) youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand";
+      if (adminBtn) { adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand"; adminBtn.style.backgroundColor = "transparent"; }
+      if (pastorBtn) { pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-400 hover:text-white font-brand"; pastorBtn.style.backgroundColor = "transparent"; }
 
       if (newRole === 'youth') {
-        youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand";
+        if (youthBtn) youthBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand";
         elevatedBanner.classList.add('hidden');
         staffElements.forEach(el => el.classList.add('hidden'));
         pastorLocked.classList.remove('hidden');
         pastorUnlocked.classList.add('hidden');
-        inboxLockNotice.innerText = "Questions submitted here are strictly confidential for the Pastor.";
       }
       else if (newRole === 'admin') {
-        adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
-        adminBtn.style.backgroundColor = "var(--accent)";
+        if (adminBtn) {
+          adminBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
+          adminBtn.style.backgroundColor = "var(--accent)";
+        }
         elevatedBanner.classList.remove('hidden');
         bannerTitle.innerText = "Admin & Leader Mode Active";
-        bannerDesc.innerText = "You can record Sunday attendance, set custom team points, edit teams, and upload PPTs.";
+        bannerDesc.innerText = "You can record Sunday attendance, set custom team points, edit teams, and upload PPT decks.";
         manageKeysBtn.classList.add('hidden');
         staffElements.forEach(el => el.classList.remove('hidden'));
 
         pastorLocked.classList.remove('hidden');
         pastorUnlocked.classList.add('hidden');
-        inboxLockNotice.innerText = "Protected: Pastor inbox is strictly restricted to Pastor role.";
       }
       else if (newRole === 'pastor') {
-        pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
-        pastorBtn.style.backgroundColor = "var(--accent)";
+        if (pastorBtn) {
+          pastorBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-stone-950 font-brand shadow-glow";
+          pastorBtn.style.backgroundColor = "var(--accent)";
+        }
         elevatedBanner.classList.remove('hidden');
         bannerTitle.innerText = "Pastor Sanctuary Active";
-        bannerDesc.innerText = "Master access unlocked: Confidential queries open, manual points editor, team identity editor, PPT hub, and key vault.";
+        bannerDesc.innerText = "Master access unlocked: Confidential pastoral queries, custom points, PPT hub, and key vault.";
         manageKeysBtn.classList.remove('hidden');
         staffElements.forEach(el => el.classList.remove('hidden'));
 
@@ -1048,7 +1169,7 @@
 
       if (target === 'pastor') {
         modalTitle.innerText = "Pastor Access";
-        modalSub.innerText = "Enter Pastor's master password to view queries & manage keys.";
+        modalSub.innerText = "Enter Pastor's master password to view confidential queries & manage keys.";
       } else {
         modalTitle.innerText = "Admin Access";
         modalSub.innerText = "Enter Admin password to edit scores, teams & attendance.";
@@ -1131,39 +1252,151 @@
       }
     }
 
-    // ==========================================
-    // TAB 1: SERMON PRESENTATION & SLIDES
-    // ==========================================
+    // =========================================================================
+    // TAB 1: CONSOLIDATED IN-WEBSITE PRESENTATION VIEWER (PPTX & PDF SLIDES)
+    // =========================================================================
+    function focusSlideViewer() {
+      const wrapper = document.getElementById('pptCanvasWrapper');
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleFullScreenViewer() {
+      const elem = document.getElementById('pptCanvasWrapper');
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          console.warn("Fullscreen request failed", err);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
     function renderPptCard() {
       if (!state.pptData) return;
       document.getElementById('pptTitleDisplay').innerText = state.pptData.title || "Sunday Sermon Presentation";
-      document.getElementById('pptSubtitleDisplay').innerText = state.pptData.subtitle || "Speaker Notes";
-      
+      document.getElementById('pptSubtitleDisplay').innerText = state.pptData.subtitle || "Pastor Notes & Presentation Deck";
+
       const downloadBtn = document.getElementById('pptDownloadBtn');
       if (state.pptData.downloadUrl && state.pptData.downloadUrl !== '#') {
         downloadBtn.href = state.pptData.downloadUrl;
         downloadBtn.classList.remove('opacity-50', 'pointer-events-none');
       } else {
         downloadBtn.href = "#";
-        downloadBtn.onclick = () => alert("Pastor has not uploaded a downloadable PPT file yet.");
+        downloadBtn.onclick = () => alert("No presentation file has been uploaded for download yet.");
       }
 
-      if (state.pptData.embedUrl) {
-        document.getElementById('slideIframe').src = state.pptData.embedUrl;
-      }
+      renderPresentationSlide();
     }
 
-    function toggleOnlineSlideViewer() {
-      const viewer = document.getElementById('onlineSlideViewer');
-      viewer.classList.toggle('hidden');
+    async function renderPresentationSlide() {
+      const counter = document.getElementById('deckSlideCounter');
+      const formatBadge = document.getElementById('deckPresentationFormat');
+      const thumbs = document.getElementById('deckThumbnails');
+      const canvasEl = document.getElementById('pdfSlideCanvas');
+      const textBody = document.getElementById('deckSlideBody');
+
+      // MODE 1: PDF Export of PowerPoint
+      if (state.pptData.fileType === 'pdf' && state.pptData.pdfDataUrl) {
+        formatBadge.innerText = "PDF Slide Deck";
+        canvasEl.classList.remove('hidden');
+        textBody.classList.add('hidden');
+
+        try {
+          if (!pdfDocInstance) {
+            pdfDocInstance = await pdfjsLib.getDocument(state.pptData.pdfDataUrl).promise;
+          }
+          const totalPages = pdfDocInstance.numPages;
+          state.pptData.totalPdfPages = totalPages;
+
+          if (state.currentSlideIdx >= totalPages) state.currentSlideIdx = 0;
+          const pageNum = state.currentSlideIdx + 1;
+          counter.innerText = `Slide ${pageNum} of ${totalPages}`;
+
+          const page = await pdfDocInstance.getPage(pageNum);
+          const viewport = page.getViewport({ scale: 1.5 });
+          canvasEl.height = viewport.height;
+          canvasEl.width = viewport.width;
+
+          const renderCtx = {
+            canvasContext: canvasEl.getContext('2d'),
+            viewport: viewport
+          };
+          await page.render(renderCtx).promise;
+
+          thumbs.innerHTML = Array.from({ length: totalPages }).map((_, idx) => `
+            <button onclick="goToDeckSlide(${idx})" class="px-3 py-1.5 rounded-xl text-xs font-bold border transition shrink-0 ${idx === state.currentSlideIdx ? 'bg-amber-400 text-stone-950 border-amber-400' : 'bg-stone-900 text-stone-300 border-stone-800'}">
+              Slide ${idx + 1}
+            </button>
+          `).join('');
+
+          return;
+        } catch (err) {
+          console.warn("Could not render PDF slide, falling back to text slide", err);
+        }
+      }
+
+      // MODE 2: PPTX Extracted / Native Structured Slides
+      formatBadge.innerText = "In-Browser Deck";
+      canvasEl.classList.add('hidden');
+      textBody.classList.remove('hidden');
+
+      const slides = state.pptData.deckSlides || [];
+      if (slides.length === 0) {
+        textBody.innerHTML = `
+          <div class="py-8 text-center">
+            <i class="ph-bold ph-presentation text-4xl opacity-40 mb-2"></i>
+            <p class="text-sm opacity-70 italic font-brand">No slides currently loaded. Pastor / Admin can upload a PowerPoint deck (.pptx or .pdf).</p>
+          </div>
+        `;
+        counter.innerText = "Slide 0 of 0";
+        thumbs.innerHTML = '';
+        return;
+      }
+
+      if (state.currentSlideIdx >= slides.length) state.currentSlideIdx = 0;
+      const current = slides[state.currentSlideIdx];
+
+      counter.innerText = `Slide ${state.currentSlideIdx + 1} of ${slides.length}`;
+
+      textBody.innerHTML = `
+        ${current.scripture ? `<span class="text-[11px] uppercase tracking-widest font-extrabold px-3 py-1 rounded-full border font-brand inline-block text-amber-300" style="border-color: var(--border-color); background-color: rgba(255,255,255,0.05);">${current.scripture}</span>` : ''}
+        <h3 class="text-xl sm:text-3xl font-black font-display text-white tracking-tight leading-snug">${current.title}</h3>
+        <p class="text-xs sm:text-base leading-relaxed opacity-90 max-w-2xl mx-auto italic font-light pt-2">${current.body}</p>
+      `;
+
+      thumbs.innerHTML = slides.map((s, idx) => `
+        <button onclick="goToDeckSlide(${idx})" class="px-3 py-2 rounded-xl text-left border transition shrink-0 max-w-[170px] ${idx === state.currentSlideIdx ? 'bg-white/15 border-amber-400' : 'bg-black/40 border-stone-800'}" style="border-color: ${idx === state.currentSlideIdx ? 'var(--accent)' : 'var(--border-color)'};">
+          <p class="text-[11px] font-bold text-white truncate font-brand">${idx + 1}. ${s.title}</p>
+          <span class="text-[9px] opacity-70 truncate block text-amber-300">${s.scripture || 'Slide Note'}</span>
+        </button>
+      `).join('');
+    }
+
+    function navigateDeckSlide(delta) {
+      if (state.pptData.fileType === 'pdf' && state.pptData.totalPdfPages > 0) {
+        const total = state.pptData.totalPdfPages;
+        state.currentSlideIdx = (state.currentSlideIdx + delta + total) % total;
+        renderPresentationSlide();
+        return;
+      }
+
+      const slides = state.pptData.deckSlides || [];
+      if (slides.length === 0) return;
+      state.currentSlideIdx = (state.currentSlideIdx + delta + slides.length) % slides.length;
+      renderPresentationSlide();
+    }
+
+    function goToDeckSlide(idx) {
+      state.currentSlideIdx = idx;
+      renderPresentationSlide();
     }
 
     function openPptUploadModal() {
       if (state.pptData) {
         document.getElementById('uploadPptTitle').value = state.pptData.title || '';
         document.getElementById('uploadPptSubtitle').value = state.pptData.subtitle || '';
-        document.getElementById('uploadPptLink').value = state.pptData.embedUrl || '';
       }
+      document.getElementById('uploadStatusMsg').classList.add('hidden');
       document.getElementById('pptUploadModal').classList.remove('hidden');
     }
 
@@ -1171,94 +1404,95 @@
       document.getElementById('pptUploadModal').classList.add('hidden');
     }
 
+    async function extractPptxSlidesClientSide(file) {
+      const zip = await JSZip.loadAsync(file);
+      const slideFiles = Object.keys(zip.files).filter(f => f.match(/^ppt\/slides\/slide[0-9]+\.xml$/));
+      
+      slideFiles.sort((a,b) => {
+        const numA = parseInt(a.match(/slide(\d+)\.xml/)[1]);
+        const numB = parseInt(b.match(/slide(\d+)\.xml/)[1]);
+        return numA - numB;
+      });
+
+      const extractedSlides = [];
+
+      for (let i = 0; i < slideFiles.length; i++) {
+        const xmlText = await zip.files[slideFiles[i]].async("string");
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        
+        const textNodes = Array.from(xmlDoc.getElementsByTagName("a:t")).map(n => n.textContent.trim()).filter(Boolean);
+        
+        if (textNodes.length > 0) {
+          const title = textNodes[0] || `Slide ${i + 1}`;
+          const body = textNodes.slice(1).join(" ") || "Sunday Sermon Discussion Point";
+          extractedSlides.push({
+            title: title.length > 60 ? title.substring(0, 60) + "..." : title,
+            scripture: `Slide ${i + 1}`,
+            body: body
+          });
+        }
+      }
+
+      return extractedSlides;
+    }
+
     async function handleSavePpt(e) {
       e.preventDefault();
       const title = document.getElementById('uploadPptTitle').value.trim();
       const subtitle = document.getElementById('uploadPptSubtitle').value.trim();
-      const link = document.getElementById('uploadPptLink').value.trim();
       const fileInput = document.getElementById('uploadPptFile');
+      const statusMsg = document.getElementById('uploadStatusMsg');
+      const submitBtn = document.getElementById('uploadPptSubmitBtn');
 
       state.pptData = state.pptData || {};
       state.pptData.title = title;
       state.pptData.subtitle = subtitle;
-      if (link) state.pptData.embedUrl = link;
 
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
+        const isPdf = file.name.toLowerCase().endsWith('.pdf');
+        const isPptx = file.name.toLowerCase().endsWith('.pptx');
+
+        submitBtn.disabled = true;
+        statusMsg.classList.remove('hidden');
+        statusMsg.innerText = "Parsing and optimizing presentation slides...";
+
         const reader = new FileReader();
         reader.onload = async function(evt) {
           state.pptData.downloadUrl = evt.target.result;
+
+          if (isPdf) {
+            state.pptData.fileType = 'pdf';
+            state.pptData.pdfDataUrl = evt.target.result;
+            pdfDocInstance = null;
+          } else if (isPptx) {
+            try {
+              const parsedSlides = await extractPptxSlidesClientSide(file);
+              if (parsedSlides.length > 0) {
+                state.pptData.fileType = 'native_slides';
+                state.pptData.deckSlides = parsedSlides;
+              }
+            } catch (err) {
+              console.warn("PPTX text extraction fallback", err);
+            }
+          }
+
+          submitBtn.disabled = false;
           closePptUploadModal();
+          state.currentSlideIdx = 0;
           renderPptCard();
           await pushToCloud();
-          alert("PPT presentation uploaded & ready for students to download!");
+          alert("Presentation uploaded! Users can now view slides directly in the website.");
         };
+
         reader.readAsDataURL(file);
       } else {
         closePptUploadModal();
         renderPptCard();
         await pushToCloud();
-        alert("Presentation details updated successfully!");
+        alert("Sermon deck details updated successfully!");
       }
-    }
-
-    function renderSlide() {
-      if (!state.slides || state.slides.length === 0) return;
-      const slide = state.slides[state.currentSlideIdx];
-      document.getElementById('currentSlideNumber').innerText = `Slide ${state.currentSlideIdx + 1} of ${state.slides.length}`;
-      document.getElementById('slideSeriesTitle').innerText = slide.series;
-
-      document.getElementById('slideDisplay').innerHTML = `
-        <span class="text-xs uppercase tracking-widest font-extrabold px-3.5 py-1 rounded-full border font-brand" style="border-color: var(--border-color); color: var(--accent); background-color: rgba(255,255,255,0.05);">${slide.scripture}</span>
-        <h2 class="text-2xl md:text-5xl font-black mt-5 mb-4 font-display text-white tracking-tight leading-snug">${slide.title}</h2>
-        <p class="text-sm md:text-lg max-w-2xl mx-auto italic leading-relaxed font-light opacity-80">"${slide.body}"</p>
-      `;
-
-      const listEl = document.getElementById('slidesList');
-      listEl.innerHTML = state.slides.map((s, idx) => `
-        <div onclick="goToSlide(${idx})" class="p-3 rounded-2xl cursor-pointer border transition flex items-center justify-between" style="border-color: ${idx === state.currentSlideIdx ? 'var(--accent)' : 'var(--border-color)'}; background-color: ${idx === state.currentSlideIdx ? 'rgba(255,255,255,0.08)' : 'transparent'};">
-          <div class="truncate pr-2">
-            <p class="text-xs font-bold text-white truncate font-brand">${idx + 1}. ${s.title}</p>
-            <p class="text-[11px] font-brand tracking-wider" style="color: var(--accent);">${s.scripture}</p>
-          </div>
-          ${(state.role === 'admin' || state.role === 'pastor') && state.slides.length > 1 ? `
-            <button onclick="event.stopPropagation(); deleteSlide(${s.id})" class="opacity-60 hover:opacity-100 hover:text-rose-400 p-1">
-              <i class="ph-bold ph-trash"></i>
-            </button>
-          ` : ''}
-        </div>
-      `).join('');
-    }
-
-    function prevSlide() { if (state.currentSlideIdx > 0) { state.currentSlideIdx--; renderSlide(); } }
-    function nextSlide() { if (state.currentSlideIdx < state.slides.length - 1) { state.currentSlideIdx++; renderSlide(); } }
-    function goToSlide(idx) { state.currentSlideIdx = idx; renderSlide(); }
-
-    function openSlideModal() { document.getElementById('addSlideModal').classList.remove('hidden'); }
-    function closeSlideModal() { document.getElementById('addSlideModal').classList.add('hidden'); }
-
-    async function handleSaveSlide(e) {
-      e.preventDefault();
-      const newSlide = {
-        id: Date.now(),
-        series: "Series: The Mountain Mover",
-        title: document.getElementById('newSlideTitle').value,
-        scripture: document.getElementById('newSlideScripture').value,
-        body: document.getElementById('newSlideBody').value
-      };
-      state.slides.push(newSlide);
-      state.currentSlideIdx = state.slides.length - 1;
-      closeSlideModal();
-      renderSlide();
-      await pushToCloud();
-    }
-
-    async function deleteSlide(id) {
-      if (!confirm("Remove this slide?")) return;
-      state.slides = state.slides.filter(s => s.id !== id);
-      if (state.currentSlideIdx >= state.slides.length) state.currentSlideIdx = 0;
-      renderSlide();
-      await pushToCloud();
     }
 
     // ==========================================
@@ -1273,55 +1507,52 @@
         const teamMemberCount = state.members.filter(m => m.teamId === team.id).length;
 
         return `
-          <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[240px]">
+          <div class="rounded-2xl sm:rounded-3xl border theme-card backdrop-blur-xl p-4 sm:p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[220px]">
             <div class="absolute inset-0 z-0">
               <img src="${team.bgImage}" alt="${team.name}" class="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition duration-700">
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-transparent"></div>
             </div>
             
             <div class="relative z-10">
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-black px-2.5 py-1 rounded-full bg-black/80 border text-stone-200 font-brand" style="border-color: var(--border-color);">#${rank + 1} PLACE</span>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-full bg-black/80 border text-stone-200 font-brand" style="border-color: var(--border-color);">#${rank + 1} PLACE</span>
                 <div class="flex items-center gap-1.5">
-                  <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
+                  <span class="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
                   ${isStaff ? `
-                    <button onclick="openEditTeamModal(${team.id})" title="Edit Team Name & Logo" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
+                    <button onclick="openEditTeamModal(${team.id})" title="Edit Team Name & Logo" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
                       <i class="ph-bold ph-pencil-simple"></i>
                     </button>
                   ` : ''}
                 </div>
               </div>
               
-              <div class="flex items-center gap-3.5 my-3">
-                <div class="w-12 h-12 rounded-2xl p-0.5 flex items-center justify-center text-stone-950 shadow-lg" style="background-color: var(--accent);">
+              <div class="flex items-center gap-3 my-2">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl p-0.5 flex items-center justify-center text-stone-950 shadow-lg shrink-0" style="background-color: var(--accent);">
                   <div class="w-full h-full bg-black/90 rounded-[14px] flex items-center justify-center text-white">
-                    <i class="ph-bold ${team.icon} text-2xl" style="color: var(--accent);"></i>
+                    <i class="ph-bold ${team.icon} text-xl sm:text-2xl" style="color: var(--accent);"></i>
                   </div>
                 </div>
                 <div>
-                  <h3 class="text-lg font-black text-white tracking-wide font-brand">${team.name}</h3>
-                  <p class="text-sm font-bold font-mono tracking-widest mt-0.5" style="color: var(--accent);">${team.points.toLocaleString()} PTS</p>
+                  <h3 class="text-base sm:text-lg font-black text-white tracking-wide font-brand">${team.name}</h3>
+                  <p class="text-xs sm:text-sm font-bold font-mono tracking-widest mt-0.5 text-amber-400">${team.points.toLocaleString()} PTS</p>
                 </div>
               </div>
             </div>
 
             <div class="relative z-10 pt-2">
               ${isStaff ? `
-                <div class="border-t pt-3 flex flex-col gap-2" style="border-color: var(--border-color);">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-semibold opacity-80 font-brand">Edit Score:</span>
-                    <button onclick="openEditPointsModal(${team.id})" class="px-3 py-1 rounded-lg text-xs font-bold text-stone-950 font-brand flex items-center gap-1 shadow" style="background-color: var(--accent);">
-                      <i class="ph-bold ph-pencil"></i> Set Points
-                    </button>
-                  </div>
-                  <div class="flex items-center justify-end gap-1 font-brand">
+                <div class="border-t pt-2.5 flex items-center justify-between" style="border-color: var(--border-color);">
+                  <button onclick="openEditPointsModal(${team.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold text-stone-950 font-brand flex items-center gap-1 shadow" style="background-color: var(--accent);">
+                    <i class="ph-bold ph-pencil"></i> Set Points
+                  </button>
+                  <div class="flex items-center gap-1 font-brand">
                     <button onclick="adjustTeamScore(${team.id}, -10)" class="px-2 h-6 rounded bg-stone-900 text-stone-300 text-[10px] font-bold border" style="border-color: var(--border-color);">-10</button>
-                    <button onclick="adjustTeamScore(${team.id}, 10)" class="px-2 h-6 rounded bg-stone-900 text-[10px] font-bold border" style="border-color: var(--border-color); color: var(--accent);">+10</button>
+                    <button onclick="adjustTeamScore(${team.id}, 10)" class="px-2 h-6 rounded bg-stone-900 text-[10px] font-bold border text-amber-400" style="border-color: var(--border-color);">+10</button>
                     <button onclick="adjustTeamScore(${team.id}, 50)" class="px-2 h-6 rounded bg-white/10 text-white text-[10px] font-bold">+50</button>
                   </div>
                 </div>
               ` : `
-                <div class="mt-3 pt-2 text-[11px] opacity-75 italic font-brand">Live team championship ranking.</div>
+                <div class="mt-2 text-[10px] opacity-75 italic font-brand">Live team championship standing.</div>
               `}
             </div>
           </div>
@@ -1423,9 +1654,6 @@
       await pushToCloud();
     }
 
-    // ==========================================
-    // TAB 3: 2026 SUNDAY ATTENDANCE SYSTEM
-    // ==========================================
     function initSundayDropdown() {
       const select = document.getElementById('sundaySelector');
       if (!select) return;
@@ -1526,54 +1754,49 @@
         
         let standingBadge = '';
         if (percent >= 75 || totalAttended >= 8) {
-          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[10px] font-brand">🔥 Consistent (Faithful)</span>';
+          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[10px] font-brand whitespace-nowrap">🔥 Consistent</span>';
         } else if (percent >= 50 || totalAttended >= 5) {
-          standingBadge = '<span class="px-2 py-0.5 rounded-full border font-semibold text-[10px] font-brand" style="border-color: var(--border-color); color: var(--accent);">Growing</span>';
+          standingBadge = '<span class="px-2 py-0.5 rounded-full border font-semibold text-[10px] font-brand text-amber-300" style="border-color: var(--border-color);">Growing</span>';
         } else {
-          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold text-[10px] font-brand">Needs Encouragement</span>';
+          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold text-[10px] font-brand whitespace-nowrap">Needs Encouragement</span>';
         }
 
         return `
           <tr class="hover:bg-white/5 transition">
-            <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full text-xs text-stone-950 font-black flex items-center justify-center font-brand shrink-0" style="background-color: var(--accent);">
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4 font-bold text-white flex items-center gap-2">
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs text-stone-950 font-black flex items-center justify-center font-brand shrink-0" style="background-color: var(--accent);">
                 ${member.name.charAt(0)}
               </div>
-              <div>
-                <span class="font-brand block leading-tight">${member.name}</span>
-                <span class="text-[10px] opacity-60">ID #${member.id}</span>
-              </div>
+              <span class="font-brand block leading-tight truncate max-w-[120px] sm:max-w-none">${member.name}</span>
             </td>
-            <td class="py-3 px-4">
-              <span class="px-2.5 py-1 rounded-lg border font-medium text-[11px] font-brand" style="border-color: var(--border-color); background-color: rgba(0,0,0,0.5);">${team.name}</span>
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4">
+              <span class="px-2 py-0.5 rounded-lg border font-medium text-[10px] sm:text-[11px] font-brand truncate inline-block max-w-[100px]" style="border-color: var(--border-color); background-color: rgba(0,0,0,0.5);">${team.name}</span>
             </td>
             
-            <td class="py-3 px-4 text-center">
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-center">
               ${isStaff ? `
-                <button onclick="toggleAttendanceForMember(${member.id})" class="px-3.5 py-1.5 rounded-xl font-brand font-bold text-xs flex items-center gap-1.5 mx-auto transition ${presentToday ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm' : 'bg-stone-900 text-stone-400 border border-stone-800'}">
-                  <i class="ph-bold ${presentToday ? 'ph-check-circle text-emerald-400' : 'ph-x-circle text-stone-500'} text-sm"></i>
+                <button onclick="toggleAttendanceForMember(${member.id})" class="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl font-brand font-bold text-[11px] sm:text-xs flex items-center gap-1 mx-auto transition ${presentToday ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm' : 'bg-stone-900 text-stone-400 border border-stone-800'}">
+                  <i class="ph-bold ${presentToday ? 'ph-check-circle text-emerald-400' : 'ph-x-circle text-stone-500'}"></i>
                   ${presentToday ? 'Present' : 'Absent'}
                 </button>
               ` : `
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-brand ${presentToday ? 'bg-emerald-500/20 text-emerald-300' : 'bg-stone-800 text-stone-400'}">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold font-brand ${presentToday ? 'bg-emerald-500/20 text-emerald-300' : 'bg-stone-800 text-stone-400'}">
                   <i class="ph-bold ${presentToday ? 'ph-check-circle' : 'ph-x-circle'}"></i>
                   ${presentToday ? 'Present' : 'Absent'}
                 </span>
               `}
             </td>
 
-            <td class="py-3 px-4 text-center font-mono font-bold">
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-center font-mono font-bold text-xs">
               <span class="text-white">${totalAttended}</span> <span class="opacity-50 text-[10px]">/ 52</span>
             </td>
 
-            <td class="py-3 px-4">${standingBadge}</td>
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4 hidden sm:table-cell">${standingBadge}</td>
 
-            <td class="py-3 px-4 text-right staff-only ${isStaff ? '' : 'hidden'}">
-              <div class="flex items-center justify-end gap-1 font-brand">
-                <button onclick="removeMember(${member.id})" title="Remove member" class="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 flex items-center justify-center transition">
-                  <i class="ph-bold ph-trash"></i>
-                </button>
-              </div>
+            <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right staff-only ${isStaff ? '' : 'hidden'}">
+              <button onclick="removeMember(${member.id})" title="Remove member" class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 inline-flex items-center justify-center transition">
+                <i class="ph-bold ph-trash text-xs"></i>
+              </button>
             </td>
           </tr>
         `;
@@ -1650,13 +1873,13 @@
       const answered = state.prayers.filter(p => p.type === 'answered');
       const isStaff = state.role === 'admin' || state.role === 'pastor';
 
-      document.getElementById('prayerReqCount').innerText = `${requests.length} Requests`;
-      document.getElementById('answeredReqCount').innerText = `${answered.length} Praises`;
+      document.getElementById('prayerReqCount').innerText = `${requests.length}`;
+      document.getElementById('answeredReqCount').innerText = `${answered.length}`;
 
       reqList.innerHTML = requests.map(p => `
-        <div class="p-4 rounded-2xl border theme-card backdrop-blur-md relative">
+        <div class="p-3.5 sm:p-4 rounded-2xl border theme-card backdrop-blur-md relative">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold flex items-center gap-1.5 font-brand" style="color: var(--accent);">
+            <span class="text-xs font-bold flex items-center gap-1.5 font-brand text-amber-300">
               <i class="ph-bold ph-hands-praying"></i> ${p.author}
             </span>
             <span class="text-[10px] opacity-60 font-brand">${p.date}</span>
@@ -1664,7 +1887,7 @@
           <p class="text-xs opacity-90 leading-relaxed">${p.text}</p>
           ${isStaff ? `
             <div class="flex justify-end gap-2 mt-2 pt-2 border-t font-brand" style="border-color: var(--border-color);">
-              <button onclick="markPrayerAnswered(${p.id})" class="text-[10px] text-emerald-400 hover:underline font-bold">Mark as Answered 🎉</button>
+              <button onclick="markPrayerAnswered(${p.id})" class="text-[10px] text-emerald-400 hover:underline font-bold">Mark Answered 🎉</button>
               <button onclick="deletePrayer(${p.id})" class="text-[10px] text-rose-400 hover:underline">Remove</button>
             </div>
           ` : ''}
@@ -1672,7 +1895,7 @@
       `).join('');
 
       ansList.innerHTML = answered.map(p => `
-        <div class="p-4 rounded-2xl border bg-emerald-950/20 border-emerald-500/25 backdrop-blur-md relative">
+        <div class="p-3.5 sm:p-4 rounded-2xl border bg-emerald-950/20 border-emerald-500/25 backdrop-blur-md relative">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-brand">
               <i class="ph-bold ph-confetti"></i> ${p.author}
@@ -1746,10 +1969,10 @@
       }
 
       list.innerHTML = state.pastorQueries.map(q => `
-        <div class="p-4 rounded-2xl border backdrop-blur-md theme-card" style="border-color: ${q.status === 'pending' ? 'var(--accent)' : 'var(--border-color)'};">
+        <div class="p-3.5 sm:p-4 rounded-2xl border backdrop-blur-md theme-card" style="border-color: ${q.status === 'pending' ? 'var(--accent)' : 'var(--border-color)'};">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
-              <span class="text-xs font-bold font-brand" style="color: var(--accent);">${q.author}</span>
+              <span class="text-xs font-bold font-brand text-amber-300">${q.author}</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full border opacity-80 font-brand" style="border-color: var(--border-color);">${q.topic}</span>
               ${q.status === 'pending' ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 uppercase font-black font-brand">Pending</span>' : ''}
             </div>
@@ -1757,7 +1980,7 @@
           </div>
           <p class="text-xs mt-2 leading-relaxed bg-black/60 p-3 rounded-xl border font-mono" style="border-color: var(--border-color);">${q.text}</p>
           <div class="flex items-center justify-end gap-3 mt-3 font-brand">
-            <button onclick="toggleQueryStatus(${q.id})" class="text-xs hover:underline font-semibold" style="color: var(--accent);">
+            <button onclick="toggleQueryStatus(${q.id})" class="text-xs hover:underline font-semibold text-amber-400">
               ${q.status === 'pending' ? 'Mark as Addressed' : 'Mark as Pending'}
             </button>
             <button onclick="deletePastorQuery(${q.id})" class="text-xs text-rose-400 hover:underline">Delete</button>
@@ -1799,10 +2022,11 @@
       await pushToCloud();
     }
 
+    // Master Render Orchestrator
     function renderAll() {
+      renderDailyVerse();
       initSundayDropdown();
       renderPptCard();
-      renderSlide();
       renderTeams();
       renderAttendance();
       renderPrayers();
