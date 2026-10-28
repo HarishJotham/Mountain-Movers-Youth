@@ -99,7 +99,7 @@
     }
 
     body { font-family: 'Outfit', sans-serif; }
-    .font-brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.22em; }
+    .font-brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.18em; }
     .font-display { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.08em; }
 
     .brand-title-gradient {
@@ -118,6 +118,36 @@
       background-color: var(--bg-surface-elevated) !important;
       border-color: var(--border-color) !important;
     }
+
+    .nav-tab-base {
+      transition: all 0.25s ease;
+      border-bottom-width: 3px;
+    }
+    .nav-tab-sermon { border-color: transparent; color: #cbd5e1; }
+    .nav-tab-sermon.active { border-color: #38bdf8 !important; color: #38bdf8 !important; background: rgba(56, 189, 248, 0.12); }
+
+    .nav-tab-teams { border-color: transparent; color: #cbd5e1; }
+    .nav-tab-teams.active { border-color: #f59e0b !important; color: #f59e0b !important; background: rgba(245, 158, 11, 0.12); }
+
+    .nav-tab-attendance {
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+      color: #6ee7b7;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+    }
+    .nav-tab-attendance.active {
+      border-color: #10b981 !important;
+      border-bottom-width: 3px !important;
+      background: rgba(16, 185, 129, 0.22) !important;
+      color: #a7f3d0 !important;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+    }
+
+    .nav-tab-prayers { border-color: transparent; color: #cbd5e1; }
+    .nav-tab-prayers.active { border-color: #ec4899 !important; color: #f472b6 !important; background: rgba(236, 72, 153, 0.12); }
+
+    .nav-tab-pastor { border-color: transparent; color: #cbd5e1; }
+    .nav-tab-pastor.active { border-color: #a855f7 !important; color: #c084fc !important; background: rgba(168, 85, 247, 0.12); }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.25); }
@@ -172,7 +202,7 @@
           </select>
         </div>
 
-        <!-- Role Badges & Dual Login -->
+        <!-- Role Badges & Login -->
         <div class="pt-3">
           <div id="roleBadgeContainer" class="flex items-center bg-stone-900/90 border rounded-xl p-1 gap-1" style="border-color: var(--border-color);">
             <button id="youthRoleBtn" onclick="setRole('youth')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white/20 text-white font-brand">
@@ -192,22 +222,28 @@
 
   <!-- NAVIGATION TABS -->
   <div class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
-    <div class="flex border-b overflow-x-auto space-x-2 pb-1 scrollbar-none" style="border-color: var(--border-color);">
-      <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn active px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 border-b-2 bg-white/5 transition font-brand" style="border-color: var(--accent); color: var(--accent);">
-        <i class="ph-bold ph-presentation"></i> Sermon Slides & PPT
+    <div class="flex border-b overflow-x-auto space-x-2 pb-1 scrollbar-none items-center" style="border-color: var(--border-color);">
+      <button onclick="switchTab('tab-sermon')" id="nav-sermon" class="tab-btn nav-tab-base nav-tab-sermon active px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-presentation text-base text-sky-400"></i> Sermon Slides & PPT
       </button>
-      <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
-        <i class="ph-bold ph-shield-star"></i> Team Leaderboard
+
+      <button onclick="switchTab('tab-teams')" id="nav-teams" class="tab-btn nav-tab-base nav-tab-teams px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-trophy text-base text-amber-400"></i> Team Leaderboard
       </button>
-      <button onclick="switchTab('tab-attendance')" id="nav-attendance" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
-        <i class="ph-bold ph-calendar-check"></i> Youth Attendance
+
+      <button onclick="switchTab('tab-attendance')" id="nav-attendance" class="tab-btn nav-tab-base nav-tab-attendance px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-bold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-calendar-check text-emerald-400 text-lg animate-pulse"></i>
+        <span>Sunday Attendance 2026</span>
+        <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono">Live</span>
       </button>
-      <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
-        <i class="ph-bold ph-hands-praying"></i> Prayer & Answer Wall
+
+      <button onclick="switchTab('tab-prayers')" id="nav-prayers" class="tab-btn nav-tab-base nav-tab-prayers px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-hands-praying text-base text-pink-400"></i> Prayer & Praise Wall
       </button>
-      <button onclick="switchTab('tab-pastor')" id="nav-pastor" class="tab-btn px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 border-b-2 border-transparent text-stone-400 hover:text-white transition font-brand">
-        <i class="ph-bold ph-chat-circle-dots"></i> Ask the Pastor
-        <span id="pastorUnreadDot" class="hidden w-2 h-2 rounded-full" style="background-color: var(--accent-secondary);"></span>
+
+      <button onclick="switchTab('tab-pastor')" id="nav-pastor" class="tab-btn nav-tab-base nav-tab-pastor px-4 py-2.5 rounded-t-xl text-xs md:text-sm font-semibold flex items-center gap-2 font-brand">
+        <i class="ph-bold ph-chat-circle-dots text-base text-purple-400"></i> Ask the Pastor
+        <span id="pastorUnreadDot" class="hidden w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
       </button>
     </div>
   </div>
@@ -308,13 +344,13 @@
       </div>
     </section>
 
-    <!-- TAB 2: TEAMS (EDITABLE) -->
+    <!-- TAB 2: TEAMS (EDITABLE + MANUAL POINT EDITING) -->
     <section id="tab-teams" class="tab-content hidden space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Championship</span>
           <h2 class="text-3xl md:text-4xl font-extrabold font-display">Team Leaderboard</h2>
-          <p class="text-xs opacity-75 font-brand">Admins & Pastor can edit team names, logos, & scores.</p>
+          <p class="text-xs opacity-75 font-brand">Admins & Pastor can edit team identities and assign precise points directly.</p>
         </div>
         <div class="staff-only hidden">
           <button onclick="resetAllScoresConfirm()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition font-brand">
@@ -325,18 +361,18 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="teamsGrid"></div>
     </section>
 
-    <!-- TAB 3: ATTENDANCE -->
+    <!-- TAB 3: 2026 SUNDAY ATTENDANCE -->
     <section id="tab-attendance" class="tab-content hidden space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Consistency Hub</span>
-          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Youth Attendance Tracker</h2>
-          <p class="text-xs opacity-75 font-brand">Total Gatherings Tracked: <span id="totalSessionsCount" class="font-bold" style="color: var(--accent);">10</span> sessions</p>
+          <span class="text-xs font-bold tracking-widest uppercase font-brand text-emerald-400">Year 2026 Registry</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display">Sunday Attendance Tracker</h2>
+          <p class="text-xs opacity-80 font-brand">Select any Sunday throughout 2026 to view and mark attendance records.</p>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
           <div class="relative">
             <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search youth name..." class="w-48 md:w-64 bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
-            <i class="ph-bold ph-magnifying-glass absolute left-2.5 top-2.5 opacity-60 text-xs"></i>
+            <i class="ph-bold ph-magnifying-glass absolute right-3 top-2.5 opacity-60 text-xs"></i>
           </div>
           <div class="staff-only hidden">
             <button onclick="openAddMemberModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-stone-950 flex items-center gap-1.5 shadow-lg font-brand" style="background-color: var(--accent);">
@@ -346,25 +382,61 @@
         </div>
       </div>
 
+      <!-- 2026 SUNDAY DATE PICKER BAR -->
+      <div class="p-5 rounded-3xl border theme-card backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center justify-center shrink-0 text-2xl">
+            <i class="ph-bold ph-calendar"></i>
+          </div>
+          <div class="w-full">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-emerald-300 font-brand">Selected Sunday (2026 Session)</label>
+            <div class="flex items-center gap-2 mt-1">
+              <select id="sundaySelector" onchange="handleSundayChange(this.value)" class="bg-stone-950 border border-emerald-500/40 text-emerald-200 text-xs rounded-xl px-3 py-2 font-mono font-bold w-full md:w-72 focus:outline-none focus:ring-1 focus:ring-emerald-400">
+              </select>
+              <button onclick="navigateSunday(-1)" title="Previous Sunday" class="p-2 rounded-xl bg-stone-900 border border-stone-700 text-white hover:bg-stone-800"><i class="ph-bold ph-caret-left"></i></button>
+              <button onclick="navigateSunday(1)" title="Next Sunday" class="p-2 rounded-xl bg-stone-900 border border-stone-700 text-white hover:bg-stone-800"><i class="ph-bold ph-caret-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="px-4 py-2 rounded-2xl bg-black/60 border border-stone-700">
+            <span class="text-[10px] uppercase font-bold opacity-70 block font-brand">Active Registry Date</span>
+            <span id="activeSundayLabel" class="text-xs font-extrabold text-emerald-300 font-brand">Sunday, 04 Jan 2026</span>
+          </div>
+
+          <div class="staff-only hidden flex items-center gap-2">
+            <button onclick="markAllForDate(true)" class="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-brand">
+              All Present
+            </button>
+            <button onclick="markAllForDate(false)" class="px-3 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold font-brand">
+              All Absent
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATISTICS FOR SELECTED SUNDAY -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="p-4 rounded-2xl border theme-card">
           <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Total Registered</p>
           <h4 id="statTotalYouth" class="text-2xl font-black mt-1 font-brand">0</h4>
         </div>
         <div class="p-4 rounded-2xl border theme-card">
-          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Avg Attendance</p>
-          <h4 id="statAvgAttendance" class="text-2xl font-black mt-1 font-brand" style="color: var(--accent);">0%</h4>
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Present on Date</p>
+          <h4 id="statDatePresentCount" class="text-2xl font-black mt-1 font-brand text-emerald-400">0</h4>
         </div>
         <div class="p-4 rounded-2xl border theme-card">
-          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Honor Roll (90%+)</p>
-          <h4 id="statHonorRoll" class="text-2xl font-black mt-1 font-brand">0</h4>
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Sunday Turnout %</p>
+          <h4 id="statDatePercentage" class="text-2xl font-black mt-1 font-brand" style="color: var(--accent);">0%</h4>
         </div>
         <div class="p-4 rounded-2xl border theme-card">
-          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">Leading Team</p>
-          <h4 id="statLeadingTeam" class="text-base font-black mt-1 truncate font-brand" style="color: var(--accent-secondary);">-</h4>
+          <p class="text-[10px] uppercase font-bold tracking-wider opacity-75 font-brand">2026 Annual Consistency</p>
+          <h4 id="statAnnualConsistency" class="text-xl font-black mt-1 truncate font-brand text-sky-400">0%</h4>
         </div>
       </div>
 
+      <!-- ATTENDANCE ROSTER TABLE -->
       <div class="rounded-3xl border theme-card overflow-hidden shadow-card">
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
@@ -372,10 +444,10 @@
               <tr class="border-b bg-white/5 text-[10px] uppercase tracking-wider font-bold font-brand" style="border-color: var(--border-color);">
                 <th class="py-3.5 px-4">Youth Member</th>
                 <th class="py-3.5 px-4">Assigned Team</th>
-                <th class="py-3.5 px-4 text-center">Attended</th>
-                <th class="py-3.5 px-4">Attendance %</th>
-                <th class="py-3.5 px-4">Status</th>
-                <th class="py-3.5 px-4 text-right staff-only hidden">Staff Action</th>
+                <th class="py-3.5 px-4 text-center">Status on Selected Sunday</th>
+                <th class="py-3.5 px-4 text-center">2026 Total Attendance</th>
+                <th class="py-3.5 px-4">Year Standing</th>
+                <th class="py-3.5 px-4 text-right staff-only hidden">Staff Controls</th>
               </tr>
             </thead>
             <tbody id="memberTableBody" class="divide-y text-xs" style="border-color: var(--border-color);"></tbody>
@@ -387,12 +459,12 @@
     <!-- TAB 4: PRAYER WALL -->
     <section id="tab-prayers" class="tab-content hidden space-y-8">
       <div>
-        <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Community of Faith</span>
+        <span class="text-xs font-bold tracking-widest uppercase font-brand text-pink-400">Community of Faith</span>
         <h2 class="text-3xl md:text-4xl font-extrabold font-display">Prayer & Answer Wall</h2>
       </div>
 
       <div class="rounded-3xl border theme-card p-6 shadow-card">
-        <h3 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2 font-brand" style="color: var(--accent);">
+        <h3 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2 font-brand text-pink-400">
           <i class="ph-bold ph-pen-nib"></i> Post a Prayer Request or Praise
         </h3>
         <form id="prayerForm" onsubmit="handlePrayerSubmit(event)" class="space-y-4">
@@ -452,7 +524,7 @@
     <!-- TAB 5: ASK THE PASTOR -->
     <section id="tab-pastor" class="tab-content hidden space-y-6">
       <div>
-        <span class="text-xs font-bold tracking-widest uppercase font-brand" style="color: var(--accent);">Pastoral Guidance</span>
+        <span class="text-xs font-bold tracking-widest uppercase font-brand text-purple-400">Pastoral Guidance</span>
         <h2 class="text-3xl md:text-4xl font-extrabold font-display">Ask Your Question to the Pastor</h2>
         <p class="text-xs opacity-75 font-brand">Strictly confidential line directly to the Pastor.</p>
       </div>
@@ -479,7 +551,7 @@
           </div>
           <div class="flex items-center justify-between">
             <span class="text-[11px] opacity-75 flex items-center gap-1 font-brand">
-              <i class="ph-bold ph-lock-key" style="color: var(--accent);"></i> Encrypted: Leaders & Youths cannot open.
+              <i class="ph-bold ph-lock-key text-purple-400"></i> Encrypted: Leaders & Youths cannot open.
             </span>
             <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-stone-950 font-brand shadow-lg" style="background-color: var(--accent);">
               <i class="ph-bold ph-paper-plane-right"></i> Send Privately
@@ -516,6 +588,42 @@
   </main>
 
   <!-- MODALS -->
+
+  <!-- MANUAL POINTS EDIT MODAL (ADMIN & PASTOR) -->
+  <div id="editPointsModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
+    <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
+        <div class="flex items-center gap-2">
+          <i class="ph-bold ph-calculator text-lg" style="color: var(--accent);"></i>
+          <h3 class="text-sm font-bold font-brand uppercase tracking-wider">Set Exact Points</h3>
+        </div>
+        <button onclick="closeEditPointsModal()" class="opacity-60 hover:opacity-100"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+
+      <form id="editPointsForm" onsubmit="handleSavePoints(event)" class="space-y-4 font-brand text-xs">
+        <input type="hidden" id="editPointsTeamId">
+        
+        <div>
+          <span class="text-[10px] uppercase font-bold opacity-60">Target Team</span>
+          <p id="editPointsTeamName" class="text-base font-black text-white mt-0.5 font-brand">Team Name</p>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1 opacity-80">Enter New Total Score</label>
+          <input type="number" id="manualPointsInput" min="0" step="1" required placeholder="e.g. 5, 27, 150, 480" class="w-full bg-stone-900 border rounded-xl px-3 py-2.5 text-base font-mono font-bold text-white focus:outline-none focus:ring-1 focus:ring-amber-400" style="border-color: var(--border-color);">
+          <p id="pointsValidationError" class="text-[11px] text-rose-400 mt-1 hidden">Please enter a valid non-negative whole number.</p>
+          <span class="text-[10px] opacity-60 mt-1 block">Enter any custom score directly. Replaces current points.</span>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEditPointsModal()" class="px-3.5 py-2 font-bold rounded-xl bg-stone-900 text-stone-300 hover:bg-stone-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 font-bold rounded-xl text-stone-950 shadow-lg" style="background-color: var(--accent);">Save Score</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT TEAM IDENTITY MODAL -->
   <div id="editTeamModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -529,7 +637,7 @@
           <input type="text" id="editTeamName" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
-          <label class="block font-semibold mb-1 opacity-80">Team Icon (ph-crown, ph-fire, ph-shield, ph-lightning)</label>
+          <label class="block font-semibold mb-1 opacity-80">Team Icon (e.g. ph-crown, ph-fire, ph-shield, ph-lightning, ph-trophy)</label>
           <input type="text" id="editTeamIcon" required class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-white" style="border-color: var(--border-color);">
         </div>
         <div>
@@ -544,6 +652,7 @@
     </div>
   </div>
 
+  <!-- PPT UPLOAD MODAL -->
   <div id="pptUploadModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -575,6 +684,7 @@
     </div>
   </div>
 
+  <!-- LOGIN MODAL -->
   <div id="loginModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="text-center">
@@ -595,6 +705,7 @@
     </div>
   </div>
 
+  <!-- PASSWORD MANAGER MODAL -->
   <div id="keyManagerModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -618,6 +729,7 @@
     </div>
   </div>
 
+  <!-- ADD YOUTH MEMBER MODAL -->
   <div id="addMemberModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -633,9 +745,11 @@
           <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Assign to Team</label>
           <select id="newMemberTeam" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);"></select>
         </div>
-        <div>
-          <label class="block text-xs font-semibold mb-1 opacity-80 font-brand">Sessions Attended (Out of 10)</label>
-          <input type="number" id="newMemberAttended" min="0" max="10" value="8" class="w-full bg-stone-900 border rounded-xl px-3 py-2 text-xs text-white font-brand" style="border-color: var(--border-color);">
+        <div class="flex items-center gap-2 pt-2">
+          <label class="flex items-center gap-2 text-xs cursor-pointer select-none font-brand">
+            <input type="checkbox" id="newMemberMarkPresentCurrent" checked class="w-4 h-4 rounded bg-stone-900 border">
+            <span class="opacity-80">Mark Present for selected Sunday date</span>
+          </label>
         </div>
         <div class="flex justify-end gap-2 pt-2 font-brand">
           <button type="button" onclick="closeAddMemberModal()" class="px-3 py-2 text-xs font-bold rounded-xl bg-stone-900 text-stone-300">Cancel</button>
@@ -645,6 +759,7 @@
     </div>
   </div>
 
+  <!-- ADD SLIDE MODAL -->
   <div id="addSlideModal" class="fixed inset-0 z-50 backdrop-blur-md bg-black/85 flex items-center justify-center p-4 hidden">
     <div class="bg-stone-950 border rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4 theme-card-elevated" style="border-color: var(--border-color);">
       <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
@@ -674,10 +789,6 @@
 
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
-    // ========================================================
-    // SUPABASE REALTIME CLOUD CONFIGURATION
-    // PASTE YOUR KEYS HERE (From Supabase -> Settings -> API)
-    // ========================================================
     const SUPABASE_URL = "https://pidgteyfhxxmgkmpkzjw.supabase.co";
     const SUPABASE_KEY = "sb_publishable_7TUOVAquMi1Z_SuLvNuUFw_BndnvACS";
 
@@ -686,8 +797,6 @@
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     }
 
-    const TOTAL_SESSIONS = 10;
-
     let authConfig = {
       pastorKey: "pastor777",
       adminKey: "admin777"
@@ -695,10 +804,31 @@
 
     let loginTarget = null;
 
+    // Generate all Sundays in the Year 2026 (52 Sundays)
+    const SUNDAYS_2026 = (function generateSundays() {
+      const dates = [];
+      const d = new Date(2026, 0, 1);
+      while (d.getDay() !== 0) {
+        d.setDate(d.getDate() + 1);
+      }
+      while (d.getFullYear() === 2026) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const iso = `${y}-${m}-${day}`;
+        const label = d.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+        dates.push({ iso, label });
+        d.setDate(d.getDate() + 7);
+      }
+      return dates;
+    })();
+
     let state = {
       theme: 'theme-sunset',
       role: 'youth',
       currentSlideIdx: 0,
+      selectedSunday: SUNDAYS_2026[0].iso,
+      sundayAttendance: {},
       pptData: {
         title: "Faith That Shifts Mountains",
         subtitle: "Pastor & Speaker Notes • Sunday Service Deck",
@@ -759,10 +889,10 @@
 
         if (data && data.data) {
           state = { ...data.data, role: state.role };
+          if (!state.sundayAttendance) state.sundayAttendance = {};
           document.getElementById('cloudStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Supabase Connected`;
           renderAll();
         } else {
-          // Initialize in Supabase on first run
           await pushToCloud();
         }
       } catch (err) {
@@ -771,7 +901,7 @@
     }
 
     async function pushToCloud() {
-      saveStorage(); // Always save instant local copy
+      saveStorage();
 
       if (!supabaseClient) return;
 
@@ -784,7 +914,6 @@
       }
     }
 
-    // Subscribe to live instant changes (Realtime WebSocket!)
     function subscribeToRealtime() {
       if (!supabaseClient) return;
 
@@ -793,6 +922,7 @@
         .on('postgres_changes', { event: '*', schema: 'public', table: 'mountain_movers' }, payload => {
           if (payload.new && payload.new.data) {
             state = { ...payload.new.data, role: state.role };
+            if (!state.sundayAttendance) state.sundayAttendance = {};
             renderAll();
           }
         })
@@ -808,6 +938,7 @@
         if (saved) {
           const parsed = JSON.parse(saved);
           state = { ...state, ...parsed, role: state.role };
+          if (!state.sundayAttendance) state.sundayAttendance = {};
         }
       } catch (e) {}
     }
@@ -821,7 +952,8 @@
           slides: state.slides,
           prayers: state.prayers,
           pastorQueries: state.pastorQueries,
-          pptData: state.pptData
+          pptData: state.pptData,
+          sundayAttendance: state.sundayAttendance
         }));
       } catch (e) {}
     }
@@ -880,7 +1012,7 @@
         adminBtn.style.backgroundColor = "var(--accent)";
         elevatedBanner.classList.remove('hidden');
         bannerTitle.innerText = "Admin & Leader Mode Active";
-        bannerDesc.innerText = "You can record attendance, manage team points, edit teams, and upload PPTs.";
+        bannerDesc.innerText = "You can record Sunday attendance, set custom team points, edit teams, and upload PPTs.";
         manageKeysBtn.classList.add('hidden');
         staffElements.forEach(el => el.classList.remove('hidden'));
 
@@ -893,7 +1025,7 @@
         pastorBtn.style.backgroundColor = "var(--accent)";
         elevatedBanner.classList.remove('hidden');
         bannerTitle.innerText = "Pastor Sanctuary Active";
-        bannerDesc.innerText = "Master access unlocked: Confidential queries open, team identity editor, PPT hub, and key vault.";
+        bannerDesc.innerText = "Master access unlocked: Confidential queries open, manual points editor, team identity editor, PPT hub, and key vault.";
         manageKeysBtn.classList.remove('hidden');
         staffElements.forEach(el => el.classList.remove('hidden'));
 
@@ -987,9 +1119,7 @@
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.style.borderColor = 'transparent';
-        btn.style.color = '#A8A29E';
-        btn.classList.remove('bg-white/5');
+        btn.classList.remove('active');
       });
 
       const target = document.getElementById(tabId);
@@ -997,12 +1127,13 @@
 
       const activeNav = document.getElementById(tabId.replace('tab-', 'nav-'));
       if (activeNav) {
-        activeNav.style.borderColor = 'var(--accent)';
-        activeNav.style.color = 'var(--accent)';
-        activeNav.classList.add('bg-white/5');
+        activeNav.classList.add('active');
       }
     }
 
+    // ==========================================
+    // TAB 1: SERMON PRESENTATION & SLIDES
+    // ==========================================
     function renderPptCard() {
       if (!state.pptData) return;
       document.getElementById('pptTitleDisplay').innerText = state.pptData.title || "Sunday Sermon Presentation";
@@ -1130,6 +1261,9 @@
       await pushToCloud();
     }
 
+    // ==========================================
+    // TAB 2: TEAMS & MANUAL POINTS EDITING
+    // ==========================================
     function renderTeams() {
       const grid = document.getElementById('teamsGrid');
       const sortedTeams = [...state.teams].sort((a,b) => b.points - a.points);
@@ -1139,7 +1273,7 @@
         const teamMemberCount = state.members.filter(m => m.teamId === team.id).length;
 
         return `
-          <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[220px]">
+          <div class="rounded-3xl border theme-card backdrop-blur-xl p-5 shadow-card hover:brightness-105 transition flex flex-col justify-between relative overflow-hidden group min-h-[240px]">
             <div class="absolute inset-0 z-0">
               <img src="${team.bgImage}" alt="${team.name}" class="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition duration-700">
               <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
@@ -1151,7 +1285,7 @@
                 <div class="flex items-center gap-1.5">
                   <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/70 border text-stone-300 font-brand" style="border-color: var(--border-color);">${teamMemberCount} Youths</span>
                   ${isStaff ? `
-                    <button onclick="openEditTeamModal(${team.id})" title="Edit Team Name & Logo" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
+                    <button onclick="openEditTeamModal(${team.id})" title="Edit Team Name & Logo" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
                       <i class="ph-bold ph-pencil-simple"></i>
                     </button>
                   ` : ''}
@@ -1166,32 +1300,80 @@
                 </div>
                 <div>
                   <h3 class="text-lg font-black text-white tracking-wide font-brand">${team.name}</h3>
-                  <p class="text-xs font-bold font-mono tracking-widest mt-0.5" style="color: var(--accent);">${team.points.toLocaleString()} PTS</p>
+                  <p class="text-sm font-bold font-mono tracking-widest mt-0.5" style="color: var(--accent);">${team.points.toLocaleString()} PTS</p>
                 </div>
               </div>
             </div>
 
-            <div class="relative z-10">
+            <div class="relative z-10 pt-2">
               ${isStaff ? `
-                <div class="mt-4 pt-3 border-t flex items-center justify-between" style="border-color: var(--border-color);">
-                  <span class="text-[11px] font-semibold opacity-80 font-brand">Points:</span>
-                  <div class="flex items-center gap-1 font-brand">
-                    <button onclick="adjustTeamScore(${team.id}, -20)" class="w-7 h-7 rounded-lg bg-stone-900 text-stone-300 text-xs font-bold border" style="border-color: var(--border-color);">-20</button>
-                    <button onclick="adjustTeamScore(${team.id}, 20)" class="w-7 h-7 rounded-lg bg-stone-900 text-xs font-bold border" style="border-color: var(--border-color); color: var(--accent);">+20</button>
-                    <button onclick="adjustTeamScore(${team.id}, 50)" class="px-2 h-7 rounded-lg text-stone-950 text-xs font-bold shadow" style="background-color: var(--accent);">+50</button>
+                <div class="border-t pt-3 flex flex-col gap-2" style="border-color: var(--border-color);">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-semibold opacity-80 font-brand">Edit Score:</span>
+                    <button onclick="openEditPointsModal(${team.id})" class="px-3 py-1 rounded-lg text-xs font-bold text-stone-950 font-brand flex items-center gap-1 shadow" style="background-color: var(--accent);">
+                      <i class="ph-bold ph-pencil"></i> Set Points
+                    </button>
+                  </div>
+                  <div class="flex items-center justify-end gap-1 font-brand">
+                    <button onclick="adjustTeamScore(${team.id}, -10)" class="px-2 h-6 rounded bg-stone-900 text-stone-300 text-[10px] font-bold border" style="border-color: var(--border-color);">-10</button>
+                    <button onclick="adjustTeamScore(${team.id}, 10)" class="px-2 h-6 rounded bg-stone-900 text-[10px] font-bold border" style="border-color: var(--border-color); color: var(--accent);">+10</button>
+                    <button onclick="adjustTeamScore(${team.id}, 50)" class="px-2 h-6 rounded bg-white/10 text-white text-[10px] font-bold">+50</button>
                   </div>
                 </div>
               ` : `
-                <div class="mt-3 pt-2 text-[11px] opacity-75 italic font-brand">Live team score standing.</div>
+                <div class="mt-3 pt-2 text-[11px] opacity-75 italic font-brand">Live team championship ranking.</div>
               `}
             </div>
           </div>
         `;
       }).join('');
+    }
 
-      if (sortedTeams.length > 0) {
-        document.getElementById('statLeadingTeam').innerText = sortedTeams[0].name;
+    function openEditPointsModal(teamId) {
+      if (state.role !== 'admin' && state.role !== 'pastor') {
+        alert("Unauthorized: You must login as Admin or Pastor to edit points.");
+        return;
       }
+      const team = state.teams.find(t => t.id === teamId);
+      if (!team) return;
+
+      document.getElementById('editPointsTeamId').value = team.id;
+      document.getElementById('editPointsTeamName').innerText = team.name;
+      document.getElementById('manualPointsInput').value = team.points;
+      document.getElementById('pointsValidationError').classList.add('hidden');
+      document.getElementById('editPointsModal').classList.remove('hidden');
+      document.getElementById('manualPointsInput').focus();
+    }
+
+    function closeEditPointsModal() {
+      document.getElementById('editPointsModal').classList.add('hidden');
+    }
+
+    async function handleSavePoints(e) {
+      e.preventDefault();
+      if (state.role !== 'admin' && state.role !== 'pastor') {
+        alert("Permission denied. Admin or Pastor role required.");
+        closeEditPointsModal();
+        return;
+      }
+
+      const teamId = parseInt(document.getElementById('editPointsTeamId').value);
+      const valStr = document.getElementById('manualPointsInput').value.trim();
+      const newPoints = Number(valStr);
+
+      if (valStr === '' || isNaN(newPoints) || newPoints < 0 || !Number.isInteger(newPoints)) {
+        document.getElementById('pointsValidationError').classList.remove('hidden');
+        return;
+      }
+
+      const team = state.teams.find(t => t.id === teamId);
+      if (!team) return;
+
+      team.points = newPoints;
+      closeEditPointsModal();
+      renderTeams();
+      await pushToCloud();
+      alert(`Success: ${team.name} updated to ${newPoints} points!`);
     }
 
     function openEditTeamModal(teamId) {
@@ -1225,6 +1407,7 @@
     }
 
     async function adjustTeamScore(teamId, delta) {
+      if (state.role !== 'admin' && state.role !== 'pastor') return;
       const team = state.teams.find(t => t.id === teamId);
       if (team) {
         team.points = Math.max(0, team.points + delta);
@@ -1234,58 +1417,162 @@
     }
 
     async function resetAllScoresConfirm() {
-      if (confirm("Reset scores for all teams to zero? This starts a brand new season.")) {
-        state.teams.forEach(t => t.points = 0);
-        renderTeams();
-        await pushToCloud();
+      if (!confirm("Reset scores for all teams to zero? This starts a brand new season.")) return;
+      state.teams.forEach(t => t.points = 0);
+      renderTeams();
+      await pushToCloud();
+    }
+
+    // ==========================================
+    // TAB 3: 2026 SUNDAY ATTENDANCE SYSTEM
+    // ==========================================
+    function initSundayDropdown() {
+      const select = document.getElementById('sundaySelector');
+      if (!select) return;
+      
+      select.innerHTML = SUNDAYS_2026.map(s => `
+        <option value="${s.iso}" ${s.iso === state.selectedSunday ? 'selected' : ''}>${s.label}</option>
+      `).join('');
+    }
+
+    function handleSundayChange(newIso) {
+      state.selectedSunday = newIso;
+      renderAttendance();
+      saveStorage();
+    }
+
+    function navigateSunday(direction) {
+      const currentIdx = SUNDAYS_2026.findIndex(s => s.iso === state.selectedSunday);
+      const nextIdx = currentIdx + direction;
+      if (nextIdx >= 0 && nextIdx < SUNDAYS_2026.length) {
+        state.selectedSunday = SUNDAYS_2026[nextIdx].iso;
+        document.getElementById('sundaySelector').value = state.selectedSunday;
+        renderAttendance();
+        saveStorage();
       }
     }
 
+    function isMemberPresent(memberId, dateIso) {
+      if (!state.sundayAttendance[dateIso]) {
+        const member = state.members.find(m => m.id === memberId);
+        return member ? member.attended >= 7 : false;
+      }
+      return !!state.sundayAttendance[dateIso][String(memberId)];
+    }
+
+    async function toggleAttendanceForMember(memberId, forceStatus = null) {
+      if (state.role !== 'admin' && state.role !== 'pastor') {
+        alert("Attendance modification requires Admin or Pastor privileges.");
+        return;
+      }
+
+      const dateIso = state.selectedSunday;
+      if (!state.sundayAttendance[dateIso]) {
+        state.sundayAttendance[dateIso] = {};
+        state.members.forEach(m => {
+          state.sundayAttendance[dateIso][String(m.id)] = (m.attended >= 7);
+        });
+      }
+
+      const current = !!state.sundayAttendance[dateIso][String(memberId)];
+      state.sundayAttendance[dateIso][String(memberId)] = forceStatus !== null ? forceStatus : !current;
+
+      renderAttendance();
+      await pushToCloud();
+    }
+
+    async function markAllForDate(present) {
+      if (state.role !== 'admin' && state.role !== 'pastor') return;
+      const dateIso = state.selectedSunday;
+      if (!state.sundayAttendance[dateIso]) state.sundayAttendance[dateIso] = {};
+
+      state.members.forEach(m => {
+        state.sundayAttendance[dateIso][String(m.id)] = present;
+      });
+
+      renderAttendance();
+      await pushToCloud();
+    }
+
+    function getMemberTotal2026Attended(memberId) {
+      let total = 0;
+      Object.keys(state.sundayAttendance).forEach(dateIso => {
+        if (state.sundayAttendance[dateIso] && state.sundayAttendance[dateIso][String(memberId)] === true) {
+          total++;
+        }
+      });
+      const member = state.members.find(m => m.id === memberId);
+      return Math.max(total, member ? member.attended : 0);
+    }
+
     function renderAttendance() {
+      const activeSundayObj = SUNDAYS_2026.find(s => s.iso === state.selectedSunday) || SUNDAYS_2026[0];
+      document.getElementById('activeSundayLabel').innerText = activeSundayObj.label;
+
       const tableBody = document.getElementById('memberTableBody');
       const searchVal = (document.getElementById('memberSearchInput')?.value || '').toLowerCase();
       const filtered = state.members.filter(m => m.name.toLowerCase().includes(searchVal));
       const isStaff = state.role === 'admin' || state.role === 'pastor';
 
+      let datePresentCount = 0;
+
       tableBody.innerHTML = filtered.map(member => {
         const team = state.teams.find(t => t.id === member.teamId) || { name: 'Unassigned' };
-        const percent = Math.round((member.attended / TOTAL_SESSIONS) * 100);
+        const presentToday = isMemberPresent(member.id, state.selectedSunday);
+        if (presentToday) datePresentCount++;
+
+        const totalAttended = getMemberTotal2026Attended(member.id);
+        const percent = Math.min(100, Math.round((totalAttended / 52) * 100));
         
-        let statusBadge = '';
-        if (percent >= 90) {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[10px] font-brand">🔥 Honor Roll (90%+)</span>';
-        } else if (percent >= 70) {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full border font-semibold text-[10px] font-brand" style="border-color: var(--border-color); color: var(--accent);">Consistent</span>';
+        let standingBadge = '';
+        if (percent >= 75 || totalAttended >= 8) {
+          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[10px] font-brand">🔥 Consistent (Faithful)</span>';
+        } else if (percent >= 50 || totalAttended >= 5) {
+          standingBadge = '<span class="px-2 py-0.5 rounded-full border font-semibold text-[10px] font-brand" style="border-color: var(--border-color); color: var(--accent);">Growing</span>';
         } else {
-          statusBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold text-[10px] font-brand">Encouragement</span>';
+          standingBadge = '<span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold text-[10px] font-brand">Needs Encouragement</span>';
         }
 
         return `
           <tr class="hover:bg-white/5 transition">
             <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full text-[11px] text-stone-950 font-black flex items-center justify-center font-brand" style="background-color: var(--accent);">
+              <div class="w-8 h-8 rounded-full text-xs text-stone-950 font-black flex items-center justify-center font-brand shrink-0" style="background-color: var(--accent);">
                 ${member.name.charAt(0)}
               </div>
-              <span class="font-brand">${member.name}</span>
-            </td>
-            <td class="py-3 px-4">
-              <span class="px-2 py-0.5 rounded-lg border font-medium text-[11px] font-brand" style="border-color: var(--border-color); background-color: rgba(0,0,0,0.5);">${team.name}</span>
-            </td>
-            <td class="py-3 px-4 text-center font-mono font-bold">${member.attended} / ${TOTAL_SESSIONS}</td>
-            <td class="py-3 px-4">
-              <div class="flex items-center gap-2">
-                <div class="w-20 bg-stone-950 rounded-full h-2 overflow-hidden border" style="border-color: var(--border-color);">
-                  <div class="h-full rounded-full" style="width: ${percent}%; background-color: var(--accent);"></div>
-                </div>
-                <span class="font-mono font-bold" style="color: var(--accent);">${percent}%</span>
+              <div>
+                <span class="font-brand block leading-tight">${member.name}</span>
+                <span class="text-[10px] opacity-60">ID #${member.id}</span>
               </div>
             </td>
-            <td class="py-3 px-4">${statusBadge}</td>
+            <td class="py-3 px-4">
+              <span class="px-2.5 py-1 rounded-lg border font-medium text-[11px] font-brand" style="border-color: var(--border-color); background-color: rgba(0,0,0,0.5);">${team.name}</span>
+            </td>
+            
+            <td class="py-3 px-4 text-center">
+              ${isStaff ? `
+                <button onclick="toggleAttendanceForMember(${member.id})" class="px-3.5 py-1.5 rounded-xl font-brand font-bold text-xs flex items-center gap-1.5 mx-auto transition ${presentToday ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm' : 'bg-stone-900 text-stone-400 border border-stone-800'}">
+                  <i class="ph-bold ${presentToday ? 'ph-check-circle text-emerald-400' : 'ph-x-circle text-stone-500'} text-sm"></i>
+                  ${presentToday ? 'Present' : 'Absent'}
+                </button>
+              ` : `
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-brand ${presentToday ? 'bg-emerald-500/20 text-emerald-300' : 'bg-stone-800 text-stone-400'}">
+                  <i class="ph-bold ${presentToday ? 'ph-check-circle' : 'ph-x-circle'}"></i>
+                  ${presentToday ? 'Present' : 'Absent'}
+                </span>
+              `}
+            </td>
+
+            <td class="py-3 px-4 text-center font-mono font-bold">
+              <span class="text-white">${totalAttended}</span> <span class="opacity-50 text-[10px]">/ 52</span>
+            </td>
+
+            <td class="py-3 px-4">${standingBadge}</td>
+
             <td class="py-3 px-4 text-right staff-only ${isStaff ? '' : 'hidden'}">
               <div class="flex items-center justify-end gap-1 font-brand">
-                <button onclick="stepAttendance(${member.id}, -1)" title="Absent / Minus" class="w-6 h-6 rounded bg-stone-900 text-stone-300 font-bold border" style="border-color: var(--border-color);">-</button>
-                <button onclick="stepAttendance(${member.id}, 1)" title="Present / Add" class="w-6 h-6 rounded text-stone-950 font-bold" style="background-color: var(--accent);">+</button>
-                <button onclick="removeMember(${member.id})" class="w-6 h-6 rounded bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 ml-1"><i class="ph-bold ph-trash"></i></button>
+                <button onclick="removeMember(${member.id})" title="Remove member" class="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 flex items-center justify-center transition">
+                  <i class="ph-bold ph-trash"></i>
+                </button>
               </div>
             </td>
           </tr>
@@ -1294,29 +1581,24 @@
 
       const totalYouth = state.members.length;
       document.getElementById('statTotalYouth').innerText = totalYouth;
+      document.getElementById('statDatePresentCount').innerText = datePresentCount;
 
-      const totalAttended = state.members.reduce((acc, m) => acc + m.attended, 0);
-      const overallAvg = totalYouth > 0 ? Math.round((totalAttended / (totalYouth * TOTAL_SESSIONS)) * 100) : 0;
-      document.getElementById('statAvgAttendance').innerText = `${overallAvg}%`;
+      const sundayPercent = totalYouth > 0 ? Math.round((datePresentCount / totalYouth) * 100) : 0;
+      document.getElementById('statDatePercentage').innerText = `${sundayPercent}%`;
 
-      const honorRoll = state.members.filter(m => (m.attended / TOTAL_SESSIONS) >= 0.9).length;
-      document.getElementById('statHonorRoll').innerText = honorRoll;
+      const allAttendedSum = state.members.reduce((acc, m) => acc + getMemberTotal2026Attended(m.id), 0);
+      const overallAvg = totalYouth > 0 ? Math.round((allAttendedSum / (totalYouth * 52)) * 100) : 0;
+      document.getElementById('statAnnualConsistency').innerText = `${overallAvg}%`;
     }
 
     function filterMembers() { renderAttendance(); }
 
-    async function stepAttendance(memberId, delta) {
-      const member = state.members.find(m => m.id === memberId);
-      if (member) {
-        member.attended = Math.min(TOTAL_SESSIONS, Math.max(0, member.attended + delta));
-        renderAttendance();
-        await pushToCloud();
-      }
-    }
-
     async function removeMember(memberId) {
-      if (!confirm("Remove this youth member?")) return;
+      if (!confirm("Remove this youth member permanently?")) return;
       state.members = state.members.filter(m => m.id !== memberId);
+      Object.keys(state.sundayAttendance).forEach(d => {
+        if (state.sundayAttendance[d]) delete state.sundayAttendance[d][String(memberId)];
+      });
       renderAttendance();
       renderTeams();
       await pushToCloud();
@@ -1334,18 +1616,23 @@
       e.preventDefault();
       const name = document.getElementById('newMemberName').value.trim();
       const teamId = parseInt(document.getElementById('newMemberTeam').value);
-      const attended = parseInt(document.getElementById('newMemberAttended').value);
+      const markPresent = document.getElementById('newMemberMarkPresentCurrent').checked;
 
       if (!name) return;
 
+      const newId = Date.now();
       const newMember = {
-        id: Date.now(),
+        id: newId,
         name,
         teamId,
-        attended: Math.min(TOTAL_SESSIONS, Math.max(0, attended))
+        attended: markPresent ? 1 : 0
       };
 
       state.members.push(newMember);
+
+      if (!state.sundayAttendance[state.selectedSunday]) state.sundayAttendance[state.selectedSunday] = {};
+      state.sundayAttendance[state.selectedSunday][String(newId)] = markPresent;
+
       closeAddMemberModal();
       document.getElementById('newMemberForm').reset();
       renderAttendance();
@@ -1353,6 +1640,9 @@
       await pushToCloud();
     }
 
+    // ==========================================
+    // TAB 4: PRAYER & PRAISE WALL
+    // ==========================================
     function renderPrayers() {
       const reqList = document.getElementById('prayerRequestsList');
       const ansList = document.getElementById('answeredPrayersList');
@@ -1434,6 +1724,9 @@
       await pushToCloud();
     }
 
+    // ==========================================
+    // TAB 5: ASK THE PASTOR (CONFIDENTIAL)
+    // ==========================================
     function renderPastorInbox() {
       const list = document.getElementById('pastorMessagesList');
       const countBadge = document.getElementById('pastorInboxCount');
@@ -1507,6 +1800,7 @@
     }
 
     function renderAll() {
+      initSundayDropdown();
       renderPptCard();
       renderSlide();
       renderTeams();
@@ -1521,7 +1815,6 @@
       setRole('youth');
       renderAll();
 
-      // Connect to Supabase Cloud & Start Realtime WebSocket!
       await syncFromCloud();
       subscribeToRealtime();
     });
